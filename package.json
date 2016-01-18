@@ -1,0 +1,16 @@
+{
+  "dependencies": {},
+  "scripts": {
+    "test": "mocha",
+    "lint": "eslint src",
+    "cover": "istanbul cover _mocha",
+    "pretest": "npm run --silent lint"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "codeclimate-test-reporter": "^0.1.1",
+    "istanbul": "^0.4.0",
+    "eslint": "^1.9.0",
+    "mocha": "^2.3.3"
+  }
+}
