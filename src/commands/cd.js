@@ -1,5 +1,7 @@
 "use strict";
 
-exports.main = (args, print) => {
-  print(args);
+exports.main = (args, c) => {
+  c.style({color: "red", fontWeight: "bold"})
+  .out(args)
+  .nl();
 };
