@@ -1,7 +1,7 @@
 {
-  "dependencies": {},
   "scripts": {
     "test": "mocha",
+    "bundler": "browserify -r ./src/webshell.js > ./html/bundle.js",
     "lint": "eslint src",
     "cover": "istanbul cover _mocha",
     "pretest": "npm run --silent lint"
@@ -9,7 +9,6 @@
   "devDependencies": {
     "browserify": "^13.0.0",
     "chai": "^3.4.1",
-    "codeclimate-test-reporter": "^0.1.1",
     "eslint": "^1.9.0",
     "istanbul": "^0.4.0",
     "mocha": "^2.3.3"

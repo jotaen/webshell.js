@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
 var Cli = function(document) {
-  this._color = "#000000";
-  this._weight = "normal";
-  this._style = "normal";
+  this._color = '#000000';
+  this._weight = 'normal';
+  this._style = 'normal';
 };
 module.exports = Cli;
 
