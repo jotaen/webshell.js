@@ -1,5 +1,5 @@
 'use strict';
 
-module.exports = (c, args) => {
-  c.out('Jan')
+module.exports = (terminal, args) => {
+  terminal.print('Jan')
 }
