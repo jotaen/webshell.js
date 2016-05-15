@@ -4,7 +4,7 @@
     "bundler": "browserify -r ./src/webshell.js > ./html/bundle.js",
     "lint": "eslint src",
     "cover": "istanbul cover _mocha",
-    "pretest": "npm run --silent lint"
+    "pretest": "#npm run --silent lint"
   },
   "devDependencies": {
     "browserify": "^13.0.0",
