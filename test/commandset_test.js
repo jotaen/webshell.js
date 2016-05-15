@@ -1,72 +1,76 @@
-"use strict";
+'use strict'
 
-var assert = require("chai").assert;
-var Commandset = require("../src/commandset.js");
+const assert = require('chai').assert
+const commandset = require('../src/commandset.js')
 
-describe("#list()", function() {
-  it("should be empty after initialisation", function() {
-    var cmds = new Commandset();
-    assert.deepEqual(cmds.list(), {});
-  });
-});
+describe('#list()', function() {
+  it('should be empty after initialisation', function() {
+    const cmds = commandset()
+    assert.deepEqual(cmds.list(), {})
+  })
+})
 
-describe("#register()", function() {
-  it("should store list", function() {
-    var cmds = new Commandset();
+describe('#register()', function() {
+  it('should store commands', function() {
+    const cmds = commandset()
 
-    var foo = function() {
-      return 1;
-    };
+    const foo = () => 1
 
-    cmds.register("foo", foo);
+    cmds.register('foo', foo)
     assert.deepEqual(cmds.list(), {
       foo: foo
-    });
-  });
+    })
+  })
 
-  it("should override command", function() {
-    var cmds = new Commandset();
+  it('should throw an error, is `command` is not a function', function() {
+    const cmds = commandset()
+    assert.throws(() => {
+      cmds.register('foo', {})
+    })
+  })
 
-    var foo = function() {
-      return "foo";
-    };
-    var baz = function() {
-      return "baz";
-    };
-    cmds.register("foo", foo);
-    cmds.register("foo", baz);
+  it('should throw an error, is `name` is not a string', function() {
+    const cmds = commandset()
+    assert.throws(() => {
+      cmds.register({}, () => 1)
+    })
+  })
+
+  it('should override commands', function() {
+    const cmds = commandset()
+
+    const first = () => 1
+    const second = () => 2
+
+    cmds.register('first', first)
+    cmds.register('first', second)
 
     assert.deepEqual(cmds.list(), {
-      foo: baz
-    });
-  });
-});
+      first: second
+    })
+  })
+})
 
-describe("#lookup()", function() {
-  it("should find a previously registered command", function() {
-    var cmds = new Commandset();
+describe('#lookup()', function() {
+  it('should find a previously registered command', function() {
+    const cmds = commandset()
 
-    var foo = function() {
-      return "foo";
-    };
-    var baz = function() {
-      return "baz";
-    };
-    cmds.register("foo", foo);
-    cmds.register("baz", baz);
+    const foo = () => 1
+    const baz = () => 2
 
-    assert.equal(cmds.lookup("foo"), foo);
-    assert.equal(cmds.lookup("baz"), baz);
-  });
+    cmds.register('foo', foo)
+    cmds.register('baz', baz)
 
-  it ("should return undefined when no command was found", function() {
-    var cmds = new Commandset();
+    assert(cmds.lookup('foo') === foo)
+    assert(cmds.lookup('baz') === baz)
+  })
 
-    var foo = function() {
-      return "foo";
-    };
-    cmds.register("foo", foo);
+  it ('should return undefined when no command was found', function() {
+    const cmds = commandset()
 
-    assert.isUndefined(cmds.lookup("baz"));
-  });
-});
+    const foo = () => 1
+    cmds.register('foo', foo)
+
+    assert(cmds.lookup('baz') === undefined)
+  })
+})

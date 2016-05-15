@@ -1,23 +1,23 @@
-'use strict';
+'use strict'
 
-var Commandset = function() {
-  this._list = {};
-};
-module.exports = Commandset;
-
-Commandset.prototype.lookup = function(name) {
-  if (this._list[name]) {
-    return this._list[name];
+const lookup = (list) => (name) => {
+  if (list[name]) {
+    return list[name]
   }
-  return undefined;
-};
+  return undefined
+}
 
-Commandset.prototype.register = function(name, command) {
-  if (! this._list.name) {
-    this._list[name] = command;
+const register = (list) => (name, command) => {
+  if (typeof name !== 'string') throw Error('First parameter of "register" must be a string')
+  if (typeof command !== 'function') throw Error('Second parameter of "register" must be a function')
+  list[name] = command
+}
+
+module.exports = () => {
+  let list = {}
+  return {
+    lookup: lookup(list),
+    register: register(list),
+    list: () => list
   }
-};
-
-Commandset.prototype.list = function() {
-  return this._list;
-};
+}
