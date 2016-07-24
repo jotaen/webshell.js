@@ -38,6 +38,7 @@ describe('#cd (change filesystem)', () => {
     const newPath = '/path/that/does/not/exist'
     cd(newPath, buffer, store)
     const output = buffer.get()
+    assert(/No such file or directory/.test(output))
     assert.deepEqual(store.getState().workingDir, [])
   })
 
@@ -46,6 +47,8 @@ describe('#cd (change filesystem)', () => {
     const buffer = createBuffer()
     const newPath = '/etc/hosts'
     cd(newPath, buffer, store)
+    const output = buffer.get()
+    assert(/Not a directory/.test(output))
     assert.deepEqual(store.getState().workingDir, [])
   })
 })
