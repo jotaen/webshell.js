@@ -1,10 +1,7 @@
 'use strict'
 
 exports.find = (tree, path) => {
-  path = path.replace(/^\/+/, '')
-  path = path.replace(/\/+$/, '')
-  const breadcrumps = path.split('/')
-  return breadcrumps.reduce((tree, item) => {
+  return path.reduce((tree, item) => {
     if (typeof tree === 'object' && tree[item]) return tree[item]
     return undefined
   }, tree)

@@ -13,7 +13,7 @@ describe('#tree', () => {
           'local': {}
         }
       }
-      const result = tree.find(source, 'usr')
+      const result = tree.find(source, ['usr'])
       const expect = {'local': {}}
 
       assert.deepEqual(result, expect)
@@ -27,22 +27,8 @@ describe('#tree', () => {
         },
         'usr': {}
       }
-      const result = tree.find(source, 'etc/hosts')
+      const result = tree.find(source, ['etc', 'hosts'])
       const expect = '127.0.0.1 localhost'
-
-      assert(result === expect)
-    })
-
-    it('should ignore leading/trailing slashes', () => {
-      const source = {
-        'bin': {},
-        'etc': {
-          'passwd': '98asf7zaiuz1289zoihf8sdf'
-        },
-        'usr': {}
-      }
-      const result = tree.find(source, '//etc/passwd///')
-      const expect = '98asf7zaiuz1289zoihf8sdf'
 
       assert(result === expect)
     })
@@ -53,7 +39,7 @@ describe('#tree', () => {
         'etc': {},
         'usr': {}
       }
-      const lookup = 'var'
+      const lookup = ['var']
       const result = tree.find(source, lookup)
 
       assert(result === undefined)
@@ -65,7 +51,7 @@ describe('#tree', () => {
         'etc': {},
         'usr': {}
       }
-      const lookup = 'c/windows/system.txt'
+      const lookup = ['c', 'windows', 'system.txt']
       const result = tree.find(source, lookup)
 
       assert(result === undefined)
@@ -79,7 +65,7 @@ describe('#tree', () => {
         },
         'usr': []
       }
-      const path = 'etc/init.d'
+      const path = ['etc', 'init.d']
       const result = tree.find(source, path)
       const expect = ['cron', 'mysql', 'supervisord']
 
