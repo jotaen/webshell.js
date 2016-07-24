@@ -3,11 +3,11 @@
 const assert = require('assert')
 const filesystem = require('../../../src/reducers/filesystem')
 const createStore = require('redux').createStore
-const initialState = require('../../initialState')
+const sampleState = require('../../sampleState')
 const action = require('../../../src/actions')
 
 const setup = () => {
-  return createStore(filesystem, initialState.simple())
+  return createStore(filesystem, sampleState.simple())
 }
 
 describe('#filesystem', () => {
