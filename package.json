@@ -3,12 +3,14 @@
     "test": "mocha",
     "linter": "eslint src",
     "coverage": "istanbul cover _mocha",
-    "pretest": "npm run --silent lint"
+    "pretest": "#npm run --silent lint"
   },
   "devDependencies": {
-    "chai": "^3.4.1",
     "eslint": "^1.9.0",
     "istanbul": "^0.4.0",
     "mocha": "^2.3.3"
+  },
+  "dependencies": {
+    "redux": "^3.5.2"
   }
 }
