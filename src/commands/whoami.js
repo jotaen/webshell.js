@@ -1,5 +1,5 @@
 'use strict';
 
-module.exports = (terminal, args) => {
-  terminal.print('Jan')
+module.exports = (input, terminal, state) => {
+  terminal.print(state.username)
 }
