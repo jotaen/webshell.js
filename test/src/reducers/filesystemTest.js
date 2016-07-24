@@ -4,6 +4,7 @@ const assert = require('assert')
 const filesystem = require('../../../src/reducers/filesystem')
 const createStore = require('redux').createStore
 const initialState = require('../../initialState')
+const action = require('../../../src/actions')
 
 const setup = () => {
   return createStore(filesystem, initialState.simple())
@@ -13,10 +14,7 @@ describe('#filesystem', () => {
   it('change the current working directory', () => {
     const store = setup()
     const newPath = ['bin']
-    store.dispatch({
-      type: 'CHANGE_DIRECTORY',
-      targetDir: newPath
-    })
+    store.dispatch(action.changeDirectory(newPath))
     const result = store.getState().workingDir
     assert.deepEqual(result, newPath)
   })
@@ -25,10 +23,7 @@ describe('#filesystem', () => {
     const store = setup()
     const invalidPath = ['var', 'www']
     assert.throws(() => {
-      store.dispatch({
-        type: 'CHANGE_DIRECTORY',
-        targetDir: invalidPath
-      })
+      store.dispatch(action.changeDirectory(invalidPath))
     }, /NOT_FOUND/)
     assert.deepEqual(store.getState().workingDir, [])
   })
@@ -37,10 +32,7 @@ describe('#filesystem', () => {
     const store = setup()
     const invalidPath = ['etc', 'hosts']
     assert.throws(() => {
-      store.dispatch({
-        type: 'CHANGE_DIRECTORY',
-        targetDir: invalidPath
-      })
+      store.dispatch(action.changeDirectory(invalidPath))
     }, /NOT_A_DIRECTORY/)
     assert.deepEqual(store.getState().workingDir, [])
   })
