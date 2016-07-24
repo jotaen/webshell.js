@@ -1,9 +1,9 @@
 'use strict'
 
 const assert = require('assert')
-const cd = require('../../src/commands/cd')
-const buffer = require('../buffer')
-const filesystem = require('../../src/reducers/filesystem')
+const cd = require('../../../src/commands/cd')
+const buffer = require('../../buffer')
+const filesystem = require('../../../src/reducers/filesystem')
 const createStore = require('redux').createStore
 
 describe('#cd (change filesystem)', () => {
