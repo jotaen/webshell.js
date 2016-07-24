@@ -1,11 +1,16 @@
 'use strict'
 
-let buffer = ''
+module.exports = () => {
+  let stream = ''
+  const buffer = {}
 
-exports.print = (output) => {
-  buffer += output
-}
+  buffer.print = (output) => {
+    stream += output
+  }
 
-exports.get = () => {
+  buffer.get = () => {
+    return stream
+  }
+
   return buffer
 }

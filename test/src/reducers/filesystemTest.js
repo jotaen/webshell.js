@@ -23,12 +23,25 @@ describe('#filesystem', () => {
 
   it('not change the current working directory, if the target was not found', () => {
     const store = setup()
-    const invalidPath = ['etc', 'init.d']
-    store.dispatch({
-      type: 'CHANGE_DIRECTORY',
-      targetDir: invalidPath
-    })
-    const result = store.getState().workingDir
-    assert.deepEqual(result, [])
+    const invalidPath = ['var', 'www']
+    assert.throws(() => {
+      store.dispatch({
+        type: 'CHANGE_DIRECTORY',
+        targetDir: invalidPath
+      })
+    }, /NOT_FOUND/)
+    assert.deepEqual(store.getState().workingDir, [])
+  })
+
+  it('not change the current working directory, if the target is not a directory', () => {
+    const store = setup()
+    const invalidPath = ['etc', 'hosts']
+    assert.throws(() => {
+      store.dispatch({
+        type: 'CHANGE_DIRECTORY',
+        targetDir: invalidPath
+      })
+    }, /NOT_A_DIRECTORY/)
+    assert.deepEqual(store.getState().workingDir, [])
   })
 })
