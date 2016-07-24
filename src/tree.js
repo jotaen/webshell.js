@@ -7,11 +7,11 @@ exports.find = (tree, path) => {
   }, tree)
 }
 
-exports.isFile = (obj) => {
+exports.isEndpoint = (obj) => {
   return typeof obj === 'string'
 }
 
-exports.isDir = (obj) => {
+exports.isBranchPoint = (obj) => {
   return typeof obj === 'object'
 }
 

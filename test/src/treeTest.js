@@ -5,119 +5,111 @@ const tree = require('../../src/tree')
 
 describe('#tree', () => {
   describe('#find', () => {
-    it('should return the subtree, if lookup is a directory', () => {
+    it('should return the subtree, if `path` is a branch point', () => {
       const source = {
-        'bin': {},
-        'etc': {},
-        'usr': {
-          'local': {}
+        'alpha': {},
+        'beta': {},
+        'gamma': {
+          'gamma-1': {}
         }
       }
-      const result = tree.find(source, ['usr'])
-      const expect = {'local': {}}
+      const result = tree.find(source, ['gamma'])
+      const expect = {'gamma-1': {}}
 
       assert.deepEqual(result, expect)
     })
 
-    it('should return the content, if lookup is a file', () => {
+    it('should return the content, if `path` is an endpoint', () => {
       const source = {
-        'bin': {},
-        'etc': {
-          'hosts': '127.0.0.1 localhost'
+        'alpha': {},
+        'beta': {
+          'b1': 'BETA-B1'
         },
-        'usr': {}
+        'gamma': {}
       }
-      const result = tree.find(source, ['etc', 'hosts'])
-      const expect = '127.0.0.1 localhost'
+      const result = tree.find(source, ['beta', 'b1'])
+      const expect = 'BETA-B1'
 
       assert(result === expect)
     })
 
-    it('should return `undefined`, if an directory is not present', () => {
+    it('should return `undefined`, if a point is not present', () => {
       const source = {
-        'bin': {},
-        'etc': {},
-        'usr': {}
+        'alpha': {},
+        'beta': {},
+        'gamma': {}
       }
-      const lookup = ['var']
+      const lookup = ['charly']
       const result = tree.find(source, lookup)
 
       assert(result === undefined)
     })
 
-    it('should return `undefined`, if a file is not present', () => {
+    it('should also find deeply nested endpoints', () => {
       const source = {
-        'bin': {},
-        'etc': {},
-        'usr': {}
-      }
-      const lookup = ['c', 'windows', 'system.txt']
-      const result = tree.find(source, lookup)
-
-      assert(result === undefined)
-    })
-
-    it('should also find deeply nested items', () => {
-      const source = {
-        'bin': [],
-        'etc': {
-          'init.d': ['cron', 'mysql', 'supervisord']
+        'alpha': [],
+        'beta': {
+          'b1': {
+            'b1-1': '',
+            'b1-2': '',
+            'b1-3': 'BETA-B1-B'
+          }
         },
-        'usr': []
+        'gamma': []
       }
-      const path = ['etc', 'init.d']
+      const path = ['beta', 'b1', 'b1-3']
       const result = tree.find(source, path)
-      const expect = ['cron', 'mysql', 'supervisord']
+      const expect = 'BETA-B1-B'
 
       assert.deepEqual(result, expect)
     })
   })
 
-  describe('#isDir', () => {
-    it('should return true, if an item is a directory', () => {
+  describe('#isBranchPoint', () => {
+    it('should return true, if an item is a branch point', () => {
       const input = {
-        'file.txt': 'Hello World',
-        'file.html': '<html>Hello World</html>'
+        'alpha': 'AAA',
+        'beta': 'BBB'
       }
-      assert(tree.isDir(input) === true)
+      assert(tree.isBranchPoint(input) === true)
     })
 
-    it('should return false, if an item is a directory containing folders', () => {
-      const input = 'I am a file'
-      assert(tree.isDir(input) === false)
+    it('should return false, if an item is an endpoint', () => {
+      const input = 'SOMETHING'
+      assert(tree.isBranchPoint(input) === false)
     })
   })
 
-  describe('#isFile', () => {
-    it('should return true, if an item is a file', () => {
-      const input = 'I am a file'
-      assert(tree.isFile(input) === true)
+  describe('#isEndpoint', () => {
+    it('should return true, if an item is an endpoint', () => {
+      const input = 'SOMETHING'
+      assert(tree.isEndpoint(input) === true)
     })
 
-    it('should return false, if an item is a directory', () => {
+    it('should return false, if an item is a branch point', () => {
       const input = {
-        'file.txt': 'Hello World',
-        'file.html': '<html>Hello World</html>'
+        'alpha': 'AAA',
+        'beta': 'BBB'
       }
-      assert(tree.isFile(input) === false)
+      assert(tree.isEndpoint(input) === false)
     })
   })
 
   describe('#list', () => {
     it('should return a list with information on all items', () => {
       const input = {
-        'documents': {
-          'letter.txt': 'Hello John! How are you?',
-          'todo-list.md': '- buy food\n- explore world'
+        'alpha': {
+          'a1': 'AAA111',
+          'a2': 'AAA222'
         },
-        'websites': {
-          'my-site': {}
+        'beta': {
+          'b1': {}
         },
-        'README': 'Follow the instructions!',
-        'LICENSE': 'public domain'
+        'gamma': 'CCC',
+        'delta': 'DDD'
       }
       const result = tree.list(input)
-      const expect = ['documents/', 'websites/', 'README', 'LICENSE']
+      const expect = ['alpha/', 'beta/', 'gamma', 'delta']
       assert.deepEqual(result, expect)
     })
   })
