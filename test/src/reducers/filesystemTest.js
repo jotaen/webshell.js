@@ -2,18 +2,13 @@
 
 const assert = require('assert')
 const filesystem = require('../../../src/reducers/filesystem')
-const createStore = require('redux').createStore
-const sampleState = require('../../sampleState')
+const predefinedStore = require('../../predefinedStore')
 const action = require('../../../src/actions')
-
-const setup = () => {
-  return createStore(filesystem, sampleState.simple())
-}
 
 describe('#filesystem', () => {
   describe('#CHANGE_DIRECTORY', () => {
     it('should change the current working directory', () => {
-      const store = setup()
+      const store = predefinedStore.simple(filesystem)
       const newPath = ['bin']
       store.dispatch(action.changeDirectory(newPath))
       const result = store.getState().workingDir
@@ -21,7 +16,7 @@ describe('#filesystem', () => {
     })
 
     it('should not change the current working directory, if the target was not found', () => {
-      const store = setup()
+      const store = predefinedStore.simple(filesystem)
       const invalidPath = ['var', 'www']
       assert.throws(() => {
         store.dispatch(action.changeDirectory(invalidPath))
@@ -30,7 +25,7 @@ describe('#filesystem', () => {
     })
 
     it('should not change the current working directory, if the target is not a directory', () => {
-      const store = setup()
+      const store = predefinedStore.simple(filesystem)
       const invalidPath = ['etc', 'hosts']
       assert.throws(() => {
         store.dispatch(action.changeDirectory(invalidPath))
@@ -41,7 +36,7 @@ describe('#filesystem', () => {
 
   describe('#CREATE_DIRECTORY', () => {
     it('should create a new directory in the filesystem', () => {
-      const store = setup()
+      const store = predefinedStore.simple(filesystem)
       const path = ['var', 'www', 'html']
       store.dispatch(action.createDirectory(path))
       const expect = {
@@ -65,7 +60,7 @@ describe('#filesystem', () => {
     })
 
     it('should not overwrite existing directories', () => {
-      const store = setup()
+      const store = predefinedStore.simple(filesystem)
       const original = Object.assign({}, store.getState().filesystem)
       const path = ['usr', 'local']
       assert.throws(() => {
@@ -77,7 +72,7 @@ describe('#filesystem', () => {
 
   describe('#CREATE_FILE', () => {
     it('should create a new file in the filesystem', () => {
-      const store = setup()
+      const store = predefinedStore.simple(filesystem)
       const path = ['var', 'www', 'index.html']
       store.dispatch(action.createFile(path, '<html>Hello World</html>'))
       const expect = {
@@ -101,7 +96,7 @@ describe('#filesystem', () => {
     })
 
     it('should not overwrite existing files', () => {
-      const store = setup()
+      const store = predefinedStore.simple(filesystem)
       const original = Object.assign({}, store.getState().filesystem)
       const path = ['etc', 'hosts']
       assert.throws(() => {

@@ -5,12 +5,11 @@ const mkdir = require('../../../src/commands/mkdir')
 const tree = require('../../../src/tree')
 const createBuffer = require('../../buffer')
 const filesystem = require('../../../src/reducers/filesystem')
-const createStore = require('redux').createStore
-const sampleState = require('../../sampleState')
+const predefinedStore = require('../../predefinedStore')
 
 describe('#mkdir (make directory)', () => {
   it('should create a new directory at the current location', () => {
-    const store = createStore(filesystem, sampleState.simple())
+    const store = predefinedStore.simple(filesystem)
     const newPath = '/temp'
     mkdir(newPath, createBuffer(), store)
     const result = tree.find(store.getState().filesystem, ['temp'])
@@ -18,7 +17,7 @@ describe('#mkdir (make directory)', () => {
   })
 
   it('should create a new directory at an arbitrary (existing) location', () => {
-    const store = createStore(filesystem, sampleState.simple())
+    const store = predefinedStore.simple(filesystem)
     const newPath = '/usr/local/bin'
     mkdir(newPath, createBuffer(), store)
     const result = tree.find(store.getState().filesystem, ['usr', 'local', 'bin'])
@@ -27,7 +26,7 @@ describe('#mkdir (make directory)', () => {
 
   it('shouldn’t create a directory at non-existing locations', () => {
     const buffer = createBuffer()
-    const store = createStore(filesystem, sampleState.simple())
+    const store = predefinedStore.simple(filesystem)
     const newPath = '/var/www'
     mkdir(newPath, buffer, store)
     const output = buffer.get()
