@@ -21,3 +21,12 @@ exports.list = (tree) => {
     return item
   })
 }
+
+exports.insert = (tree, path, content) => {
+  const branch = path.reverse().reduce((obj, key) => {
+    const node = {}
+    node[key] = obj
+    return node
+  }, content)
+  return Object.assign({}, tree, branch)
+}

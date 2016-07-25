@@ -8,13 +8,13 @@ describe('#tree', () => {
     it('should return the subtree, if `path` is a branch point', () => {
       const source = {
         'alpha': {},
-        'beta': {},
-        'gamma': {
-          'gamma-1': {}
+        'bravo': {},
+        'charly': {
+          'charly-1': {}
         }
       }
-      const result = tree.find(source, ['gamma'])
-      const expect = {'gamma-1': {}}
+      const result = tree.find(source, ['charly'])
+      const expect = {'charly-1': {}}
 
       assert.deepEqual(result, expect)
     })
@@ -22,12 +22,12 @@ describe('#tree', () => {
     it('should return the content, if `path` is an endpoint', () => {
       const source = {
         'alpha': {},
-        'beta': {
+        'bravo': {
           'b1': 'BETA-B1'
         },
-        'gamma': {}
+        'charly': {}
       }
-      const result = tree.find(source, ['beta', 'b1'])
+      const result = tree.find(source, ['bravo', 'b1'])
       const expect = 'BETA-B1'
 
       assert(result === expect)
@@ -36,10 +36,10 @@ describe('#tree', () => {
     it('should return `undefined`, if a point is not present', () => {
       const source = {
         'alpha': {},
-        'beta': {},
-        'gamma': {}
+        'bravo': {},
+        'charly': {}
       }
-      const lookup = ['charly']
+      const lookup = ['yankee']
       const result = tree.find(source, lookup)
 
       assert(result === undefined)
@@ -48,16 +48,16 @@ describe('#tree', () => {
     it('should also find deeply nested endpoints', () => {
       const source = {
         'alpha': [],
-        'beta': {
+        'bravo': {
           'b1': {
             'b1-1': '',
             'b1-2': '',
             'b1-3': 'BETA-B1-B'
           }
         },
-        'gamma': []
+        'charly': []
       }
-      const path = ['beta', 'b1', 'b1-3']
+      const path = ['bravo', 'b1', 'b1-3']
       const result = tree.find(source, path)
       const expect = 'BETA-B1-B'
 
@@ -69,7 +69,7 @@ describe('#tree', () => {
     it('should return true, if an item is a branch point', () => {
       const input = {
         'alpha': 'AAA',
-        'beta': 'BBB'
+        'bravo': 'BBB'
       }
       assert(tree.isBranchPoint(input) === true)
     })
@@ -89,7 +89,7 @@ describe('#tree', () => {
     it('should return false, if an item is a branch point', () => {
       const input = {
         'alpha': 'AAA',
-        'beta': 'BBB'
+        'bravo': 'BBB'
       }
       assert(tree.isEndpoint(input) === false)
     })
@@ -102,14 +102,58 @@ describe('#tree', () => {
           'a1': 'AAA111',
           'a2': 'AAA222'
         },
-        'beta': {
+        'bravo': {
           'b1': {}
         },
-        'gamma': 'CCC',
+        'charly': 'CCC',
         'delta': 'DDD'
       }
       const result = tree.list(input)
-      const expect = ['alpha/', 'beta/', 'gamma', 'delta']
+      const expect = ['alpha/', 'bravo/', 'charly', 'delta']
+      assert.deepEqual(result, expect)
+    })
+  })
+
+  describe('#insert', () => {
+    it('should insert a new endpoint into an empty tree', () => {
+      const initial = {}
+      const result = tree.insert(initial, ['alpha'], {'a1': 'AAA111'})
+      const expect = {
+        'alpha': {'a1': 'AAA111'}
+      }
+      assert.deepEqual(result, expect)
+    })
+
+    it('should leave the rest of the original tree intact', () => {
+      const initial = {
+        'alpha': {
+          'a1': 'AAA111'
+        },
+        'bravo': 'BBB'
+      }
+      const result = tree.insert(initial, ['foxtrott'], 'FFF111')
+      const expect = {
+        'alpha': {
+          'a1': 'AAA111'
+        },
+        'bravo': 'BBB',
+        'foxtrott': 'FFF111'
+      }
+      assert.deepEqual(result, expect)
+    })
+
+    it('should insert a node deeply', () => {
+      const initial = {
+        'alpha': {}
+      }
+      const result = tree.insert(initial, ['alpha', 'a1', 'AAA'], 'FFF111')
+      const expect = {
+        'alpha': {
+          'a1': {
+            'AAA': 'FFF111'
+          }
+        }
+      }
       assert.deepEqual(result, expect)
     })
   })
