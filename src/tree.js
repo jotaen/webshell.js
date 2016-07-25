@@ -1,5 +1,7 @@
 'use strict'
 
+const deepmerge = require('deepmerge')
+
 exports.find = (tree, path) => {
   return path.reduce((tree, item) => {
     if (typeof tree === 'object' && tree[item]) return tree[item]
@@ -28,5 +30,5 @@ exports.insert = (tree, path, content) => {
     node[key] = obj
     return node
   }, content)
-  return Object.assign({}, tree, branch)
+  return deepmerge(tree, branch)
 }

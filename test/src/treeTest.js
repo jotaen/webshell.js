@@ -131,13 +131,13 @@ describe('#tree', () => {
         },
         'bravo': 'BBB'
       }
-      const result = tree.insert(initial, ['foxtrott'], 'FFF111')
+      const result = tree.insert(initial, ['alpha', 'a2'], 'AAA222')
       const expect = {
         'alpha': {
-          'a1': 'AAA111'
+          'a1': 'AAA111',
+          'a2': 'AAA222'
         },
-        'bravo': 'BBB',
-        'foxtrott': 'FFF111'
+        'bravo': 'BBB'
       }
       assert.deepEqual(result, expect)
     })
