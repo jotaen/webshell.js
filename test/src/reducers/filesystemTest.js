@@ -74,4 +74,40 @@ describe('#filesystem', () => {
       assert.deepEqual(store.getState().filesystem, original)
     })
   })
+
+  describe('#CREATE_FILE', () => {
+    it('should create a new file in the filesystem', () => {
+      const store = setup()
+      const path = ['var', 'www', 'index.html']
+      store.dispatch(action.createFile(path, '<html>Hello World</html>'))
+      const expect = {
+        'bin': {
+          'date': '2024-12-24T18:19:23Z'
+        },
+        'etc': {
+          'hosts': '127.0.0.1 localhost',
+          'passwd': '198azsf1i2hhAs8faz98ZHU'
+        },
+        'usr': {
+          'local': {}
+        },
+        'var': {
+          'www': {
+            'index.html': '<html>Hello World</html>'
+          }
+        }
+      }
+      assert.deepEqual(store.getState().filesystem, expect)
+    })
+
+    it('should not overwrite existing files', () => {
+      const store = setup()
+      const original = Object.assign({}, store.getState().filesystem)
+      const path = ['etc', 'hosts']
+      assert.throws(() => {
+        store.dispatch(action.createFile(path))
+      }, /ALREADY_EXISTS/)
+      assert.deepEqual(store.getState().filesystem, original)
+    })
+  })
 })
