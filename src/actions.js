@@ -1,17 +1,18 @@
 'use strict'
 
-exports.changeDirectory = (targetDir) => ({
-  type: 'CHANGE_DIRECTORY',
-  targetDir: targetDir
+exports.changeLocation = (path) => ({
+  type: 'CHANGE_LOCATION',
+  path: path
 })
 
-exports.createDirectory = (targetDir) => ({
-  type: 'CREATE_DIRECTORY',
-  targetDir: targetDir
+exports.createDirectory = (path) => ({
+  type: 'CREATE_PATH',
+  path: path,
+  content: {}
 })
 
-exports.createFile = (targetDir, content) => ({
-  type: 'CREATE_FILE',
-  targetDir: targetDir,
+exports.createFile = (path, content) => ({
+  type: 'CREATE_PATH',
+  path: path,
   content: content
 })

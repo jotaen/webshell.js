@@ -1,6 +1,6 @@
 'use strict'
 
 module.exports = () => ({
-  filesystem: {},
-  workingDir: []
+  directoryStructure: {},
+  currentLocation: []
 })

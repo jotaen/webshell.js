@@ -6,7 +6,7 @@ const action = require('../actions')
 module.exports = (input, terminal, store) => {
   const path = process.path(input)
   try {
-    store.dispatch(action.changeDirectory(path))
+    store.dispatch(action.changeLocation(path))
   } catch(e) {
     const pathString = '/' + path.join('/')
     if (e.message === 'NOT_FOUND') terminal.print(pathString + ': No such file or directory')

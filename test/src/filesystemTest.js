@@ -1,11 +1,11 @@
 'use strict'
 
 const assert = require('assert')
-const tree = require('../../src/tree')
+const filesystem = require('../../src/filesystem')
 
-describe('#tree', () => {
+describe('#filesystem', () => {
   describe('#find', () => {
-    it('should return the subtree, if `path` is a branch point', () => {
+    it('should return the subfilesystem, if `path` is a branch point', () => {
       const source = {
         'alpha': {},
         'bravo': {},
@@ -13,7 +13,7 @@ describe('#tree', () => {
           'charly-1': {}
         }
       }
-      const result = tree.find(source, ['charly'])
+      const result = filesystem.find(source, ['charly'])
       const expect = {'charly-1': {}}
 
       assert.deepEqual(result, expect)
@@ -27,7 +27,7 @@ describe('#tree', () => {
         },
         'charly': {}
       }
-      const result = tree.find(source, ['bravo', 'b1'])
+      const result = filesystem.find(source, ['bravo', 'b1'])
       const expect = 'BETA-B1'
 
       assert(result === expect)
@@ -40,7 +40,7 @@ describe('#tree', () => {
         'charly': {}
       }
       const lookup = ['yankee']
-      const result = tree.find(source, lookup)
+      const result = filesystem.find(source, lookup)
 
       assert(result === undefined)
     })
@@ -58,32 +58,32 @@ describe('#tree', () => {
         'charly': []
       }
       const path = ['bravo', 'b1', 'b1-3']
-      const result = tree.find(source, path)
+      const result = filesystem.find(source, path)
       const expect = 'BETA-B1-B'
 
       assert.deepEqual(result, expect)
     })
   })
 
-  describe('#isBranchPoint', () => {
+  describe('#isDirectory', () => {
     it('should return true, if an item is a branch point', () => {
       const input = {
         'alpha': 'AAA',
         'bravo': 'BBB'
       }
-      assert(tree.isBranchPoint(input) === true)
+      assert(filesystem.isDirectory(input) === true)
     })
 
     it('should return false, if an item is an endpoint', () => {
       const input = 'SOMETHING'
-      assert(tree.isBranchPoint(input) === false)
+      assert(filesystem.isDirectory(input) === false)
     })
   })
 
-  describe('#isEndpoint', () => {
+  describe('#isFile', () => {
     it('should return true, if an item is an endpoint', () => {
       const input = 'SOMETHING'
-      assert(tree.isEndpoint(input) === true)
+      assert(filesystem.isFile(input) === true)
     })
 
     it('should return false, if an item is a branch point', () => {
@@ -91,28 +91,28 @@ describe('#tree', () => {
         'alpha': 'AAA',
         'bravo': 'BBB'
       }
-      assert(tree.isEndpoint(input) === false)
+      assert(filesystem.isFile(input) === false)
     })
   })
 
   describe('#insert', () => {
-    it('should insert a new endpoint into an empty tree', () => {
+    it('should insert a new endpoint into an empty filesystem', () => {
       const initial = {}
-      const result = tree.insert(initial, ['alpha'], {'a1': 'AAA111'})
+      const result = filesystem.insert(initial, ['alpha'], {'a1': 'AAA111'})
       const expect = {
         'alpha': {'a1': 'AAA111'}
       }
       assert.deepEqual(result, expect)
     })
 
-    it('should leave the rest of the original tree intact', () => {
+    it('should leave the rest of the original filesystem intact', () => {
       const initial = {
         'alpha': {
           'a1': 'AAA111'
         },
         'bravo': 'BBB'
       }
-      const result = tree.insert(initial, ['alpha', 'a2'], 'AAA222')
+      const result = filesystem.insert(initial, ['alpha', 'a2'], 'AAA222')
       const expect = {
         'alpha': {
           'a1': 'AAA111',
@@ -127,7 +127,7 @@ describe('#tree', () => {
       const initial = {
         'alpha': {}
       }
-      const result = tree.insert(initial, ['alpha', 'a1', 'AAA'], 'FFF111')
+      const result = filesystem.insert(initial, ['alpha', 'a1', 'AAA'], 'FFF111')
       const expect = {
         'alpha': {
           'a1': {

@@ -2,12 +2,12 @@
 
 const process = require('../process')
 const action = require('../actions')
-const tree = require('../tree')
+const filesystem = require('../filesystem')
 
 module.exports = (input, terminal, store) => {
   const path = process.path(input)
-  const targetDir = tree.find(store.getState().filesystem, path.slice(0, -1))
-  if (!tree.isBranchPoint(targetDir)) {
+  const location = filesystem.find(store.getState().directoryStructure, path.slice(0, -1))
+  if (!filesystem.isDirectory(location)) {
     const pathString = '/' + path.join('/')
     terminal.print(pathString + ': No such file or directory')
     return
