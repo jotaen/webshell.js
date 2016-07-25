@@ -17,13 +17,6 @@ exports.isBranchPoint = (obj) => {
   return typeof obj === 'object'
 }
 
-exports.list = (tree) => {
-  return Object.keys(tree).map((item) => {
-    if (typeof tree[item] === 'object') return item + '/'
-    return item
-  })
-}
-
 exports.insert = (tree, path, content) => {
   const branch = path.reverse().reduce((obj, key) => {
     const node = {}

@@ -95,25 +95,6 @@ describe('#tree', () => {
     })
   })
 
-  describe('#list', () => {
-    it('should return a list with information on all items', () => {
-      const input = {
-        'alpha': {
-          'a1': 'AAA111',
-          'a2': 'AAA222'
-        },
-        'bravo': {
-          'b1': {}
-        },
-        'charly': 'CCC',
-        'delta': 'DDD'
-      }
-      const result = tree.list(input)
-      const expect = ['alpha/', 'bravo/', 'charly', 'delta']
-      assert.deepEqual(result, expect)
-    })
-  })
-
   describe('#insert', () => {
     it('should insert a new endpoint into an empty tree', () => {
       const initial = {}
