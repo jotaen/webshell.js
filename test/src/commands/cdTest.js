@@ -3,12 +3,12 @@
 const assert = require('assert')
 const cd = require('../../../src/commands/cd')
 const createBuffer = require('../../buffer')
-const filesystemReducer = require('../../../src/reducers/filesystem')
+const reducer = require('../../../src/reducers/index')
 const predefinedStore = require('../../predefinedStore')
 
 describe('#cd (change directory)', () => {
   it('should change the current working filesystem', () => {
-    const store = predefinedStore.simple(filesystemReducer)
+    const store = predefinedStore.simple(reducer)
     const buffer = createBuffer()
     const newPath = '/usr/local/'
     cd(newPath, buffer, store)
@@ -20,7 +20,7 @@ describe('#cd (change directory)', () => {
   })
 
   it('should change the current working filesystem, even if input is "dirty"', () => {
-    const store = predefinedStore.simple(filesystemReducer)
+    const store = predefinedStore.simple(reducer)
     const buffer = createBuffer()
     const newPath = '////usr///local//'
     cd(newPath, buffer, store)
@@ -32,7 +32,7 @@ describe('#cd (change directory)', () => {
   })
 
   it('should not change the current working filesystem, if target does not exist', () => {
-    const store = predefinedStore.simple(filesystemReducer)
+    const store = predefinedStore.simple(reducer)
     const buffer = createBuffer()
     const newPath = '/path/that/does/not/exist'
     cd(newPath, buffer, store)
@@ -42,7 +42,7 @@ describe('#cd (change directory)', () => {
   })
 
   it('should not change the current working filesystem, if target is a file', () => {
-    const store = predefinedStore.simple(filesystemReducer)
+    const store = predefinedStore.simple(reducer)
     const buffer = createBuffer()
     const newPath = '/etc/hosts'
     cd(newPath, buffer, store)

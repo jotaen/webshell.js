@@ -2,9 +2,7 @@
 
 const filesystem = require('../filesystem')
 
-const handler = {}
-
-handler.CHANGE_LOCATION = (state, action) => {
+exports.CHANGE_LOCATION = (state, action) => {
   const path = action.path
   const tree = state.directoryStructure
   const target = filesystem.find(tree, path)
@@ -13,17 +11,10 @@ handler.CHANGE_LOCATION = (state, action) => {
   return Object.assign({}, state, {currentLocation: path})
 }
 
-handler.CREATE_PATH = (state, action) => {
+exports.CREATE_PATH = (state, action) => {
   const path = action.path
   const tree = state.directoryStructure
   if (filesystem.find(tree, path)) throw new Error('ALREADY_EXISTS')
   const newTree = filesystem.insert(tree, path, action.content)
   return Object.assign({}, state, {directoryStructure: newTree})
-}
-
-module.exports = (state, action) => {
-  if (handler[action.type]) {
-    return handler[action.type](state, action)
-  }
-  return state
 }

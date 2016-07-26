@@ -4,12 +4,12 @@ const assert = require('assert')
 const mkdir = require('../../../src/commands/mkdir')
 const filesystem = require('../../../src/filesystem')
 const createBuffer = require('../../buffer')
-const filesystemReducer = require('../../../src/reducers/filesystem')
+const reducer = require('../../../src/reducers/index')
 const predefinedStore = require('../../predefinedStore')
 
 describe('#mkdir (make directory)', () => {
   it('should create a new directory at the current location', () => {
-    const store = predefinedStore.simple(filesystemReducer)
+    const store = predefinedStore.simple(reducer)
     const newPath = '/temp'
     mkdir(newPath, createBuffer(), store)
     const result = filesystem.find(store.getState().directoryStructure, ['temp'])
@@ -17,7 +17,7 @@ describe('#mkdir (make directory)', () => {
   })
 
   it('should create a new directory at an arbitrary (existing) location', () => {
-    const store = predefinedStore.simple(filesystemReducer)
+    const store = predefinedStore.simple(reducer)
     const newPath = '/usr/local/bin'
     mkdir(newPath, createBuffer(), store)
     const result = filesystem.find(store.getState().directoryStructure, ['usr', 'local', 'bin'])
@@ -26,7 +26,7 @@ describe('#mkdir (make directory)', () => {
 
   it('shouldn’t create a directory at non-existing locations', () => {
     const buffer = createBuffer()
-    const store = predefinedStore.simple(filesystemReducer)
+    const store = predefinedStore.simple(reducer)
     const newPath = '/var/www'
     mkdir(newPath, buffer, store)
     const output = buffer.get()
