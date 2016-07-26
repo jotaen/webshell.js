@@ -3,9 +3,10 @@
 const createStore = require('redux').createStore
 const initialState = require('../src/initialState')
 const action = require('../src/actions')
+const reducers = require('../src/reducers/index')
 
-exports.simple = (reducer) => {
-  const store = createStore(reducer, initialState())
+module.exports = () => {
+  const store = createStore(reducers, initialState(reducers))
   store.dispatch(action.createDirectory(['bin']))
   store.dispatch(action.createFile(['bin', 'date'], '2024-12-24T18:19:23Z'))
   store.dispatch(action.createDirectory(['etc']))

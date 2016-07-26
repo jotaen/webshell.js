@@ -8,8 +8,7 @@ const predefinedStore = require('../../predefinedStore')
 describe('#pwd (print working directory)', () => {
   it('should print out the current directory', () => {
     const buffer = createBuffer()
-    const store = predefinedStore.simple((state) => state)
-
+    const store = predefinedStore()
     pwd(undefined, buffer, store)
     const result = buffer.get()
     const expect = '/'

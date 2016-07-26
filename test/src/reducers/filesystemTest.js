@@ -1,15 +1,13 @@
 'use strict'
 
 const assert = require('assert')
-const fs = require('../../../src/reducers/filesystem')
-const rd = require('../../../src/reducers/reducerDictionary')
 const predefinedStore = require('../../predefinedStore')
 const action = require('../../../src/actions')
 
 describe('#filesystem', () => {
   describe('#CHANGE_LOCATION', () => {
     it('should change the current location', () => {
-      const store = predefinedStore.simple(rd.dict(fs))
+      const store = predefinedStore()
       const newPath = ['bin']
       store.dispatch(action.changeLocation(newPath))
       const result = store.getState().currentLocation
@@ -17,7 +15,7 @@ describe('#filesystem', () => {
     })
 
     it('should not change the current location, if the target was not found', () => {
-      const store = predefinedStore.simple(rd.dict(fs))
+      const store = predefinedStore()
       const invalidPath = ['var', 'www']
       assert.throws(() => {
         store.dispatch(action.changeLocation(invalidPath))
@@ -26,7 +24,7 @@ describe('#filesystem', () => {
     })
 
     it('should not change the current location, if the target is not a directory', () => {
-      const store = predefinedStore.simple(rd.dict(fs))
+      const store = predefinedStore()
       const invalidPath = ['etc', 'hosts']
       assert.throws(() => {
         store.dispatch(action.changeLocation(invalidPath))
@@ -37,7 +35,7 @@ describe('#filesystem', () => {
 
   describe('#CREATE_DIRECTORY', () => {
     it('should create a new directory in the filesystem', () => {
-      const store = predefinedStore.simple(rd.dict(fs))
+      const store = predefinedStore()
       const path = ['var', 'www', 'html']
       store.dispatch(action.createDirectory(path))
       const expect = {
@@ -61,7 +59,7 @@ describe('#filesystem', () => {
     })
 
     it('should not overwrite existing directories', () => {
-      const store = predefinedStore.simple(rd.dict(fs))
+      const store = predefinedStore()
       const original = Object.assign({}, store.getState().directoryStructure)
       const path = ['usr', 'local']
       assert.throws(() => {
@@ -73,7 +71,7 @@ describe('#filesystem', () => {
 
   describe('#CREATE_FILE', () => {
     it('should create a new file in the filesystem', () => {
-      const store = predefinedStore.simple(rd.dict(fs))
+      const store = predefinedStore()
       const path = ['var', 'www', 'index.html']
       store.dispatch(action.createFile(path, '<html>Hello World</html>'))
       const expect = {
@@ -97,7 +95,7 @@ describe('#filesystem', () => {
     })
 
     it('should not overwrite existing files', () => {
-      const store = predefinedStore.simple(rd.dict(fs))
+      const store = predefinedStore()
       const original = Object.assign({}, store.getState().directoryStructure)
       const path = ['etc', 'hosts']
       assert.throws(() => {
