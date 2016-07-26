@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 const process = require('../process')
 const action = require('../actions')
@@ -15,7 +15,7 @@ module.exports = (input, terminal, store) => {
   }
   try {
     store.dispatch(action.createDirectory(path))
-  } catch(e) {
+  } catch (e) {
     const pathString = '/' + path.join('/')
     if (e.message === 'ALREADY_EXISTS') terminal.print(pathString + ': File or folder already exists')
   }

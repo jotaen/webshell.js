@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = (input, terminal, store) => {
   const path = store.getState().currentLocation

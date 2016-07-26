@@ -1,16 +1,20 @@
 {
   "scripts": {
     "test": "mocha",
-    "linter": "eslint src",
+    "linter": "eslint .",
     "coverage": "istanbul cover _mocha",
-    "pretest": "#npm run --silent lint"
+    "pretest": "npm run --silent linter"
   },
   "devDependencies": {
-    "eslint": "^1.9.0",
+    "eslint": "^3.1.1",
+    "eslint-config-standard": "^5.3.5",
+    "eslint-plugin-promise": "^2.0.0",
+    "eslint-plugin-standard": "^2.0.0",
     "istanbul": "^0.4.0",
     "mocha": "^2.3.3"
   },
   "dependencies": {
+    "deepmerge": "^0.2.10",
     "redux": "^3.5.2"
   }
 }
