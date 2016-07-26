@@ -6,8 +6,9 @@ const filesystem = require('../filesystem')
 
 module.exports = (input, terminal, store) => {
   const path = process.path(input)
-  const location = filesystem.find(store.getState().directoryStructure, path.slice(0, -1))
-  if (!filesystem.isDirectory(location)) {
+  const tree = store.getState().directoryStructure
+  const location = path.slice(0, -1)
+  if (!filesystem.isDirectory(tree, location)) {
     const pathString = '/' + path.join('/')
     terminal.print(pathString + ': No such file or directory')
     return

@@ -5,135 +5,170 @@ const filesystem = require('../../src/filesystem')
 
 describe('#filesystem', () => {
   describe('#find', () => {
-    it('should return the subfilesystem, if `path` is a branch point', () => {
-      const source = {
-        'alpha': {},
-        'bravo': {},
-        'charly': {
-          'charly-1': {}
+    it('should return the subtree, if `path` is a branch point', () => {
+      const tree = {
+        'bin': {},
+        'etc': {},
+        'usr': {
+          'lib': {},
+          'local': {}
         }
       }
-      const result = filesystem.find(source, ['charly'])
-      const expect = {'charly-1': {}}
-
+      const path = ['usr']
+      const result = filesystem.find(tree, path)
+      const expect = {'local': {}, 'lib': {}}
       assert.deepEqual(result, expect)
     })
 
     it('should return the content, if `path` is an endpoint', () => {
-      const source = {
-        'alpha': {},
-        'bravo': {
-          'b1': 'BETA-B1'
+      const tree = {
+        'bin': {},
+        'etc': {
+          'hosts': '127.0.0.1 localhost'
         },
-        'charly': {}
+        'usr': {}
       }
-      const result = filesystem.find(source, ['bravo', 'b1'])
-      const expect = 'BETA-B1'
-
+      const path = ['etc', 'hosts']
+      const result = filesystem.find(tree, path)
+      const expect = '127.0.0.1 localhost'
       assert(result === expect)
     })
 
     it('should return `undefined`, if a point is not present', () => {
-      const source = {
-        'alpha': {},
-        'bravo': {},
-        'charly': {}
+      const tree = {
+        'bin': {},
+        'etc': {},
+        'usr': {}
       }
-      const lookup = ['yankee']
-      const result = filesystem.find(source, lookup)
-
+      const path = ['opt']
+      const result = filesystem.find(tree, path)
       assert(result === undefined)
     })
 
-    it('should also find deeply nested endpoints', () => {
-      const source = {
-        'alpha': [],
-        'bravo': {
-          'b1': {
-            'b1-1': '',
-            'b1-2': '',
-            'b1-3': 'BETA-B1-B'
+    it('should find deeply nested endpoints', () => {
+      const tree = {
+        'etc': [],
+        'usr': {
+          'local': {
+            'bin': {},
+            'lib': {},
+            'LICENSE.txt': 'Public domain'
           }
-        },
-        'charly': []
+        }
       }
-      const path = ['bravo', 'b1', 'b1-3']
-      const result = filesystem.find(source, path)
-      const expect = 'BETA-B1-B'
-
+      const path = ['usr', 'local', 'LICENSE.txt']
+      const result = filesystem.find(tree, path)
+      const expect = 'Public domain'
       assert.deepEqual(result, expect)
     })
   })
 
   describe('#isDirectory', () => {
-    it('should return true, if an item is a branch point', () => {
-      const input = {
-        'alpha': 'AAA',
-        'bravo': 'BBB'
+    it('should return true, if a node is a directory', () => {
+      const tree = {
+        'usr': {
+          'bin': {}
+        }
       }
-      assert(filesystem.isDirectory(input) === true)
+      const path = ['usr', 'bin']
+      const result = filesystem.isDirectory(tree, path)
+      assert(result === true)
     })
 
-    it('should return false, if an item is an endpoint', () => {
-      const input = 'SOMETHING'
-      assert(filesystem.isDirectory(input) === false)
+    it('should return false, if a node is not a directory (but a file)', () => {
+      const tree = {
+        'usr': {
+          'README.txt': 'Hello!'
+        }
+      }
+      const path = ['usr', 'README.txt']
+      const result = filesystem.isDirectory(tree, path)
+      assert(result === false)
+    })
+
+    it('should return false, if a node does not exist', () => {
+      const tree = {
+        'bin': {},
+        'usr': {}
+      }
+      const path = ['etc']
+      const result = filesystem.isDirectory(tree, path)
+      assert(result === false)
     })
   })
 
   describe('#isFile', () => {
-    it('should return true, if an item is an endpoint', () => {
-      const input = 'SOMETHING'
-      assert(filesystem.isFile(input) === true)
+    it('should return true, if a node is a file', () => {
+      const tree = {
+        'etc': {
+          'hosts': '8.8.8.8 GOOGLE'
+        }
+      }
+      const path = ['etc', 'hosts']
+      const result = filesystem.isFile(tree, path)
+      assert(result === true)
     })
 
-    it('should return false, if an item is a branch point', () => {
-      const input = {
-        'alpha': 'AAA',
-        'bravo': 'BBB'
+    it('should return false, if a node is not a file (but a directory)', () => {
+      const tree = {
+        'usr': {
+          'local': {}
+        }
       }
-      assert(filesystem.isFile(input) === false)
+      const path = ['usr', 'local']
+      const result = filesystem.isFile(tree, path)
+      assert(result === false)
+    })
+
+    it('should return false, if a node does not exist', () => {
+      const tree = {
+        'bin': {},
+        'usr': {}
+      }
+      const path = ['README.txt']
+      const result = filesystem.isFile(tree, path)
+      assert(result === false)
     })
   })
 
   describe('#insert', () => {
     it('should insert a new endpoint into an empty filesystem', () => {
-      const initial = {}
-      const result = filesystem.insert(initial, ['alpha'], {'a1': 'AAA111'})
+      const initialTree = {}
+      const path = ['www']
+      const node = {'index.txt': 'Hello World!'}
+      const result = filesystem.insert(initialTree, path, node)
       const expect = {
-        'alpha': {'a1': 'AAA111'}
+        'www': {'index.txt': 'Hello World!'}
       }
       assert.deepEqual(result, expect)
     })
 
     it('should leave the rest of the original filesystem intact', () => {
-      const initial = {
-        'alpha': {
-          'a1': 'AAA111'
-        },
-        'bravo': 'BBB'
-      }
-      const result = filesystem.insert(initial, ['alpha', 'a2'], 'AAA222')
-      const expect = {
-        'alpha': {
-          'a1': 'AAA111',
-          'a2': 'AAA222'
-        },
-        'bravo': 'BBB'
-      }
-      assert.deepEqual(result, expect)
-    })
-
-    it('should insert a node deeply', () => {
-      const initial = {
-        'alpha': {}
-      }
-      const result = filesystem.insert(initial, ['alpha', 'a1', 'AAA'], 'FFF111')
-      const expect = {
-        'alpha': {
-          'a1': {
-            'AAA': 'FFF111'
+      const initialTree = {
+        'etc': {
+          'hosts': '8.8.4.4 google.dns',
+          'apache2': {
+            'httpd.conf': ''
           }
-        }
+        },
+        'sbin': {
+          'md5': '172cc879a248ecb9e8f9d809a'
+        },
+        'README.txt': 'Some important information'
+      }
+      const result = filesystem.insert(initialTree, ['etc', 'nfs.conf'], '### NFS CONFIG ###')
+      const expect = {
+        'etc': {
+          'hosts': '8.8.4.4 google.dns',
+          'apache2': {
+            'httpd.conf': ''
+          },
+          'nfs.conf': '### NFS CONFIG ###'
+        },
+        'sbin': {
+          'md5': '172cc879a248ecb9e8f9d809a'
+        },
+        'README.txt': 'Some important information'
       }
       assert.deepEqual(result, expect)
     })

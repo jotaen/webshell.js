@@ -9,12 +9,14 @@ exports.find = (tree, path) => {
   }, tree)
 }
 
-exports.isFile = (obj) => {
-  return typeof obj === 'string'
+exports.isFile = (tree, path) => {
+  const branch = this.find(tree, path)
+  return typeof branch === 'string'
 }
 
-exports.isDirectory = (obj) => {
-  return typeof obj === 'object'
+exports.isDirectory = (tree, path) => {
+  const branch = this.find(tree, path)
+  return typeof branch === 'object'
 }
 
 exports.insert = (tree, path, content) => {
