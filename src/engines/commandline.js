@@ -35,8 +35,9 @@ stdin.on('data', (line) => {
   const input = splitInput(sanitizedLine)
   const buffer = createBuffer()
   if (input.command === 'pwd') pwd(input.data, buffer, store)
-  if (input.command === 'cd') cd(input.data, buffer, store)
-  if (input.command === 'mkdir') mkdir(input.data, buffer, store)
+  else if (input.command === 'cd') cd(input.data, buffer, store)
+  else if (input.command === 'mkdir') mkdir(input.data, buffer, store)
+  else buffer.print(input.command + ': command not found')
   const output = buffer.get()
   const newline = output === '' ? '' : '\n'
   process.stdout.write(output + newline)
