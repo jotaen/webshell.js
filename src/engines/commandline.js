@@ -7,6 +7,7 @@ const reducers = require('../reducers/index')
 
 const cd = require('../commands/cd')
 const mkdir = require('../commands/mkdir')
+const ls = require('../commands/ls')
 const pwd = require('../commands/pwd')
 
 const stdin = process.stdin
@@ -37,6 +38,7 @@ stdin.on('data', (line) => {
   if (input.command === 'pwd') pwd(input.data, buffer, store)
   else if (input.command === 'cd') cd(input.data, buffer, store)
   else if (input.command === 'mkdir') mkdir(input.data, buffer, store)
+  else if (input.command === 'ls') ls(input.data, buffer, store)
   else buffer.print(input.command + ': command not found')
   const output = buffer.get()
   const newline = output === '' ? '' : '\n'
