@@ -1,6 +1,6 @@
 'use strict'
 
-exports.path = (path) => {
+exports.split = (path) => {
   return path.split('/').filter((item) => {
     return item !== ''
   })

@@ -1,14 +1,14 @@
 'use strict'
 
 const filesystem = require('../filesystem')
-const process = require('../process')
+const path = require('../path')
 
 module.exports = (input, terminal, store) => {
   const tree = store.getState().directoryStructure
-  let path = []
-  if (input) path = process.path(input)
-  else path = store.getState().currentLocation
-  const targetDirectory = filesystem.find(tree, path)
+  let location = []
+  if (input) location = path.split(input)
+  else location = store.getState().currentLocation
+  const targetDirectory = filesystem.find(tree, location)
 
   Object.keys(targetDirectory).sort().map((node) => {
     terminal.print(node)

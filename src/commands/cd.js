@@ -1,14 +1,14 @@
 'use strict'
 
-const process = require('../process')
+const path = require('../path')
 const action = require('../actions')
 
 module.exports = (input, terminal, store) => {
-  const path = process.path(input)
+  const location = path.split(input)
   try {
-    store.dispatch(action.changeLocation(path))
+    store.dispatch(action.changeLocation(location))
   } catch (e) {
-    const pathString = '/' + path.join('/')
+    const pathString = '/' + location.join('/')
     if (e.message === 'NOT_FOUND') terminal.print(pathString + ': No such file or directory')
     if (e.message === 'NOT_A_DIRECTORY') terminal.print(pathString + ': Not a directory')
   }
