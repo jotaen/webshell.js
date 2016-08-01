@@ -26,4 +26,27 @@ describe('#path', () => {
       assert.deepEqual(expect, result)
     })
   })
+
+  describe('#resolve', () => {
+    it('should resolve two dots (directory up)', () => {
+      const input = ['a', '..', 'b', 'c', '..']
+      const expect = ['b']
+      const result = path.resolve(input)
+      assert.deepEqual(expect, result)
+    })
+
+    it('should “bump” at the root path', () => {
+      const input = ['..', '..', 'a']
+      const expect = ['a']
+      const result = path.resolve(input)
+      assert.deepEqual(expect, result)
+    })
+
+    it('should resolve one dot (same directory)', () => {
+      const input = ['.', 'a', '.', 'b', 'c']
+      const expect = ['a', 'b', 'c']
+      const result = path.resolve(input)
+      assert.deepEqual(expect, result)
+    })
+  })
 })
