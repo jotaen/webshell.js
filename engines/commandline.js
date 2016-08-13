@@ -15,6 +15,7 @@ const store = createStore(reducers, defaultState(reducers))
 const splitInput = (line) => {
   const parts = line.split(' ')
   return {
+    raw: line,
     command: parts.shift(),
     args: parts
   }
@@ -26,19 +27,25 @@ const prompt = () => {
   process.stdout.write(ps1)
 }
 
+let nextCommand
+
 stdin.on('data', (line) => {
   const sanitizedLine = line.replace(/(\r\n|\n|\r)/gm, '')
   const input = splitInput(sanitizedLine)
   const buffer = createBuffer()
-  if (typeof commands[input.command] === 'function') {
-    commands[input.command](input.args, buffer, store)
-  } else {
+  if (typeof nextCommand === 'function') {
+    nextCommand = nextCommand(input.raw, buffer, store)
+  } else if (typeof commands[input.command] === 'function') {
+    nextCommand = commands[input.command](input.args, buffer, store)
+  } else if (input.raw !== '') {
     buffer.print(input.command + ': command not found')
   }
   const output = buffer.get()
   const newline = output === '' ? '' : '\n'
   process.stdout.write(output + newline)
-  prompt()
+  if (typeof nextCommand !== 'function') {
+    prompt()
+  }
 })
 
 prompt()
