@@ -9,7 +9,7 @@ describe('#ls (list)', () => {
   it('should list all items of the current location', () => {
     const store = predefinedStore()
     const buffer = createBuffer()
-    ls(undefined, buffer, store)
+    ls([], buffer, store)
     const output = buffer.get()
     const expect = 'bin/\netc/\nusr/\n'
     assert.strictEqual(output, expect)
@@ -19,7 +19,7 @@ describe('#ls (list)', () => {
     const store = predefinedStore()
     const buffer = createBuffer()
     const input = '/bin'
-    ls(input, buffer, store)
+    ls([input], buffer, store)
     const output = buffer.get()
     const expect = 'date\n'
     assert.strictEqual(output, expect)
@@ -29,7 +29,7 @@ describe('#ls (list)', () => {
     const store = predefinedStore()
     const buffer = createBuffer()
     const input = '/bin'
-    ls(input, buffer, store)
+    ls([input], buffer, store)
     const output = buffer.get()
     const expect = 'date\n'
     assert.strictEqual(output, expect)
@@ -39,7 +39,7 @@ describe('#ls (list)', () => {
     const store = predefinedStore()
     const buffer = createBuffer()
     const input = '/etc'
-    ls(input, buffer, store)
+    ls([input], buffer, store)
     const output = buffer.get()
     const expect = 'hosts\npasswd\n'
     assert.strictEqual(output, expect)

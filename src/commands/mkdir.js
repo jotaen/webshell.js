@@ -4,9 +4,9 @@ const makePathFromString = require('../makePathFromString')
 const action = require('../actions')
 const filesystem = require('../filesystem')
 
-module.exports = (input, terminal, store) => {
+module.exports = (args, terminal, store) => {
   const currentLocation = store.getState().currentLocation
-  const path = makePathFromString(input, currentLocation)
+  const path = makePathFromString(args[0], currentLocation)
   const tree = store.getState().directoryStructure
   const destination = path.slice(0, -1)
   if (!filesystem.isDirectory(tree, destination)) {

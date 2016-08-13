@@ -3,9 +3,9 @@
 const makePathFromString = require('../makePathFromString')
 const action = require('../actions')
 
-module.exports = (input, terminal, store) => {
+module.exports = (args, terminal, store) => {
   const currentLocation = store.getState().currentLocation
-  const path = makePathFromString(input, currentLocation)
+  const path = makePathFromString(args[0], currentLocation)
   try {
     store.dispatch(action.changeLocation(path))
   } catch (e) {

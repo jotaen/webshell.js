@@ -17,10 +17,10 @@ stdin.setEncoding('utf8')
 const store = createStore(reducers, initialState(reducers))
 
 const splitInput = (line) => {
-  const args = line.split(' ')
+  const parts = line.split(' ')
   return {
-    command: args.shift(),
-    data: args.join(' ')
+    command: parts.shift(),
+    args: parts
   }
 }
 
@@ -30,18 +30,19 @@ const prompt = () => {
   process.stdout.write(ps1)
 }
 
-prompt()
 stdin.on('data', (line) => {
   const sanitizedLine = line.replace(/(\r\n|\n|\r)/gm, '')
   const input = splitInput(sanitizedLine)
   const buffer = createBuffer()
-  if (input.command === 'pwd') pwd(input.data, buffer, store)
-  else if (input.command === 'cd') cd(input.data, buffer, store)
-  else if (input.command === 'mkdir') mkdir(input.data, buffer, store)
-  else if (input.command === 'ls') ls(input.data, buffer, store)
+  if (input.command === 'pwd') pwd(input.args, buffer, store)
+  else if (input.command === 'cd') cd(input.args, buffer, store)
+  else if (input.command === 'mkdir') mkdir(input.args, buffer, store)
+  else if (input.command === 'ls') ls(input.args, buffer, store)
   else buffer.print(input.command + ': command not found')
   const output = buffer.get()
   const newline = output === '' ? '' : '\n'
   process.stdout.write(output + newline)
   prompt()
 })
+
+prompt()
