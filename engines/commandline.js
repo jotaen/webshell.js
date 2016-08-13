@@ -1,6 +1,6 @@
 'use strict'
 
-const initialState = require('../src/initialState')
+const defaultState = require('../src/defaultState')
 const createBuffer = require('../test/buffer')
 const createStore = require('redux').createStore
 const reducers = require('../src/reducers/index')
@@ -10,7 +10,7 @@ const stdin = process.stdin
 stdin.resume()
 stdin.setEncoding('utf8')
 
-const store = createStore(reducers, initialState(reducers))
+const store = createStore(reducers, defaultState(reducers))
 
 const splitInput = (line) => {
   const parts = line.split(' ')
