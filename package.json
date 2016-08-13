@@ -1,7 +1,7 @@
 {
   "scripts": {
     "test": "mocha",
-    "cli": "node src/engines/commandline.js",
+    "cli": "node engines/commandline.js",
     "linter": "eslint .",
     "coverage": "istanbul cover _mocha",
     "pretest": "npm run --silent linter"

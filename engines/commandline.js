@@ -1,10 +1,10 @@
 'use strict'
 
-const initialState = require('../initialState')
-const createBuffer = require('../../test/buffer')
+const initialState = require('../src/initialState')
+const createBuffer = require('../test/buffer')
 const createStore = require('redux').createStore
-const reducers = require('../reducers/index')
-const commands = require('../commands/index')
+const reducers = require('../src/reducers/index')
+const commands = require('../src/commands/index')
 
 const stdin = process.stdin
 stdin.resume()
