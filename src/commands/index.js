@@ -6,5 +6,6 @@ module.exports = {
   debug: require('./debug'),
   ls: require('./ls'),
   mkdir: require('./mkdir'),
-  pwd: require('./pwd')
+  pwd: require('./pwd'),
+  whoami: require('./whoami')
 }
