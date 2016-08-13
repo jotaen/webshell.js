@@ -3,11 +3,11 @@
 const filesystem = require('../filesystem')
 const makePathFromString = require('../makePathFromString')
 
-module.exports = (args, terminal, store) => {
+module.exports = (input, terminal, store) => {
   const tree = store.getState().directoryStructure
   const currentLocation = store.getState().currentLocation
   let location = []
-  if (args[0]) location = makePathFromString(args[0], currentLocation)
+  if (input) location = makePathFromString(input, currentLocation)
   else location = store.getState().currentLocation
   const targetDirectory = filesystem.find(tree, location)
 

@@ -9,7 +9,7 @@ describe('#pwd (print working directory)', () => {
   it('should print out the current directory', () => {
     const buffer = createBuffer()
     const store = predefinedStore()
-    pwd([], buffer, store)
+    pwd('', buffer, store)
     const result = buffer.get()
     const expect = '/'
     assert(result === expect)

@@ -10,7 +10,7 @@ describe('#cd (change directory)', () => {
     const store = predefinedStore()
     const buffer = createBuffer()
     const newPath = '/usr/local/'
-    cd([newPath], buffer, store)
+    cd(newPath, buffer, store)
     const output = buffer.get()
     const result = store.getState().currentLocation
     const expect = ['usr', 'local']
@@ -22,7 +22,7 @@ describe('#cd (change directory)', () => {
     const store = predefinedStore()
     const buffer = createBuffer()
     const newPath = '////usr///local//'
-    cd([newPath], buffer, store)
+    cd(newPath, buffer, store)
     const output = buffer.get()
     const result = store.getState().currentLocation
     const expect = ['usr', 'local']
@@ -34,7 +34,7 @@ describe('#cd (change directory)', () => {
     const store = predefinedStore()
     const buffer = createBuffer()
     const newPath = '/path/that/does/not/exist'
-    cd([newPath], buffer, store)
+    cd(newPath, buffer, store)
     const output = buffer.get()
     assert(/No such file or directory/.test(output))
     assert.deepEqual(store.getState().currentLocation, [])
@@ -44,7 +44,7 @@ describe('#cd (change directory)', () => {
     const store = predefinedStore()
     const buffer = createBuffer()
     const newPath = '/etc/hosts'
-    cd([newPath], buffer, store)
+    cd(newPath, buffer, store)
     const output = buffer.get()
     assert(/Not a directory/.test(output))
     assert.deepEqual(store.getState().currentLocation, [])
