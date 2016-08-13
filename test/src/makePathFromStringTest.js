@@ -12,14 +12,14 @@ describe('#path', () => {
   })
 
   it('should resolve two dots in absolute path', () => {
-    const absolute = ['a', '..', 'b', 'c', '..']
-    const expect = ['b']
+    const absolute = '/a/b/c/../..'
+    const expect = ['a']
     const result = makePathFromString(absolute, [])
     assert.deepEqual(expect, result)
   })
 
   it('should resolve two dots in relative path', () => {
-    const relative = ['..', '..']
+    const relative = '../..'
     const reference = ['a', 'b', 'c']
     const expect = ['a']
     const result = makePathFromString(relative, reference)
@@ -27,14 +27,14 @@ describe('#path', () => {
   })
 
   it('should “bump” at root in an absolute path', () => {
-    const absolute = ['..', '..', 'a']
+    const absolute = '../../../a'
     const expect = ['a']
     const result = makePathFromString(absolute, [])
     assert.deepEqual(expect, result)
   })
 
   it('should “bump” at root in a relative path', () => {
-    const absolute = ['..', '..', '..', '..', '..', '..', '..', '..', 'a', 'b']
+    const absolute = '../../../../../../../../a/b'
     const reference = ['a', 'b', 'c']
     const expect = ['a', 'b']
     const result = makePathFromString(absolute, reference)
@@ -42,14 +42,14 @@ describe('#path', () => {
   })
 
   it('should resolve one dot in absolute path', () => {
-    const absolute = ['.', 'a', '.', 'b', 'c']
+    const absolute = './a/./b/c'
     const expect = ['a', 'b', 'c']
     const result = makePathFromString(absolute, [])
     assert.deepEqual(expect, result)
   })
 
   it('should resolve one dot in relative path', () => {
-    const relative = ['.', '.', 'd']
+    const relative = '././d'
     const reference = ['a', 'b', 'c']
     const expect = ['a', 'b', 'c', 'd']
     const result = makePathFromString(relative, reference)
@@ -57,7 +57,7 @@ describe('#path', () => {
   })
 
   it('should resolve a complicated relative path correctly', () => {
-    const relative = ['..', '.', 'f', '..', '..', '..', 'd', '.', '..', '..', '..', '..', '..', '..', '..', 'a', 'b', '.']
+    const relative = '.././f/../../../d/./../../../../../../../a/b/.'
     const reference = ['a', 'b', 'c', 'd', 'e', 'f']
     const expect = ['a', 'b']
     const result = makePathFromString(relative, reference)

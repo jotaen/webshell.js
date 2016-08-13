@@ -1,6 +1,6 @@
 'use strict'
 
-const sanitize = (pathString) => {
+const slashSplit = (pathString) => {
   return pathString.split('/').filter((node) => {
     return node !== ''
   })
@@ -17,8 +17,9 @@ const resolveDots = (path, referencePath) => {
 const isAbsolutePath = (pathString) => (pathString.substr(0, 1) === '/')
 
 module.exports = (pathString, referenceLocation) => {
-  let ref = []
-  if (!isAbsolutePath(pathString)) ref = ref.concat(referenceLocation)
-  const path = sanitize(pathString)
-  return resolveDots(path, ref)
+  const path = slashSplit(pathString)
+  if (isAbsolutePath(pathString)) {
+    return resolveDots(path, [])
+  }
+  return resolveDots(path, referenceLocation.slice(0))
 }
