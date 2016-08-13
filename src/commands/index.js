@@ -1,9 +1,10 @@
 'use strict'
 
 module.exports = {
+  cat: require('./cat'),
   cd: require('./cd'),
-  mkdir: require('./mkdir'),
+  debug: require('./debug'),
   ls: require('./ls'),
-  pwd: require('./pwd'),
-  debug: require('./debug')
+  mkdir: require('./mkdir'),
+  pwd: require('./pwd')
 }
