@@ -15,9 +15,8 @@ const store = createStore(reducers, defaultState(reducers))
 const splitInput = (line) => {
   const parts = line.split(' ')
   return {
-    raw: line,
     command: parts.shift(),
-    args: parts
+    arg: parts.join(' ')
   }
 }
 
@@ -34,10 +33,10 @@ stdin.on('data', (line) => {
   const input = splitInput(sanitizedLine)
   const buffer = createBuffer()
   if (typeof nextCommand === 'function') {
-    nextCommand = nextCommand(input.raw, buffer, store)
+    nextCommand = nextCommand(input.arg, buffer, store)
   } else if (typeof commands[input.command] === 'function') {
-    nextCommand = commands[input.command](input.args, buffer, store)
-  } else if (input.raw !== '') {
+    nextCommand = commands[input.command](input.arg, buffer, store)
+  } else if (input.command !== '') {
     buffer.print(input.command + ': command not found')
   }
   const output = buffer.get()

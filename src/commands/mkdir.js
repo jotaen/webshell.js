@@ -7,7 +7,7 @@ const filesystem = require('../filesystem')
 module.exports = (input, terminal, store) => {
   const currentLocation = store.getState().currentLocation
   const path = makePathFromString(input, currentLocation)
-  const tree = store.getState().directoryStructure
+  const tree = store.getState().fileTree
   const destination = path.slice(0, -1)
   if (!filesystem.isDirectory(tree, destination)) {
     const pathString = '/' + path.join('/')

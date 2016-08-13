@@ -11,7 +11,7 @@ describe('#mkdir (make directory)', () => {
     const store = predefinedStore()
     const newPath = '/temp'
     mkdir(newPath, createBuffer(), store)
-    const result = filesystem.find(store.getState().directoryStructure, ['temp'])
+    const result = filesystem.find(store.getState().fileTree, ['temp'])
     assert.deepEqual(result, {})
   })
 
@@ -19,7 +19,7 @@ describe('#mkdir (make directory)', () => {
     const store = predefinedStore()
     const newPath = '/usr/local/bin'
     mkdir(newPath, createBuffer(), store)
-    const result = filesystem.find(store.getState().directoryStructure, ['usr', 'local', 'bin'])
+    const result = filesystem.find(store.getState().fileTree, ['usr', 'local', 'bin'])
     assert.deepEqual(result, {})
   })
 

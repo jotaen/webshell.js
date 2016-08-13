@@ -55,17 +55,17 @@ describe('#filesystem', () => {
           }
         }
       }
-      assert.deepEqual(store.getState().directoryStructure, expect)
+      assert.deepEqual(store.getState().fileTree, expect)
     })
 
     it('should not overwrite existing directories', () => {
       const store = predefinedStore()
-      const original = Object.assign({}, store.getState().directoryStructure)
+      const original = Object.assign({}, store.getState().fileTree)
       const path = ['usr', 'local']
       assert.throws(() => {
         store.dispatch(action.createDirectory(path))
       }, /ALREADY_EXISTS/)
-      assert.deepEqual(store.getState().directoryStructure, original)
+      assert.deepEqual(store.getState().fileTree, original)
     })
   })
 
@@ -91,17 +91,17 @@ describe('#filesystem', () => {
           }
         }
       }
-      assert.deepEqual(store.getState().directoryStructure, expect)
+      assert.deepEqual(store.getState().fileTree, expect)
     })
 
     it('should not overwrite existing files', () => {
       const store = predefinedStore()
-      const original = Object.assign({}, store.getState().directoryStructure)
+      const original = Object.assign({}, store.getState().fileTree)
       const path = ['etc', 'hosts']
       assert.throws(() => {
         store.dispatch(action.createFile(path))
       }, /ALREADY_EXISTS/)
-      assert.deepEqual(store.getState().directoryStructure, original)
+      assert.deepEqual(store.getState().fileTree, original)
     })
   })
 })

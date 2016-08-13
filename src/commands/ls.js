@@ -4,7 +4,7 @@ const filesystem = require('../filesystem')
 const makePathFromString = require('../makePathFromString')
 
 module.exports = (input, terminal, store) => {
-  const tree = store.getState().directoryStructure
+  const tree = store.getState().fileTree
   const currentLocation = store.getState().currentLocation
   let location = []
   if (input) location = makePathFromString(input, currentLocation)
