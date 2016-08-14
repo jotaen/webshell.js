@@ -3,6 +3,14 @@
 const createBuffer = require('../buffer/textBuffer.js')
 const createEngine = require('../engine.js')
 
+const prompt = (buffer, state) => {
+  buffer
+    .color('green').print(state.currentUser)
+    .color('light-gray').print('@')
+    .color('yellow').print('/' + state.currentLocation.join('/'))
+    .color('red').print('$')
+}
+
 module.exports = (stdin, stdout, initialState) => {
   stdin.resume()
   stdin.setEncoding('utf8')
@@ -11,15 +19,18 @@ module.exports = (stdin, stdout, initialState) => {
 
   stdin.on('data', (line) => {
     const input = line.replace(/(\r\n|\n|\r)/gm, '')
-    engine.execute(input, buffer)
+    const state = engine(input, buffer)
     const response = buffer.flush()
     stdout.write(response)
-    engine.prompt(buffer)
+    prompt(buffer, state)
+    const ps1 = buffer.flush()
     let newline = '\n'
     if (response === '') newline = ''
-    stdout.write(newline + buffer.flush() + ' ')
+    stdout.write(newline + ps1 + ' ')
   })
 
-  engine.prompt(buffer)
-  stdout.write(buffer.flush() + ' ')
+  const state = engine('', buffer)
+  prompt(buffer, state)
+  const ps1 = buffer.flush()
+  stdout.write(ps1 + ' ')
 }

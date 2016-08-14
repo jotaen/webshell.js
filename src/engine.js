@@ -17,24 +17,16 @@ module.exports = (initialState) => {
   const state = Object.assign(defaultState(), initialState)
   const store = createStore(reducers, state)
   let nextCommand
-  return {
-    execute: (line, buffer) => {
-      const statement = splitStatement(line)
-      buffer.reset()
-      if (typeof nextCommand === 'function') {
-        nextCommand = nextCommand(statement.input, buffer, store)
-      } else if (typeof commands[statement.command] === 'function') {
-        nextCommand = commands[statement.command](statement.input, buffer, store)
-      } else if (statement.command !== '') {
-        buffer.print(statement.command + ': command not found')
-      }
-    },
-    prompt: (buffer) => {
-      buffer
-        .color('green').print(store.getState().currentUser)
-        .color('light-gray').print('@')
-        .color('yellow').print('/' + store.getState().currentLocation.join('/'))
-        .color('red').print('$')
+  return (line, buffer) => {
+    const statement = splitStatement(line)
+    buffer.reset()
+    if (typeof nextCommand === 'function') {
+      nextCommand = nextCommand(statement.input, buffer, store)
+    } else if (typeof commands[statement.command] === 'function') {
+      nextCommand = commands[statement.command](statement.input, buffer, store)
+    } else if (statement.command !== '') {
+      buffer.print(statement.command + ': command not found')
     }
+    return store.getState()
   }
 }
