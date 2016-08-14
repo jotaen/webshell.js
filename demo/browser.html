@@ -45,7 +45,7 @@
 
     <script type="text/javascript">
       const initialState = {
-        currentUser: 'jotaen',
+        currentUser: 'browser',
         fileTree: {
           var: {
             www: {}
@@ -54,14 +54,6 @@
         currentLocation: ['var', 'www']
       }
       const webshell = createWebshell('webshell', initialState)
-      const command = 'webserver start --port=80'
-      let response = 'Starting webserver on port 80...'
-      response += '\n\nUncaught UrlNotFound-Exception'
-      response += '\n  at: module webserver'
-      response += '\n  at: function request(url)'
-      response += '\n      `url`: ' + window.location
-      response += '\n\nExit process with status 404'
-      webshell.write(command, response)
     </script>
   </body>
 </html>

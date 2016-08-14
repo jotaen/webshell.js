@@ -48,6 +48,7 @@ module.exports = (defaultStyle) => {
       weight: 'normal',
       style: 'normal'
     }, defaultStyle)
+    return buffer
   }
 
   buffer.reset()

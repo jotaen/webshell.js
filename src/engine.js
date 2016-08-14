@@ -1,9 +1,9 @@
 'use strict'
 
-const defaultState = require('../defaultState')
+const defaultState = require('./defaultState')
 const createStore = require('redux').createStore
-const reducers = require('../reducers/index')
-const commands = require('../commands/index')
+const reducers = require('./reducers/index')
+const commands = require('./commands/index')
 
 const splitStatement = (line) => {
   const parts = line.split(' ')
@@ -28,15 +28,13 @@ module.exports = (initialState) => {
       } else if (statement.command !== '') {
         buffer.print(statement.command + ': command not found')
       }
-      return buffer.flush()
     },
     prompt: (buffer) => {
-      return buffer
+      buffer
         .color('green').print(store.getState().currentUser)
         .color('light-gray').print('@')
         .color('yellow').print('/' + store.getState().currentLocation.join('/'))
         .color('red').print('$')
-        .flush()
     }
   }
 }

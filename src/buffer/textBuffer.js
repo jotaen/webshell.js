@@ -9,10 +9,15 @@ module.exports = () => {
     return buffer
   }
 
-  buffer.flush = () => storage
+  buffer.flush = () => {
+    const oldStorage = storage
+    storage = ''
+    return oldStorage
+  }
   buffer.color = () => buffer
   buffer.style = () => buffer
   buffer.weight = () => buffer
+  buffer.reset = () => buffer
 
   return buffer
 }
