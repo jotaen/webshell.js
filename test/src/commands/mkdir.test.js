@@ -3,7 +3,7 @@
 const assert = require('assert')
 const mkdir = require('../../../src/commands/mkdir')
 const filesystem = require('../../../src/filesystem')
-const createBuffer = require('../../buffer')
+const createBuffer = require('../../../src/buffer/textBuffer.js')
 const predefinedStore = require('../../predefinedStore')
 
 describe('#mkdir (make directory)', () => {

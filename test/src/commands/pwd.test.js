@@ -2,7 +2,7 @@
 
 const assert = require('assert')
 const pwd = require('../../../src/commands/pwd')
-const createBuffer = require('../../buffer')
+const createBuffer = require('../../../src/buffer/textBuffer.js')
 const predefinedStore = require('../../predefinedStore')
 
 describe('#pwd (print working directory)', () => {

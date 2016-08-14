@@ -2,7 +2,7 @@
 
 const assert = require('assert')
 const whoami = require('../../../src/commands/whoami')
-const createBuffer = require('../../buffer')
+const createBuffer = require('../../../src/buffer/textBuffer.js')
 const predefinedStore = require('../../predefinedStore')
 
 describe('#whoami (who am i)', () => {

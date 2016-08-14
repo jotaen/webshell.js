@@ -2,7 +2,7 @@
 
 const assert = require('assert')
 const cd = require('../../../src/commands/cd')
-const createBuffer = require('../../buffer')
+const createBuffer = require('../../../src/buffer/textBuffer.js')
 const predefinedStore = require('../../predefinedStore')
 
 describe('#cd (change directory)', () => {

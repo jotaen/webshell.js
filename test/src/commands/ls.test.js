@@ -2,7 +2,7 @@
 
 const assert = require('assert')
 const ls = require('../../../src/commands/ls')
-const createBuffer = require('../../buffer')
+const createBuffer = require('../../../src/buffer/textBuffer.js')
 const predefinedStore = require('../../predefinedStore')
 
 describe('#ls (list)', () => {

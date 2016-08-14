@@ -1,7 +1,7 @@
 'use strict'
 
 const defaultState = require('../src/defaultState')
-const createBuffer = require('../test/buffer')
+const createBuffer = require('../src/buffer/textBuffer.js')
 const createStore = require('redux').createStore
 const reducers = require('../src/reducers/index')
 const commands = require('../src/commands/index')

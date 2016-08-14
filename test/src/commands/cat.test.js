@@ -2,7 +2,7 @@
 
 const assert = require('assert')
 const cat = require('../../../src/commands/cat')
-const createBuffer = require('../../buffer')
+const createBuffer = require('../../../src/buffer/textBuffer.js')
 const predefinedStore = require('../../predefinedStore')
 
 describe('#cat (concat, echo files)', () => {
