@@ -3,7 +3,7 @@
 const webshell = require('../src/repls/commandline')
 
 const initialState = {
-  currentUser: 'cli',
+  sessions: ['cli'],
   fileTree: {
     var: {
       www: {}

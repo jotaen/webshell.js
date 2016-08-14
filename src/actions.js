@@ -17,7 +17,7 @@ exports.createFile = (path, content) => ({
   content: content
 })
 
-exports.switchUser = (userName) => ({
-  type: 'SWITCH_USER',
+exports.login = (userName) => ({
+  type: 'LOGIN',
   userName
 })

@@ -3,7 +3,7 @@
 const assert = require('assert')
 const makePathFromString = require('../../src/makePathFromString')
 
-describe('#path', () => {
+describe('#makePathFromString', () => {
   it('should ignore double/triple/… slashes', () => {
     const input = '///harr//////harrrr/harrrrrrrr////////////'
     const expect = ['harr', 'harrrr', 'harrrrrrrr']

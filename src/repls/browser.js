@@ -1,11 +1,12 @@
 'use strict'
 
-const createEngine = require('../engine.js')
-const createBuffer = require('../buffer/htmlBuffer.js')
+const createEngine = require('../engine')
+const createBuffer = require('../buffer/htmlBuffer')
+const user = require('../user')
 
 const prompt = (buffer, state) => {
   buffer
-    .color('green').print(state.currentUser)
+    .color('green').print(user.name(state.sessions))
     .color('light-gray').print('@')
     .color('yellow').print('/' + state.currentLocation.join('/'))
     .color('red').print('$')

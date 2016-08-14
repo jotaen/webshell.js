@@ -2,10 +2,11 @@
 
 const createBuffer = require('../buffer/textBuffer.js')
 const createEngine = require('../engine.js')
+const user = require('../user')
 
 const prompt = (buffer, state) => {
   buffer
-    .color('green').print(state.currentUser)
+    .color('green').print(user.name(state.sessions))
     .color('light-gray').print('@')
     .color('yellow').print('/' + state.currentLocation.join('/'))
     .color('red').print('$')

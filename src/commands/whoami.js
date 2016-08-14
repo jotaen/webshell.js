@@ -1,6 +1,8 @@
 'use strict'
 
+const user = require('../user')
+
 module.exports = (input, terminal, store) => {
-  const user = store.getState().currentUser
-  terminal.print(user)
+  const userName = user.name(store.getState().sessions)
+  terminal.print(userName)
 }
