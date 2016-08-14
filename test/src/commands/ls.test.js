@@ -22,6 +22,14 @@ describe('#ls (list)', () => {
     assert.strictEqual(output, expect)
   })
 
+  it('should print error, if specified location does not exist', () => {
+    const env = createEnv()
+    const input = '/this/directory/does/not/exist'
+    ls(input, env.buffer, env.frozenState)
+    const output = env.buffer.flush()
+    assert(/No such file or directory/.test(output))
+  })
+
   it('should add trailing slashes to directories', () => {
     const env = createEnv()
     const input = '/bin'

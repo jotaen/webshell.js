@@ -9,9 +9,15 @@ module.exports = (input, terminal, state) => {
   let location = []
   if (input) location = makePathFromString(input, currentLocation)
   else location = currentLocation
-  const targetDirectory = filesystem.find(tree, location)
 
-  Object.keys(targetDirectory).sort().map((node) => {
+  if (!filesystem.isDirectory(tree, location)) {
+    const pathString = '/' + location.join('/')
+    terminal.print('ls: ' + pathString + ': No such file or directory')
+    return
+  }
+
+  const targetDirectory = filesystem.find(tree, location)
+  Object.keys(targetDirectory).sort().forEach((node) => {
     terminal.print(node)
     if (typeof tree[node] === 'object') terminal.print('/')
     terminal.print('\n')
