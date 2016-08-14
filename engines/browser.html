@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>webshell.js</title>
+    <script src="../webshell.js"></script>
+    <style media="screen">
+      * {
+        font-family: monospace;
+        font-size: 18px;
+      }
+      html {
+        background-color: #000;
+        color: #fff;
+      }
+      .prompt {
+        float: left;
+        margin-right: 0.5em;
+      }
+      .input {
+        display: flex;
+        outline: none;
+      }
+      .response {
+        clear: both;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="webshell">
+      <div class="prompt">jotaen@/$</div>
+      <div class="input" id="webshell-current" contentEditable="true" onkeypress="return webshell.process(event)"></div>
+    </div>
+
+    <script type="text/javascript">
+      const webshell = createWebshell('webshell')
+    </script>
+  </body>
+</html>
