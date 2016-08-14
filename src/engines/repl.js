@@ -1,7 +1,6 @@
 'use strict'
 
 const defaultState = require('../defaultState')
-const createBuffer = require('../buffer/textBuffer.js')
 const createStore = require('redux').createStore
 const reducers = require('../reducers/index')
 const commands = require('../commands/index')
@@ -18,8 +17,7 @@ module.exports = () => {
   const store = createStore(reducers, defaultState(reducers))
   let nextCommand
   return {
-    execute: (line) => {
-      const buffer = createBuffer()
+    execute: (line, buffer) => {
       const statement = splitStatement(line)
       if (typeof nextCommand === 'function') {
         nextCommand = nextCommand(statement.input, buffer, store)
@@ -28,12 +26,19 @@ module.exports = () => {
       } else if (statement.command !== '') {
         buffer.print(statement.command + ': command not found')
       }
-      return buffer.get()
+      return buffer.flush()
     },
-    prompt: () => {
-      const user = store.getState().currentUser
-      const location = '/' + store.getState().currentLocation.join('/')
-      return user + '@' + location + '$'
+    prompt: (buffer) => {
+      return buffer
+        .color('red')
+        .print(store.getState().currentUser)
+        .color('white')
+        .print('@')
+        .color('green')
+        .print('/' + store.getState().currentLocation.join('/'))
+        .color('white')
+        .print('$')
+        .flush()
     }
   }
 }
