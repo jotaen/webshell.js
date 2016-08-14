@@ -7,5 +7,6 @@ module.exports = {
   ls: require('./ls'),
   mkdir: require('./mkdir'),
   pwd: require('./pwd'),
+  su: require('./su'),
   whoami: require('./whoami')
 }

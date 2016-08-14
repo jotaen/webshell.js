@@ -2,17 +2,22 @@
 
 exports.changeLocation = (path) => ({
   type: 'CHANGE_LOCATION',
-  path: path
+  path
 })
 
 exports.createDirectory = (path) => ({
   type: 'CREATE_PATH',
-  path: path,
+  path,
   content: {}
 })
 
 exports.createFile = (path, content) => ({
   type: 'CREATE_PATH',
-  path: path,
+  path,
   content: content
+})
+
+exports.switchUser = (userName) => ({
+  type: 'SWITCH_USER',
+  userName
 })
