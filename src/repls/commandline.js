@@ -2,15 +2,7 @@
 
 const createBuffer = require('../buffer/textBuffer.js')
 const createEngine = require('../engine.js')
-const stack = require('../stack')
-
-const prompt = (buffer, state) => {
-  buffer
-    .color('green').print(stack.latest(state.sessions))
-    .color('light-gray').print('@')
-    .color('yellow').print('/' + state.currentLocation.join('/'))
-    .color('red').print('$')
-}
+const util = require('./util')
 
 module.exports = (stdin, stdout, initialState) => {
   stdin.resume()
@@ -23,7 +15,7 @@ module.exports = (stdin, stdout, initialState) => {
     const state = engine(input, buffer)
     const response = buffer.flush()
     stdout.write(response)
-    prompt(buffer, state)
+    util.prompt(buffer, state)
     const ps1 = buffer.flush()
     let newline = '\n'
     if (response === '') newline = ''
@@ -31,7 +23,7 @@ module.exports = (stdin, stdout, initialState) => {
   })
 
   const state = engine('', buffer)
-  prompt(buffer, state)
+  util.prompt(buffer, state)
   const ps1 = buffer.flush()
-  stdout.write(ps1 + ' ')
+  stdout.write(ps1 + '$ ')
 }

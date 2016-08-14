@@ -71,13 +71,14 @@
 
     <script type="text/javascript">
       const initialState = {
-        sessions: ['browser'],
+        currentLocation: ['var', 'www'],
         fileTree: {
           var: {
             www: {}
           }
         },
-        currentLocation: ['var', 'www']
+        lastLogin: new Date(),
+        sessions: ['browser']
       }
       const webshell = createWebshell('webshell', initialState)
     </script>

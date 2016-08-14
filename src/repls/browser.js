@@ -2,14 +2,7 @@
 
 const createEngine = require('../engine')
 const createBuffer = require('../buffer/htmlBuffer')
-const stack = require('../stack')
-
-const prompt = (buffer, state) => {
-  buffer
-    .color('green').print(stack.latest(state.sessions))
-    .color('light-gray').print('@')
-    .color('yellow').print('/' + state.currentLocation.join('/'))
-}
+const util = require('./util')
 
 module.exports = (elementId, initialState) => {
   const engine = createEngine(initialState)
@@ -30,15 +23,21 @@ module.exports = (elementId, initialState) => {
     inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__input webshell__text">' + input + '</div>')
     inputElement.innerHTML = ''
     inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__response webshell__text">' + response + '</div>')
-    prompt(buffer, state)
+    util.prompt(buffer, state)
     const ps1 = buffer.flush()
     inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__prompt">' + ps1 + '</div>')
     webshellElement.scrollTop = webshellElement.scrollHeight
     return false
   }
 
+  // Get initial state:
   const state = engine('', buffer)
-  prompt(buffer, state)
+
+  util.welcome(buffer, state)
+  const hello = buffer.flush()
+  inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__response webshell__text">' + hello + '</div>')
+
+  util.prompt(buffer, state)
   const ps1 = buffer.flush()
   inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__prompt">' + ps1 + '</div>')
   inputElement.focus()
