@@ -10,7 +10,7 @@ describe('#whoami (who am i)', () => {
     const buffer = createBuffer()
     const store = predefinedStore()
     whoami('', buffer, store)
-    const result = buffer.get()
+    const result = buffer.flush()
     const expect = 'root'
     assert.strictEqual(result, expect)
   })

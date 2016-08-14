@@ -28,7 +28,7 @@ describe('#mkdir (make directory)', () => {
     const store = predefinedStore()
     const newPath = '/usr'
     mkdir(newPath, buffer, store)
-    const output = buffer.get()
+    const output = buffer.flush()
     assert(/already exist/.test(output))
   })
 
@@ -37,7 +37,7 @@ describe('#mkdir (make directory)', () => {
     const store = predefinedStore()
     const newPath = '/var/www'
     mkdir(newPath, buffer, store)
-    const output = buffer.get()
+    const output = buffer.flush()
     assert(/No such file or directory/.test(output))
   })
 })

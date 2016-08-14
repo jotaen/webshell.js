@@ -10,7 +10,7 @@ describe('#ls (list)', () => {
     const store = predefinedStore()
     const buffer = createBuffer()
     ls('', buffer, store)
-    const output = buffer.get()
+    const output = buffer.flush()
     const expect = 'bin/\netc/\nusr/\n'
     assert.strictEqual(output, expect)
   })
@@ -20,7 +20,7 @@ describe('#ls (list)', () => {
     const buffer = createBuffer()
     const input = '/bin'
     ls(input, buffer, store)
-    const output = buffer.get()
+    const output = buffer.flush()
     const expect = 'date\n'
     assert.strictEqual(output, expect)
   })
@@ -30,7 +30,7 @@ describe('#ls (list)', () => {
     const buffer = createBuffer()
     const input = '/bin'
     ls(input, buffer, store)
-    const output = buffer.get()
+    const output = buffer.flush()
     const expect = 'date\n'
     assert.strictEqual(output, expect)
   })
@@ -40,7 +40,7 @@ describe('#ls (list)', () => {
     const buffer = createBuffer()
     const input = '/etc'
     ls(input, buffer, store)
-    const output = buffer.get()
+    const output = buffer.flush()
     const expect = 'hosts\npasswd\n'
     assert.strictEqual(output, expect)
   })

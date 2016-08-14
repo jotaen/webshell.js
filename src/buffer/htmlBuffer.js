@@ -22,10 +22,6 @@ module.exports = (defaultStyle) => {
     return buffer
   }
 
-  buffer.get = () => {
-    return storage
-  }
-
   buffer.flush = () => {
     const oldStorage = storage
     storage = ''

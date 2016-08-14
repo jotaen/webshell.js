@@ -6,15 +6,13 @@ module.exports = () => {
 
   buffer.print = (output) => {
     storage += output
+    return buffer
   }
 
-  buffer.get = () => {
-    return storage
-  }
-
-  buffer.clear = () => {
-    storage = ''
-  }
+  buffer.flush = () => storage
+  buffer.color = () => buffer
+  buffer.style = () => buffer
+  buffer.weight = () => buffer
 
   return buffer
 }

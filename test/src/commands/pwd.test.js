@@ -10,7 +10,7 @@ describe('#pwd (print working directory)', () => {
     const buffer = createBuffer()
     const store = predefinedStore()
     pwd('', buffer, store)
-    const result = buffer.get()
+    const result = buffer.flush()
     const expect = '/'
     assert(result === expect)
   })

@@ -39,7 +39,7 @@ stdin.on('data', (line) => {
   } else if (input.command !== '') {
     buffer.print(input.command + ': command not found')
   }
-  const output = buffer.get()
+  const output = buffer.flush()
   const newline = output === '' ? '' : '\n'
   process.stdout.write(output + newline)
   if (typeof nextCommand !== 'function') {
