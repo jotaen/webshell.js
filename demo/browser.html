@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>webshell.js</title>
-    <script src="../webshell.js"></script>
+    <script src="../dist/webshell.js"></script>
+    <script src="../dist/webshell-util.js"></script>
     <style media="screen">
       * {
         font-family: monospace;
@@ -70,28 +71,16 @@
     <div id="webshell" class="webshell"></div>
 
     <script type="text/javascript">
-      const readState = (name) => {
-        const key = 'webshelljs_' + name
-        const value = window.localStorage.getItem(key)
-        if (!value) return {}
-        const result = JSON.parse(value)
-        if (result.lastActivity) result.lastActivity = new Date(result.lastActivity)
-        return result
+      const id = 'webshell'
+      const refresh = window.location.href.search(/\?refresh/) === -1 ? false : true
+      if (refresh) {
+        webshellDeleteState(id)
+        window.location = window.location.href.split('?')[0]
       }
-
-      const defaultState = {
-        currentLocation: ['var', 'www'],
-        fileTree: {
-          var: {
-            www: {}
-          }
-        },
-        sessions: ['browser']
-      }
-
-      const savedState = readState('webshell')
+      const defaultState = webshellDefaultState()
+      const savedState = webshellReadState(id)
       const initialState = Object.assign({}, defaultState, savedState)
-      const webshell = createWebshell('webshell', initialState)
+      const webshell = webshellCreate(id, initialState)
     </script>
   </body>
 </html>
