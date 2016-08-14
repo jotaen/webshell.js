@@ -1,22 +1,19 @@
 'use strict'
 
 const makeClasses = (font) => {
-  let result = ''
-  result += 'webshell__text webshell__text--' + font.color
+  let result = 'webshell__text'
   result += ' '
-  result += 'webshell__text webshell__text--' + font.weight
+  result += 'webshell__text--' + font.color
   result += ' '
-  result += 'webshell__text webshell__text--' + font.style
+  result += 'webshell__text--' + font.weight
+  result += ' '
+  result += 'webshell__text--' + font.style
   return result
 }
 
 module.exports = (defaultStyle) => {
   let storage = ''
-  let font = Object.assign({
-    color: 'white',
-    weight: 'normal',
-    style: 'normal'
-  }, defaultStyle)
+  let font = {}
   const buffer = {}
 
   buffer.print = (output) => {
@@ -46,8 +43,13 @@ module.exports = (defaultStyle) => {
   }
 
   buffer.reset = () => {
-    font = Object.assign({}, defaultStyle)
+    font = Object.assign({
+      color: 'white',
+      weight: 'normal',
+      style: 'normal'
+    }, defaultStyle)
   }
 
+  buffer.reset()
   return buffer
 }

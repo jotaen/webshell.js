@@ -18,6 +18,7 @@
         background-color: #000;
         cursor: text;
         padding: 0.5em;
+        overflow: scroll;
       }
       .webshell__prompt {
         float: left;
@@ -29,18 +30,38 @@
       }
       .webshell__response {
         clear: both;
+        white-space: pre;
+        margin-bottom: 0.2em;
       }
       .webshell__text { color: #fff }
       .webshell__text--green { color: #65c858 }
       .webshell__text--yellow { color: #cac43b }
       .webshell__text--light-gray { color: #bbb }
+      .webshell__text--red { color: #c0253e }
     </style>
   </head>
   <body>
     <div id="webshell" class="webshell"></div>
 
     <script type="text/javascript">
-      const webshell = createWebshell('webshell')
+      const initialState = {
+        currentUser: 'jotaen',
+        fileTree: {
+          var: {
+            www: {}
+          }
+        },
+        currentLocation: ['var', 'www']
+      }
+      const webshell = createWebshell('webshell', initialState)
+      const command = 'webserver start --port=80'
+      let response = 'Starting webserver on port 80...'
+      response += '\n\nUncaught UrlNotFound-Exception'
+      response += '\n  at: module webserver'
+      response += '\n  at: function request(url)'
+      response += '\n      `url`: ' + window.location
+      response += '\n\nExit process with status 404'
+      webshell.write(command, response)
     </script>
   </body>
 </html>

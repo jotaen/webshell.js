@@ -13,8 +13,9 @@ const splitStatement = (line) => {
   }
 }
 
-module.exports = () => {
-  const store = createStore(reducers, defaultState(reducers))
+module.exports = (initialState) => {
+  const state = Object.assign(defaultState(), initialState)
+  const store = createStore(reducers, state)
   let nextCommand
   return {
     execute: (line, buffer) => {
@@ -34,7 +35,7 @@ module.exports = () => {
         .color('green').print(store.getState().currentUser)
         .color('light-gray').print('@')
         .color('yellow').print('/' + store.getState().currentLocation.join('/'))
-        .color('light-gray').print('$')
+        .color('red').print('$')
         .flush()
     }
   }
