@@ -1,14 +1,14 @@
 'use strict'
 
 const assert = require('assert')
-const predefinedStore = require('../../predefinedStore')
+const testingStore = require('../../testingStore')
 const action = require('../../../src/actions')
 const stack = require('../../../src/stack')
 
 describe('#users', () => {
   describe('#LOGIN', () => {
     it('should login a new user', () => {
-      const store = predefinedStore()
+      const store = testingStore()
       const newUser = 'alice'
       store.dispatch(action.login(newUser))
       const result = stack.latest(store.getState().sessions)
@@ -16,7 +16,7 @@ describe('#users', () => {
     })
 
     it('should throw, if argument is empty', () => {
-      const store = predefinedStore()
+      const store = testingStore()
       assert.throws(() => {
         store.dispatch(action.login(''))
       }, /EMPTY_USERNAME/)
@@ -25,7 +25,7 @@ describe('#users', () => {
 
   describe('#LOGOUT', () => {
     it('should logout the current user', () => {
-      const store = predefinedStore()
+      const store = testingStore()
       store.dispatch(action.logout())
       const result = stack.latest(store.getState().sessions)
       const expect = 'root'
@@ -33,7 +33,7 @@ describe('#users', () => {
     })
 
     it('should do nothing, if no user is logged in', () => {
-      const store = predefinedStore()
+      const store = testingStore()
       store.dispatch(action.logout())
       store.dispatch(action.logout())
       store.dispatch(action.logout())

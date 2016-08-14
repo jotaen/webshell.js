@@ -2,16 +2,14 @@
 
 const assert = require('assert')
 const help = require('../../../src/commands/help')
-const createBuffer = require('../../../src/buffer/textBuffer.js')
-const predefinedStore = require('../../predefinedStore')
+const createEnv = require('../../testingEnv')
 
 describe('#help', () => {
   it('should list all available commands', () => {
-    const store = predefinedStore()
-    const buffer = createBuffer()
-    help('', buffer, store)
-    const output = buffer.flush()
+    const env = createEnv()
+    help('', env.buffer, env.frozenState)
+    const output = env.buffer.flush()
     const expect = /Commands:/
-    assert.ok(expect.test(output))
+    assert(expect.test(output))
   })
 })

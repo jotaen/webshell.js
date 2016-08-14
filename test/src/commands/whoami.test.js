@@ -2,15 +2,13 @@
 
 const assert = require('assert')
 const whoami = require('../../../src/commands/whoami')
-const createBuffer = require('../../../src/buffer/textBuffer.js')
-const predefinedStore = require('../../predefinedStore')
+const createEnv = require('../../testingEnv')
 
 describe('#whoami (who am i)', () => {
   it('should print out the name of the current logged in user', () => {
-    const buffer = createBuffer()
-    const store = predefinedStore()
-    whoami('', buffer, store)
-    const result = buffer.flush()
+    const env = createEnv()
+    whoami('', env.buffer, env.frozenState)
+    const result = env.buffer.flush()
     const expect = 'alice'
     assert.strictEqual(result, expect)
   })

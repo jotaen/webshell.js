@@ -2,26 +2,23 @@
 
 const assert = require('assert')
 const su = require('../../../src/commands/su')
-const createBuffer = require('../../../src/buffer/textBuffer')
-const predefinedStore = require('../../predefinedStore')
+const createEnv = require('../../testingEnv')
 const stack = require('../../../src/stack')
 
 describe('#su (switch user)', () => {
   it('should switch the current user', () => {
-    const buffer = createBuffer()
-    const store = predefinedStore()
+    const env = createEnv()
     const newUser = 'alice'
-    su(newUser, buffer, store)
-    const currentUser = stack.latest(store.getState().sessions)
+    su(newUser, env.buffer, env.frozenState)
+    const currentUser = stack.latest(env.store.getState().sessions)
     assert.strictEqual(newUser, currentUser)
   })
 
   it('should do nothing, if no username was given', () => {
-    const buffer = createBuffer()
-    const store = predefinedStore()
-    const oldUser = stack.latest(store.getState().sessions)
-    su('', buffer, store)
-    const currentUser = stack.latest(store.getState().sessions)
+    const env = createEnv()
+    const oldUser = stack.latest(env.store.getState().sessions)
+    su('', env.buffer, env.frozenState)
+    const currentUser = stack.latest(env.store.getState().sessions)
     assert.strictEqual(oldUser, currentUser)
   })
 })

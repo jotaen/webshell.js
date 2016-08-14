@@ -2,51 +2,46 @@
 
 const assert = require('assert')
 const cd = require('../../../src/commands/cd')
-const createBuffer = require('../../../src/buffer/textBuffer.js')
-const predefinedStore = require('../../predefinedStore')
+const createEnv = require('../../testingEnv')
 
 describe('#cd (change directory)', () => {
-  it('should change the current working filesystem', () => {
-    const store = predefinedStore()
-    const buffer = createBuffer()
+  it('should change the current working directory', () => {
+    const env = createEnv()
     const newPath = '/usr/local/'
-    cd(newPath, buffer, store)
-    const output = buffer.flush()
-    const result = store.getState().currentLocation
+    cd(newPath, env.buffer, env.frozenState, env.dispatch)
+    const output = env.buffer.flush()
+    const result = env.store.getState().currentLocation
     const expect = ['usr', 'local']
-    assert(output === '')
+    assert.strictEqual(output, '')
     assert.deepEqual(result, expect)
   })
 
-  it('should change the current working filesystem, even if input is "dirty"', () => {
-    const store = predefinedStore()
-    const buffer = createBuffer()
+  it('should change the current working directory, even if input is "dirty"', () => {
+    const env = createEnv()
     const newPath = '////usr///local//'
-    cd(newPath, buffer, store)
-    const output = buffer.flush()
-    const result = store.getState().currentLocation
+    cd(newPath, env.buffer, env.frozenState, env.dispatch)
+    const output = env.buffer.flush()
+    const result = env.store.getState().currentLocation
     const expect = ['usr', 'local']
-    assert(output === '')
+    assert.strictEqual(output, '')
     assert.deepEqual(result, expect)
   })
 
-  it('should not change the current working filesystem, if target does not exist', () => {
-    const store = predefinedStore()
-    const buffer = createBuffer()
+  it('should not change the current working directory, if target does not exist', () => {
+    const env = createEnv()
     const newPath = '/path/that/does/not/exist'
-    cd(newPath, buffer, store)
-    const output = buffer.flush()
+    cd(newPath, env.buffer, env.frozenState, env.dispatch)
+    const output = env.buffer.flush()
     assert(/No such file or directory/.test(output))
-    assert.deepEqual(store.getState().currentLocation, [])
+    assert.deepEqual(env.store.getState().currentLocation, [])
   })
 
-  it('should not change the current working filesystem, if target is a file', () => {
-    const store = predefinedStore()
-    const buffer = createBuffer()
+  it('should not change the current working directory, if target is a file', () => {
+    const env = createEnv()
     const newPath = '/etc/hosts'
-    cd(newPath, buffer, store)
-    const output = buffer.flush()
+    cd(newPath, env.buffer, env.frozenState, env.dispatch)
+    const output = env.buffer.flush()
     assert(/Not a directory/.test(output))
-    assert.deepEqual(store.getState().currentLocation, [])
+    assert.deepEqual(env.store.getState().currentLocation, [])
   })
 })

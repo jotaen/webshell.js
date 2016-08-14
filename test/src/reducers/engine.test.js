@@ -1,13 +1,13 @@
 'use strict'
 
 const assert = require('assert')
-const predefinedStore = require('../../predefinedStore')
+const testingStore = require('../../testingStore')
 const action = require('../../../src/actions')
 
 describe('#engine', () => {
   describe('#SAVE_INPUT', () => {
     it('should store inputs in history', () => {
-      const store = predefinedStore()
+      const store = testingStore()
       store.dispatch(action.saveInput('help'))
       store.dispatch(action.saveInput('ls -la'))
       store.dispatch(action.saveInput('ssh admin@127.0.0.1 -i ~/.ssh/myKey'))
@@ -21,7 +21,7 @@ describe('#engine', () => {
     })
 
     it('should not store blank/empty inputs', () => {
-      const store = predefinedStore()
+      const store = testingStore()
       store.dispatch(action.saveInput(''))
       store.dispatch(action.saveInput(' '))
       store.dispatch(action.saveInput('        '))
@@ -32,7 +32,7 @@ describe('#engine', () => {
 
   describe('#ACTIVITY', () => {
     it('should update the acitivity timestamp', () => {
-      const store = predefinedStore()
+      const store = testingStore()
       const before = new Date()
       store.dispatch(action.activity())
       const after = new Date()

@@ -2,9 +2,9 @@
 
 const action = require('../actions')
 
-module.exports = (input, buffer, store) => {
+module.exports = (input, buffer, state, dispatch) => {
   try {
-    store.dispatch(action.login(input))
+    dispatch(action.login(input))
   } catch (e) {
     return
   }

@@ -2,45 +2,40 @@
 
 const assert = require('assert')
 const ls = require('../../../src/commands/ls')
-const createBuffer = require('../../../src/buffer/textBuffer.js')
-const predefinedStore = require('../../predefinedStore')
+const createEnv = require('../../testingEnv')
 
 describe('#ls (list)', () => {
   it('should list all items of the current location', () => {
-    const store = predefinedStore()
-    const buffer = createBuffer()
-    ls('', buffer, store)
-    const output = buffer.flush()
+    const env = createEnv()
+    ls('', env.buffer, env.frozenState)
+    const output = env.buffer.flush()
     const expect = 'bin/\netc/\nusr/\n'
     assert.strictEqual(output, expect)
   })
 
   it('should list all items of any location', () => {
-    const store = predefinedStore()
-    const buffer = createBuffer()
+    const env = createEnv()
     const input = '/bin'
-    ls(input, buffer, store)
-    const output = buffer.flush()
+    ls(input, env.buffer, env.frozenState)
+    const output = env.buffer.flush()
     const expect = 'date\n'
     assert.strictEqual(output, expect)
   })
 
   it('should add trailing slashes to directories', () => {
-    const store = predefinedStore()
-    const buffer = createBuffer()
+    const env = createEnv()
     const input = '/bin'
-    ls(input, buffer, store)
-    const output = buffer.flush()
+    ls(input, env.buffer, env.frozenState)
+    const output = env.buffer.flush()
     const expect = 'date\n'
     assert.strictEqual(output, expect)
   })
 
   it('should sort the output in alphabetic order', () => {
-    const store = predefinedStore()
-    const buffer = createBuffer()
+    const env = createEnv()
     const input = '/etc'
-    ls(input, buffer, store)
-    const output = buffer.flush()
+    ls(input, env.buffer, env.frozenState)
+    const output = env.buffer.flush()
     const expect = 'hosts\npasswd\n'
     assert.strictEqual(output, expect)
   })

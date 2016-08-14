@@ -1,8 +1,8 @@
 'use strict'
 
-module.exports = (input, terminal, store) => {
+module.exports = (input, terminal, state) => {
   if (input === 'state') {
-    const state = JSON.stringify(store.getState(), null, 2)
+    const state = JSON.stringify(state, null, 2)
     terminal.print(state)
   }
 }

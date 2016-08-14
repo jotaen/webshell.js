@@ -1,9 +1,9 @@
 'use strict'
 
 const createStore = require('redux').createStore
-const defaultState = require('../src/defaultState')
-const action = require('../src/actions')
 const reducers = require('../src/reducers/index')
+const action = require('../src/actions')
+const defaultState = require('../src/defaultState')
 
 module.exports = () => {
   const store = createStore(reducers, defaultState(reducers))

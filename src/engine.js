@@ -28,15 +28,16 @@ module.exports = (initialState) => {
     buffer.reset()
     const statement = splitStatement(line)
     store.dispatch(action.activity())
+    const frozenState = Object.freeze(store.getState())
     if (typeof nextCommand === 'function') {
-      nextCommand = nextCommand(statement.input, buffer, store)
+      nextCommand = nextCommand(statement.input, buffer, frozenState, store.dispatch)
     } else if (typeof commands[statement.command] === 'function') {
       store.dispatch(action.saveInput(statement.raw))
-      nextCommand = commands[statement.command](statement.input, buffer, store)
+      nextCommand = commands[statement.command](statement.input, buffer, frozenState, store.dispatch)
     } else if (statement.command !== '') {
       buffer.print(statement.command + ': command not found')
     }
 
-    if (isStateOkay(store.getState())) return store.getState()
+    if (isStateOkay(store.getState())) return Object.freeze(store.getState())
   }
 }

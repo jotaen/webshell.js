@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = (input, terminal, store) => {
+module.exports = (input, terminal) => {
   terminal.print('Commands:')
   terminal.print('\n')
   const commands = require('./index')
