@@ -3,7 +3,7 @@
 const assert = require('assert')
 const predefinedStore = require('../../predefinedStore')
 const action = require('../../../src/actions')
-const user = require('../../../src/user')
+const stack = require('../../../src/stack')
 
 describe('#users', () => {
   describe('#LOGIN', () => {
@@ -11,7 +11,7 @@ describe('#users', () => {
       const store = predefinedStore()
       const newUser = 'alice'
       store.dispatch(action.login(newUser))
-      const result = user.name(store.getState().sessions)
+      const result = stack.latest(store.getState().sessions)
       assert.strictEqual(result, newUser)
     })
 
@@ -27,7 +27,7 @@ describe('#users', () => {
     it('should logout the current user', () => {
       const store = predefinedStore()
       store.dispatch(action.logout())
-      const result = user.name(store.getState().sessions)
+      const result = stack.latest(store.getState().sessions)
       const expect = 'root'
       assert.strictEqual(expect, result)
     })
@@ -39,7 +39,7 @@ describe('#users', () => {
       store.dispatch(action.logout())
       store.dispatch(action.logout())
       store.dispatch(action.logout())
-      const result = user.name(store.getState().sessions)
+      const result = stack.latest(store.getState().sessions)
       const expect = ''
       assert.strictEqual(expect, result)
     })
