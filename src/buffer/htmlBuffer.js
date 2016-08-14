@@ -1,24 +1,26 @@
 'use strict'
 
-const makeStyles = (font) => {
+const makeClasses = (font) => {
   let result = ''
-  result += 'color:' + font.color
-  result += ';font-weight:' + font.weight
-  result += ';font-style:' + font.style
+  result += 'webshell__text webshell__text--' + font.color
+  result += ' '
+  result += 'webshell__text webshell__text--' + font.weight
+  result += ' '
+  result += 'webshell__text webshell__text--' + font.style
   return result
 }
 
 module.exports = (defaultStyle) => {
   let storage = ''
-  const font = Object.assign({
-    color: '#fff',
+  let font = Object.assign({
+    color: 'white',
     weight: 'normal',
     style: 'normal'
   }, defaultStyle)
   const buffer = {}
 
   buffer.print = (output) => {
-    storage += '<span style="' + makeStyles(font) + '">' + output + '</span>'
+    storage += '<span class="' + makeClasses(font) + '">' + output + '</span>'
     return buffer
   }
 
@@ -28,8 +30,8 @@ module.exports = (defaultStyle) => {
     return oldStorage
   }
 
-  buffer.color = (colorCode) => {
-    font.color = colorCode
+  buffer.color = (color) => {
+    font.color = color
     return buffer
   }
 
@@ -41,6 +43,10 @@ module.exports = (defaultStyle) => {
   buffer.weight = (weight) => {
     font.weight = weight
     return buffer
+  }
+
+  buffer.reset = () => {
+    font = Object.assign({}, defaultStyle)
   }
 
   return buffer

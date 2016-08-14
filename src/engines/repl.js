@@ -19,6 +19,7 @@ module.exports = () => {
   return {
     execute: (line, buffer) => {
       const statement = splitStatement(line)
+      buffer.reset()
       if (typeof nextCommand === 'function') {
         nextCommand = nextCommand(statement.input, buffer, store)
       } else if (typeof commands[statement.command] === 'function') {
@@ -30,14 +31,10 @@ module.exports = () => {
     },
     prompt: (buffer) => {
       return buffer
-        .color('red')
-        .print(store.getState().currentUser)
-        .color('white')
-        .print('@')
-        .color('green')
-        .print('/' + store.getState().currentLocation.join('/'))
-        .color('white')
-        .print('$')
+        .color('green').print(store.getState().currentUser)
+        .color('light-gray').print('@')
+        .color('yellow').print('/' + store.getState().currentLocation.join('/'))
+        .color('light-gray').print('$')
         .flush()
     }
   }
