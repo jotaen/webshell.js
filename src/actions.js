@@ -25,3 +25,8 @@ exports.login = (userName) => ({
 exports.logout = () => ({
   type: 'LOGOUT'
 })
+
+exports.saveInput = (input) => ({
+  type: 'SAVE_INPUT',
+  input
+})

@@ -1,8 +1,14 @@
 'use strict'
 
-const rd = require('./reducerDictionary')
-
-module.exports = rd.dict(rd.combine([
+const dict = Object.assign({},
+  require('./engine'),
   require('./filesystem'),
   require('./sessions')
-]))
+)
+
+module.exports = (state, action) => {
+  if (dict[action.type]) {
+    return dict[action.type](state, action)
+  }
+  return state
+}

@@ -1,7 +1,8 @@
 'use strict'
 
 module.exports = () => ({
-  sessions: ['root'],
+  currentLocation: [],
   fileTree: {},
-  currentLocation: []
+  history: [],
+  sessions: ['root']
 })
