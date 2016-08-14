@@ -1,11 +1,11 @@
 {
   "scripts": {
     "test": "mocha",
-    "cli": "node engines/commandline.js",
+    "cli": "node demo/commandline.js",
     "linter": "eslint .",
     "coverage": "istanbul cover _mocha",
     "pretest": "npm run --silent linter",
-    "bundler": "browserify src/index.js --s createWebshell -o webshell.js"
+    "bundler": "browserify src/engines/browser.js --s createWebshell -o webshell.js"
   },
   "devDependencies": {
     "browserify": "^13.1.0",

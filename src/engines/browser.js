@@ -1,10 +1,10 @@
 'use strict'
 
-const defaultState = require('./defaultState')
-const createBuffer = require('./buffer/textBuffer.js')
+const defaultState = require('../defaultState')
+const createBuffer = require('../buffer/textBuffer.js')
 const createStore = require('redux').createStore
-const reducers = require('./reducers/index')
-const commands = require('./commands/index')
+const reducers = require('../reducers/index')
+const commands = require('../commands/index')
 
 module.exports = (elementId) => {
   const inputElement = document.getElementById('webshell-current')
@@ -12,18 +12,7 @@ module.exports = (elementId) => {
   const webshell = {}
   let nextCommand
 
-  webshell.process = (event) => {
-    if (event.keyCode !== 13) return;
-    const input = inputElement.innerHTML;
-    inputElement.insertAdjacentHTML('beforebegin', '<div class="input">'+input+'</div>');
-    inputElement.innerHTML = ''
-    const response = webshell.dispatch(input)
-    inputElement.insertAdjacentHTML('beforebegin', '<div class="response">'+response+'</div>');
-    inputElement.insertAdjacentHTML('beforebegin', '<div class="prompt">jotaen@/$</div>');
-    return false;
-  }
-
-  webshell.dispatch = (input) => {
+  const dispatch = (input) => {
     return input+': command not found'
     const buffer = createBuffer()
     if (typeof nextCommand === 'function') {
@@ -34,6 +23,17 @@ module.exports = (elementId) => {
       buffer.print(input.command + ': command not found')
     }
     return buffer.get()
+  }
+
+  webshell.process = (event) => {
+    if (event.keyCode !== 13) return;
+    const input = inputElement.innerHTML;
+    inputElement.insertAdjacentHTML('beforebegin', '<div class="input">'+input+'</div>');
+    inputElement.innerHTML = ''
+    const response = dispatch(input)
+    inputElement.insertAdjacentHTML('beforebegin', '<div class="response">'+response+'</div>');
+    inputElement.insertAdjacentHTML('beforebegin', '<div class="prompt">jotaen@/$</div>');
+    return false;
   }
 
   return webshell
