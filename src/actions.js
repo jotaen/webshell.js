@@ -30,3 +30,8 @@ exports.saveInput = (input) => ({
   type: 'SAVE_INPUT',
   input
 })
+
+exports.activity = () => ({
+  type: 'ACTIVITY',
+  timestamp: new Date()
+})

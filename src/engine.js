@@ -20,8 +20,9 @@ module.exports = (initialState) => {
   const store = createStore(reducers, state)
   let nextCommand
   return (line, buffer) => {
-    const statement = splitStatement(line)
     buffer.reset()
+    const statement = splitStatement(line)
+    store.dispatch(action.activity())
     if (typeof nextCommand === 'function') {
       nextCommand = nextCommand(statement.input, buffer, store)
     } else if (typeof commands[statement.command] === 'function') {

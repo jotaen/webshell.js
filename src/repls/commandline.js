@@ -22,8 +22,10 @@ module.exports = (stdin, stdout, initialState) => {
     stdout.write(newline + ps1 + ' ')
   })
 
-  const state = engine('', buffer)
-  util.prompt(buffer, state)
+  util.welcome(buffer, initialState)
+  const hello = buffer.flush()
+  stdout.write(hello + '\n')
+  util.prompt(buffer, initialState)
   const ps1 = buffer.flush()
   stdout.write(ps1 + '$ ')
 }

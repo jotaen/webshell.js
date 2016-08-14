@@ -7,6 +7,7 @@ const reducers = require('../src/reducers/index')
 
 module.exports = () => {
   const store = createStore(reducers, defaultState(reducers))
+  store.dispatch(action.activity(new Date(1245151961)))
   store.dispatch(action.login('root'))
   store.dispatch(action.login('alice'))
   store.dispatch(action.createDirectory(['bin']))

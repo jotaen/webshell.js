@@ -13,7 +13,7 @@ exports.prompt = (buffer, state) => {
 
 exports.welcome = (buffer, state) => {
   const userName = stack.latest(state.sessions)
-  const lastLogin = state.lastLogin
+  const date = state.lastActivity
   buffer.print('Hello ' + userName + '!')
-  if (lastLogin instanceof Date) buffer.print(' Last activity: ' + lastLogin.toLocaleString())
+  if (date instanceof Date) buffer.print(' Last activity: ' + date.toLocaleString())
 }

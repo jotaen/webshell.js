@@ -4,8 +4,25 @@ const createEngine = require('../engine')
 const createBuffer = require('../buffer/htmlBuffer')
 const util = require('./util')
 
+const saveState = (name, obj) => {
+  const key = 'webshelljs_' + name
+  const value = JSON.stringify(obj)
+  window.localStorage.setItem(key, value)
+}
+
+const readState = (name) => {
+  const key = 'webshelljs_' + name
+  const value = window.localStorage.getItem(key)
+  if (!value) return {}
+  const result = JSON.parse(value)
+  if (result.lastActivity) result.lastActivity = new Date(result.lastActivity)
+  return result
+}
+
 module.exports = (elementId, initialState) => {
-  const engine = createEngine(initialState)
+  const lastState = readState(elementId)
+  const mergedState = Object.assign({}, initialState, lastState)
+  const engine = createEngine(mergedState)
   const buffer = createBuffer()
 
   const webshellElement = document.getElementById(elementId)
@@ -27,17 +44,15 @@ module.exports = (elementId, initialState) => {
     const ps1 = buffer.flush()
     inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__prompt">' + ps1 + '</div>')
     webshellElement.scrollTop = webshellElement.scrollHeight
+    saveState(elementId, state)
     return false
   }
 
-  // Get initial state:
-  const state = engine('', buffer)
-
-  util.welcome(buffer, state)
+  util.welcome(buffer, mergedState)
   const hello = buffer.flush()
   inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__response webshell__text">' + hello + '</div>')
 
-  util.prompt(buffer, state)
+  util.prompt(buffer, mergedState)
   const ps1 = buffer.flush()
   inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__prompt">' + ps1 + '</div>')
   inputElement.focus()

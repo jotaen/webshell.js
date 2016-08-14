@@ -29,4 +29,16 @@ describe('#engine', () => {
       assert.deepEqual(result.length, 0)
     })
   })
+
+  describe('#ACTIVITY', () => {
+    it('should update the acitivity timestamp', () => {
+      const store = predefinedStore()
+      const before = new Date()
+      store.dispatch(action.activity())
+      const after = new Date()
+      const result = store.getState().lastActivity
+      assert(before <= result)
+      assert(after >= result)
+    })
+  })
 })

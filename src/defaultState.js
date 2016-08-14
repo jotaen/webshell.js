@@ -4,6 +4,6 @@ module.exports = () => ({
   currentLocation: [],
   fileTree: {},
   history: [],
-  lastLogin: null,
+  lastActivity: null,
   sessions: ['root']
 })
