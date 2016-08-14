@@ -13,23 +13,21 @@
         background-color: #000;
         color: #fff;
       }
-      .prompt {
+      .webshell__prompt {
         float: left;
         margin-right: 0.5em;
       }
-      .input {
+      .webshell__input {
         display: flex;
         outline: none;
       }
-      .response {
+      .webshell__response {
         clear: both;
       }
     </style>
   </head>
   <body>
-    <div id="webshell">
-      <div class="input" id="webshell-current" contentEditable="true" onkeypress="return webshell.process(event)"></div>
-    </div>
+    <div id="webshell"></div>
 
     <script type="text/javascript">
       const webshell = createWebshell('webshell')
