@@ -21,3 +21,7 @@ exports.login = (userName) => ({
   type: 'LOGIN',
   userName
 })
+
+exports.logout = () => ({
+  type: 'LOGOUT'
+})

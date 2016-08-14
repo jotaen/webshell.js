@@ -26,17 +26,22 @@ describe('#users', () => {
   describe('#LOGOUT', () => {
     it('should logout the current user', () => {
       const store = predefinedStore()
-      const newUser = 'alice'
-      store.dispatch(action.login(newUser))
+      store.dispatch(action.logout())
       const result = user.name(store.getState().sessions)
-      assert.strictEqual(result, newUser)
+      const expect = 'root'
+      assert.strictEqual(expect, result)
     })
 
-    it('should throw, if argument is empty', () => {
+    it('should do nothing, if no user is logged in', () => {
       const store = predefinedStore()
-      assert.throws(() => {
-        store.dispatch(action.login(''))
-      }, /EMPTY_USERNAME/)
+      store.dispatch(action.logout())
+      store.dispatch(action.logout())
+      store.dispatch(action.logout())
+      store.dispatch(action.logout())
+      store.dispatch(action.logout())
+      const result = user.name(store.getState().sessions)
+      const expect = ''
+      assert.strictEqual(expect, result)
     })
   })
 })

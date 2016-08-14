@@ -6,3 +6,7 @@ exports.LOGIN = (state, action) => {
   return Object.assign({}, state, {sessions})
 }
 
+exports.LOGOUT = (state, action) => {
+  const sessions = state.sessions.slice(0, -1)
+  return Object.assign({}, state, {sessions})
+}
