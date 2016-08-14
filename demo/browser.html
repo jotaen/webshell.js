@@ -14,30 +14,56 @@
         padding: 0;
       }
       .webshell {
+        box-sizing: border-box;
         height: 100vh;
         background-color: #000;
         cursor: text;
         padding: 0.5em;
-        overflow: scroll;
+        overflow-y: scroll;
       }
       .webshell__prompt {
-        float: left;
-        margin-right: 0.5em;
+        margin-top: 1em;
+      }
+      .webshell__prompt:first-child {
+        margin-top: 0;
+      }
+      @media (min-width: 30em) {
+        .webshell__prompt {
+          margin-top: inherit;
+          float: left;
+          margin-right: 0.2em;
+        }
       }
       .webshell__input {
+        position: relative;
         display: flex;
         outline: none;
+        padding-left: 1em;
+      }
+      .webshell__input:before {
+        position: absolute;
+        left: 0em;
+        content: '$';
+        color: #777;
+      }
+      .webshell__input--current:before {
+        color: #c0253e;
       }
       .webshell__response {
         clear: both;
-        white-space: pre;
+        white-space: pre-wrap;
         margin-bottom: 0.2em;
+        min-height: 1em;
+      }
+      @media (min-width: 30em) {
+        .webshell__response {
+          min-height: inherit;
+        }
       }
       .webshell__text { color: #fff }
       .webshell__text--green { color: #65c858 }
       .webshell__text--yellow { color: #cac43b }
-      .webshell__text--light-gray { color: #bbb }
-      .webshell__text--red { color: #c0253e }
+      .webshell__text--light-gray { color: #999 }
     </style>
   </head>
   <body>

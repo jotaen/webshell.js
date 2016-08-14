@@ -9,7 +9,6 @@ const prompt = (buffer, state) => {
     .color('green').print(stack.latest(state.sessions))
     .color('light-gray').print('@')
     .color('yellow').print('/' + state.currentLocation.join('/'))
-    .color('red').print('$')
 }
 
 module.exports = (elementId, initialState) => {
@@ -17,8 +16,8 @@ module.exports = (elementId, initialState) => {
   const buffer = createBuffer()
 
   const webshellElement = document.getElementById(elementId)
-  webshellElement.innerHTML = '<div class="webshell__input webshell__text" id="' + elementId + '-current-input" contentEditable="true"></div>'
-  const inputElement = document.getElementById(elementId + '-current-input')
+  webshellElement.innerHTML = '<div class="webshell__input webshell__input--current webshell__text" id="' + elementId + '-cursor" contentEditable="true"></div>'
+  const inputElement = document.getElementById(elementId + '-cursor')
   webshellElement.onclick = (event) => {
     if (event.target === webshellElement) inputElement.focus()
   }
