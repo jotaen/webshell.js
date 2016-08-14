@@ -4,13 +4,17 @@ const createRepl = require('./repl.js')
 const createBuffer = require('../buffer/htmlBuffer.js')
 
 module.exports = (elementId) => {
-  const webshellElement = document.getElementById(elementId)
-  webshellElement.innerHTML = '<div class="webshell__input webshell__text" id="' + elementId + '-current-input" contentEditable="true" onkeypress="return webshell.process(event)"></div>'
-  const inputElement = document.getElementById(elementId + '-current-input')
   const repl = createRepl()
   const buffer = createBuffer()
 
+  const webshellElement = document.getElementById(elementId)
+  webshellElement.innerHTML = '<div class="webshell__input webshell__text" id="' + elementId + '-current-input" contentEditable="true" onkeypress="return webshell.process(event)"></div>'
+  const inputElement = document.getElementById(elementId + '-current-input')
+  webshellElement.onclick = (event) => {
+    if (event.target === webshellElement) inputElement.focus()
+  }
   inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__prompt">' + repl.prompt(buffer) + '</div>')
+  inputElement.focus()
 
   return {
     process: (event) => {

@@ -9,8 +9,15 @@
         font-family: monospace;
         font-size: 18px;
       }
-      html {
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      .webshell {
+        height: 100vh;
         background-color: #000;
+        cursor: text;
+        padding: 0.5em;
       }
       .webshell__prompt {
         float: left;
@@ -30,7 +37,7 @@
     </style>
   </head>
   <body>
-    <div id="webshell"></div>
+    <div id="webshell" class="webshell"></div>
 
     <script type="text/javascript">
       const webshell = createWebshell('webshell')
