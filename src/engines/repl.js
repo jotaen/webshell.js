@@ -29,6 +29,11 @@ module.exports = () => {
         buffer.print(statement.command + ': command not found')
       }
       return buffer.get()
+    },
+    prompt: () => {
+      const user = store.getState().currentUser
+      const location = '/' + store.getState().currentLocation.join('/')
+      return user + '@' + location + '$'
     }
   }
 }

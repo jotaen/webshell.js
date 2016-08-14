@@ -2,7 +2,7 @@
 
 module.exports = (defaultStyle) => {
   let storage = ''
-  const style = defaultStyle
+  let style = defaultStyle
   const buffer = {}
 
   buffer.print = (output) => {
