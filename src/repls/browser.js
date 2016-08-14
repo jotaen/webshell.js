@@ -10,19 +10,8 @@ const saveState = (name, obj) => {
   window.localStorage.setItem(key, value)
 }
 
-const readState = (name) => {
-  const key = 'webshelljs_' + name
-  const value = window.localStorage.getItem(key)
-  if (!value) return {}
-  const result = JSON.parse(value)
-  if (result.lastActivity) result.lastActivity = new Date(result.lastActivity)
-  return result
-}
-
 module.exports = (elementId, initialState) => {
-  const lastState = readState(elementId)
-  const mergedState = Object.assign({}, initialState, lastState)
-  const engine = createEngine(mergedState)
+  const engine = createEngine(initialState)
   const buffer = createBuffer()
 
   const webshellElement = document.getElementById(elementId)
@@ -40,6 +29,11 @@ module.exports = (elementId, initialState) => {
     inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__input webshell__text">' + input + '</div>')
     inputElement.innerHTML = ''
     inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__response webshell__text">' + response + '</div>')
+    if (!state) {
+      inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__response webshell__text">Bye bye.</div>')
+      webshellElement.removeChild(inputElement)
+      return
+    }
     util.prompt(buffer, state)
     const ps1 = buffer.flush()
     inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__prompt">' + ps1 + '</div>')
@@ -48,11 +42,11 @@ module.exports = (elementId, initialState) => {
     return false
   }
 
-  util.welcome(buffer, mergedState)
+  util.welcome(buffer, initialState)
   const hello = buffer.flush()
   inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__response webshell__text">' + hello + '</div>')
 
-  util.prompt(buffer, mergedState)
+  util.prompt(buffer, initialState)
   const ps1 = buffer.flush()
   inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__prompt">' + ps1 + '</div>')
   inputElement.focus()

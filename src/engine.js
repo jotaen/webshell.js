@@ -15,6 +15,11 @@ const splitStatement = (line) => {
   }
 }
 
+const isStateOkay = (state) => {
+  if (state.sessions.length === 0) return false
+  return true
+}
+
 module.exports = (initialState) => {
   const state = Object.assign(defaultState(), initialState)
   const store = createStore(reducers, state)
@@ -31,6 +36,7 @@ module.exports = (initialState) => {
     } else if (statement.command !== '') {
       buffer.print(statement.command + ': command not found')
     }
-    return store.getState()
+
+    if (isStateOkay(store.getState())) return store.getState()
   }
 }

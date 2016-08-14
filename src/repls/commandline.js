@@ -15,6 +15,10 @@ module.exports = (stdin, stdout, initialState) => {
     const state = engine(input, buffer)
     const response = buffer.flush()
     stdout.write(response)
+    if (!state) {
+      stdout.write('\nBye bye.\n')
+      process.exit(0)
+    }
     util.prompt(buffer, state)
     const ps1 = buffer.flush()
     let newline = '\n'
