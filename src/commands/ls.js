@@ -2,21 +2,19 @@
 
 const filesystem = require('../filesystem')
 const makePathFromString = require('../makePathFromString')
+const CommandError = require('../errors')
 
 module.exports = (input, print, state) => {
   const tree = state.fileTree
   const currentLocation = state.currentLocation
-  let location = []
-  if (input) location = makePathFromString(input, currentLocation)
-  else location = currentLocation
+  let path = []
+  if (input) path = makePathFromString(input, currentLocation)
+  else path = currentLocation
 
-  if (!filesystem.isDirectory(tree, location)) {
-    const pathString = '/' + location.join('/')
-    print('ls: ' + pathString + ': No such file or directory')
-    return
-  }
+  if (!filesystem.find(tree, path)) throw new CommandError.PathNotFound(path)
+  if (!filesystem.isDirectory(tree, path)) throw new CommandError.NotADirectory(path)
 
-  const targetDirectory = filesystem.find(tree, location)
+  const targetDirectory = filesystem.find(tree, path)
   Object.keys(targetDirectory).sort().forEach((node) => {
     let suffix = ''
     if (typeof tree[node] === 'object') suffix = '/'

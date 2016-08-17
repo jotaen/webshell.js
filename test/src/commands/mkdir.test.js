@@ -4,6 +4,7 @@ const assert = require('assert')
 const mkdir = require('../../../src/commands/mkdir')
 const filesystem = require('../../../src/filesystem')
 const createEnv = require('../../testingEnv')
+const CommandError = require('../../../src/errors')
 
 describe('#mkdir (make directory)', () => {
   it('should create a new directory at the current location', () => {
@@ -25,16 +26,16 @@ describe('#mkdir (make directory)', () => {
   it('shouldn’t create a directory, when there is already one existing', () => {
     const env = createEnv()
     const newPath = '/usr'
-    mkdir(newPath, env.buffer.print, env.frozenState, env.dispatch)
-    const output = env.buffer.get()
-    assert(/already exist/.test(output))
+    assert.throws(() => {
+      mkdir(newPath, env.buffer.print, env.frozenState, env.dispatch)
+    }, CommandError.PathAlreadyExists)
   })
 
   it('shouldn’t create a directory at non-existing locations', () => {
     const env = createEnv()
     const newPath = '/var/www'
-    mkdir(newPath, env.buffer.print, env.frozenState, env.dispatch)
-    const output = env.buffer.get()
-    assert(/No such file or directory/.test(output))
+    assert.throws(() => {
+      mkdir(newPath, env.buffer.print, env.frozenState, env.dispatch)
+    }, CommandError.PathNotExists)
   })
 })

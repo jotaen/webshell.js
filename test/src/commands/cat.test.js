@@ -3,6 +3,7 @@
 const assert = require('assert')
 const cat = require('../../../src/commands/cat')
 const createEnv = require('../../testingEnv')
+const CommandError = require('../../../src/errors')
 
 describe('#cat (concat, echo files)', () => {
   it('should print out the content of a file', () => {
@@ -17,17 +18,17 @@ describe('#cat (concat, echo files)', () => {
   it('should should print an error, when a directory was given', () => {
     const env = createEnv()
     const path = '/usr'
-    cat(path, env.buffer.print, env.frozenState)
-    const output = env.buffer.get()
-    assert(/Not a file/.test(output))
+    assert.throws(() => {
+      cat(path, env.buffer.print, env.frozenState)
+    }, CommandError.NotAFile)
   })
 
   it('should should print an error, when path was not found', () => {
     const env = createEnv()
     const path = '/non/existing/path/filename.txt'
-    cat(path, env.buffer.print, env.frozenState)
-    const output = env.buffer.get()
-    assert(/Not a file/.test(output))
+    assert.throws(() => {
+      cat(path, env.buffer.print, env.frozenState)
+    }, CommandError.PathNotFound)
   })
 
   it('should print a `usage` text, if no input was given', () => {

@@ -21,13 +21,20 @@ module.exports = (commands, reducers, initialState) => {
     const statement = splitStatement(line)
     store.dispatch(action.activity())
     const frozenState = Object.freeze(store.getState())
+    let execute = () => {}
     if (typeof nextCommand === 'function') {
-      nextCommand = nextCommand(statement.input, buffer.print, frozenState, store.dispatch)
+      execute = nextCommand
     } else if (typeof commands[statement.command] === 'function') {
       store.dispatch(action.saveInput(statement.raw))
-      nextCommand = commands[statement.command](statement.input, buffer.print, frozenState, store.dispatch)
+      execute = commands[statement.command]
     } else if (statement.command !== '') {
-      buffer.print(statement.command + ': command not found')
+      execute = () => { throw new Error('Command not found') }
+    }
+
+    try {
+      nextCommand = execute(statement.input, buffer.print, frozenState, store.dispatch)
+    } catch (e) {
+      buffer.print(statement.command + ': ' + e.message)
     }
 
     return {

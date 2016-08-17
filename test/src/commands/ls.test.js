@@ -3,6 +3,7 @@
 const assert = require('assert')
 const ls = require('../../../src/commands/ls')
 const createEnv = require('../../testingEnv')
+const CommandError = require('../../../src/errors')
 
 describe('#ls (list)', () => {
   it('should list all items of the current location', () => {
@@ -25,9 +26,17 @@ describe('#ls (list)', () => {
   it('should print error, if specified location does not exist', () => {
     const env = createEnv()
     const input = '/this/directory/does/not/exist'
-    ls(input, env.buffer.print, env.frozenState)
-    const output = env.buffer.get()
-    assert(/No such file or directory/.test(output))
+    assert.throws(() => {
+      ls(input, env.buffer.print, env.frozenState)
+    }, CommandError.PathNotFound)
+  })
+
+  it('should print error, if specified location is not a directory', () => {
+    const env = createEnv()
+    const input = '/etc/hosts'
+    assert.throws(() => {
+      ls(input, env.buffer.print, env.frozenState)
+    }, CommandError.NotADirectory)
   })
 
   it('should add trailing slashes to directories', () => {

@@ -3,6 +3,7 @@
 const assert = require('assert')
 const cd = require('../../../src/commands/cd')
 const createEnv = require('../../testingEnv')
+const CommandError = require('../../../src/errors')
 
 describe('#cd (change directory)', () => {
   it('should change the current working directory', () => {
@@ -30,18 +31,18 @@ describe('#cd (change directory)', () => {
   it('should not change the current working directory, if target does not exist', () => {
     const env = createEnv()
     const newPath = '/path/that/does/not/exist'
-    cd(newPath, env.buffer.print, env.frozenState, env.dispatch)
-    const output = env.buffer.get()
-    assert(/No such file or directory/.test(output))
+    assert.throws(() => {
+      cd(newPath, env.buffer.print, env.frozenState, env.dispatch)
+    }, CommandError.PathNotExists)
     assert.deepEqual(env.store.getState().currentLocation, [])
   })
 
   it('should not change the current working directory, if target is a file', () => {
     const env = createEnv()
     const newPath = '/etc/hosts'
-    cd(newPath, env.buffer.print, env.frozenState, env.dispatch)
-    const output = env.buffer.get()
-    assert(/Not a directory/.test(output))
+    assert.throws(() => {
+      cd(newPath, env.buffer.print, env.frozenState, env.dispatch)
+    }, CommandError.NotADirectory)
     assert.deepEqual(env.store.getState().currentLocation, [])
   })
 })

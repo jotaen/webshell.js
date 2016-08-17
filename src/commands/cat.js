@@ -2,6 +2,7 @@
 
 const makePathFromString = require('../makePathFromString')
 const filesystem = require('../filesystem')
+const CommandError = require('../errors')
 
 module.exports = (input, print, state) => {
   if (input === '') {
@@ -12,9 +13,7 @@ module.exports = (input, print, state) => {
   const currentLocation = state.currentLocation
   const path = makePathFromString(input, currentLocation)
   const node = filesystem.find(tree, path)
-  if (filesystem.isFile(tree, path)) {
-    print(node)
-  } else {
-    print('cat: ' + input + ': Not a file')
-  }
+  if (!node) throw new CommandError.PathNotFound(path)
+  if (!filesystem.isFile(tree, path)) throw new CommandError.NotAFile(path)
+  print(node)
 }
