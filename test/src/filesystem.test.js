@@ -186,4 +186,58 @@ describe('#filesystem', () => {
       assert.deepEqual(result, expect)
     })
   })
+
+  describe('#remove', () => {
+    it('should remove a path, if it’s a file', () => {
+      const tree = {
+        'etc': {
+          'hosts': '8.8.8.8 GOOGLE',
+          'foo': 'to be removed'
+        }
+      }
+      const expect = {
+        'etc': {
+          'hosts': '8.8.8.8 GOOGLE'
+        }
+      }
+      const path = ['etc', 'foo']
+      const result = filesystem.remove(tree, path)
+      assert.deepEqual(result, expect)
+    })
+
+    it('should remove a path, if it’s a directory', () => {
+      const tree = {
+        'etc': {
+          'hosts': '8.8.8.8 GOOGLE'
+        }
+      }
+      const expect = {}
+      const path = ['etc']
+      const result = filesystem.remove(tree, path)
+      assert.deepEqual(result, expect)
+    })
+
+    it('should return original tree, if path was not found', () => {
+      const tree = {
+        'etc': {
+          'hosts': '8.8.8.8 GOOGLE'
+        }
+      }
+      const path = ['non', 'existing', 'path']
+      const result = filesystem.remove(tree, path)
+      assert.deepEqual(result, tree)
+    })
+
+    it('should not mofify the input tree', () => {
+      const original = {
+        'etc': {
+          'hosts': '8.8.8.8 GOOGLE'
+        }
+      }
+      const tree = Object.freeze(original)
+      const path = ['etc']
+      filesystem.remove(tree, path)
+      assert.deepEqual(original, tree)
+    })
+  })
 })

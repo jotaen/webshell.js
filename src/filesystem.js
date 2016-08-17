@@ -18,6 +18,18 @@ exports.isFile = (tree, path) => {
   return typeof branch === 'string'
 }
 
+exports.remove = (tree, path) => {
+  const copy = Object.assign({}, tree)
+  let last = path.length
+  path.reduce((tr, item) => {
+    last--
+    if (tr === undefined || tr[item] === undefined) return undefined
+    if (last === 0) delete tr[item]
+    else return tr[item]
+  }, copy)
+  return copy
+}
+
 exports.isDirectory = (tree, path) => {
   const branch = this.find(tree, path)
   return typeof branch === 'object'

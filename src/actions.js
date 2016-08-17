@@ -11,6 +11,11 @@ exports.createDirectory = (path) => ({
   content: {}
 })
 
+exports.delete = (path) => ({
+  type: 'REMOVE_PATH',
+  path
+})
+
 exports.createFile = (path, content) => ({
   type: 'CREATE_PATH',
   path,

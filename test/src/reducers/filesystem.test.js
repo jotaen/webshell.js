@@ -119,4 +119,24 @@ describe('#filesystem', () => {
       assert.strictEqual(store.getState().fileTree.etc.foobar, '')
     })
   })
+
+  describe('#REMOVE_PATH', () => {
+    it('should remove a file from the filesystem', () => {
+      const store = testingStore()
+      const path = ['etc', 'hosts']
+      store.dispatch(action.delete(path))
+      const expect = {
+        'bin': {
+          'date': '2024-12-24T18:19:23Z'
+        },
+        'etc': {
+          'passwd': '198azsf1i2hhAs8faz98ZHU'
+        },
+        'usr': {
+          'local': {}
+        }
+      }
+      assert.deepEqual(store.getState().fileTree, expect)
+    })
+  })
 })

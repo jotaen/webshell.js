@@ -10,7 +10,9 @@ module.exports = {
   logout: require('./exit'), // alias
   ls: require('./ls'),
   mkdir: require('./mkdir'),
+  put: require('./put'),
   pwd: require('./pwd'),
+  rm: require('./rm'),
   su: require('./su'),
   whoami: require('./whoami')
 }
