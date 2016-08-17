@@ -104,5 +104,19 @@ describe('#filesystem', () => {
       }, CommandError.PathAlreadyExists)
       assert.deepEqual(store.getState().fileTree, original)
     })
+
+    it('should always cast the content to type string', () => {
+      const store = testingStore()
+      const path = ['etc', 'test123']
+      store.dispatch(action.createFile(path, 5))
+      assert.strictEqual(store.getState().fileTree.etc.test123, '5')
+    })
+
+    it('should create an empty string, if no content was given', () => {
+      const store = testingStore()
+      const path = ['etc', 'foobar']
+      store.dispatch(action.createFile(path))
+      assert.strictEqual(store.getState().fileTree.etc.foobar, '')
+    })
   })
 })

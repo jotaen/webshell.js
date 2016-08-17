@@ -4,7 +4,11 @@ const deepmerge = require('deepmerge')
 
 exports.find = (tree, path) => {
   return path.reduce((tree, item) => {
-    if (typeof tree === 'object' && tree[item]) return tree[item]
+    if (typeof tree === 'object') {
+      if (typeof tree[item] === 'object' || typeof tree[item] === 'string') {
+        return tree[item]
+      }
+    }
     return undefined
   }, tree)
 }

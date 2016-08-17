@@ -13,7 +13,7 @@ module.exports = (args, print, state) => {
   const currentLocation = state.currentLocation
   const path = makePathFromString(args[0], currentLocation)
   const node = filesystem.find(tree, path)
-  if (!node) throw new CommandError.PathNotFound(path)
+  if (node === undefined) throw new CommandError.PathNotFound(path)
   if (!filesystem.isFile(tree, path)) throw new CommandError.NotAFile(path)
   print(node)
 }

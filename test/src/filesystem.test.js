@@ -45,6 +45,19 @@ describe('#filesystem', () => {
       assert(result === undefined)
     })
 
+    it('should find empty endpoints', () => {
+      const tree = {
+        'bin': {},
+        'etc': {},
+        'usr': {
+          'hello': ''
+        }
+      }
+      const path = ['usr', 'hello']
+      const result = filesystem.find(tree, path)
+      assert(result === '')
+    })
+
     it('should find deeply nested endpoints', () => {
       const tree = {
         'etc': [],

@@ -14,7 +14,7 @@ exports.createDirectory = (path) => ({
 exports.createFile = (path, content) => ({
   type: 'CREATE_PATH',
   path,
-  content: content
+  content: content ? String(content) : ''
 })
 
 exports.login = (userName) => ({
