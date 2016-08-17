@@ -9,7 +9,7 @@ describe('#mkdir (make directory)', () => {
   it('should create a new directory at the current location', () => {
     const env = createEnv()
     const newPath = 'temp'
-    mkdir(newPath, env.buffer, env.frozenState, env.dispatch)
+    mkdir(newPath, env.buffer.print, env.frozenState, env.dispatch)
     const result = filesystem.find(env.store.getState().fileTree, ['temp'])
     assert.deepEqual(result, {})
   })
@@ -17,7 +17,7 @@ describe('#mkdir (make directory)', () => {
   it('should create a new directory at an arbitrary (existing) location', () => {
     const env = createEnv()
     const newPath = '/usr/local/bin'
-    mkdir(newPath, env.buffer, env.frozenState, env.dispatch)
+    mkdir(newPath, env.buffer.print, env.frozenState, env.dispatch)
     const result = filesystem.find(env.store.getState().fileTree, ['usr', 'local', 'bin'])
     assert.deepEqual(result, {})
   })
@@ -25,16 +25,16 @@ describe('#mkdir (make directory)', () => {
   it('shouldn’t create a directory, when there is already one existing', () => {
     const env = createEnv()
     const newPath = '/usr'
-    mkdir(newPath, env.buffer, env.frozenState, env.dispatch)
-    const output = env.buffer.flush()
+    mkdir(newPath, env.buffer.print, env.frozenState, env.dispatch)
+    const output = env.buffer.get()
     assert(/already exist/.test(output))
   })
 
   it('shouldn’t create a directory at non-existing locations', () => {
     const env = createEnv()
     const newPath = '/var/www'
-    mkdir(newPath, env.buffer, env.frozenState, env.dispatch)
-    const output = env.buffer.flush()
+    mkdir(newPath, env.buffer.print, env.frozenState, env.dispatch)
+    const output = env.buffer.get()
     assert(/No such file or directory/.test(output))
   })
 })

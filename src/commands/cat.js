@@ -3,9 +3,9 @@
 const makePathFromString = require('../makePathFromString')
 const filesystem = require('../filesystem')
 
-module.exports = (input, terminal, state) => {
+module.exports = (input, print, state) => {
   if (input === '') {
-    terminal.print('usage: cat [filename]')
+    print('usage: cat [filename]')
     return
   }
   const tree = state.fileTree
@@ -13,8 +13,8 @@ module.exports = (input, terminal, state) => {
   const path = makePathFromString(input, currentLocation)
   const node = filesystem.find(tree, path)
   if (filesystem.isFile(tree, path)) {
-    terminal.print(node)
+    print(node)
   } else {
-    terminal.print('cat: ' + input + ': Not a file')
+    print('cat: ' + input + ': Not a file')
   }
 }

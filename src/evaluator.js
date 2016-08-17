@@ -2,6 +2,7 @@
 
 const createStore = require('redux').createStore
 const action = require('./actions')
+const createBuffer = require('./buffer')
 
 const splitStatement = (line) => {
   const parts = line.split(' ')
@@ -12,27 +13,26 @@ const splitStatement = (line) => {
   }
 }
 
-const isStateOkay = (state) => {
-  if (state.sessions.length === 0) return false
-  return true
-}
-
 module.exports = (commands, reducers, initialState) => {
   const store = createStore(reducers, initialState)
   let nextCommand
-  return (line, buffer) => {
+  return (line) => {
+    const buffer = createBuffer()
     const statement = splitStatement(line)
     store.dispatch(action.activity())
     const frozenState = Object.freeze(store.getState())
     if (typeof nextCommand === 'function') {
-      nextCommand = nextCommand(statement.input, buffer, frozenState, store.dispatch)
+      nextCommand = nextCommand(statement.input, buffer.print, frozenState, store.dispatch)
     } else if (typeof commands[statement.command] === 'function') {
       store.dispatch(action.saveInput(statement.raw))
-      nextCommand = commands[statement.command](statement.input, buffer, frozenState, store.dispatch)
+      nextCommand = commands[statement.command](statement.input, buffer.print, frozenState, store.dispatch)
     } else if (statement.command !== '') {
       buffer.print(statement.command + ': command not found')
     }
 
-    if (isStateOkay(store.getState())) return Object.freeze(store.getState())
+    return {
+      output: buffer.get(),
+      state: Object.freeze(store.getState())
+    }
   }
 }

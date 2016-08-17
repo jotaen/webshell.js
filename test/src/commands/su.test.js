@@ -9,7 +9,7 @@ describe('#su (switch user)', () => {
   it('should switch the current user', () => {
     const env = createEnv()
     const newUser = 'alice'
-    su(newUser, env.buffer, env.frozenState)
+    su(newUser, env.buffer.print, env.frozenState)
     const currentUser = stack.latest(env.store.getState().sessions)
     assert.strictEqual(newUser, currentUser)
   })
@@ -17,7 +17,7 @@ describe('#su (switch user)', () => {
   it('should do nothing, if no username was given', () => {
     const env = createEnv()
     const oldUser = stack.latest(env.store.getState().sessions)
-    su('', env.buffer, env.frozenState)
+    su('', env.buffer.print, env.frozenState)
     const currentUser = stack.latest(env.store.getState().sessions)
     assert.strictEqual(oldUser, currentUser)
   })

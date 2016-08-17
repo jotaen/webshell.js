@@ -2,7 +2,7 @@
 
 const action = require('../actions')
 
-module.exports = (input, buffer, state, dispatch) => {
+module.exports = (input, print, state, dispatch) => {
   try {
     dispatch(action.login(input))
   } catch (e) {

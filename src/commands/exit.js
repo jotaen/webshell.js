@@ -2,6 +2,6 @@
 
 const action = require('../actions')
 
-module.exports = (input, buffer, state, dispatch) => {
+module.exports = (input, print, state, dispatch) => {
   dispatch(action.logout())
 }

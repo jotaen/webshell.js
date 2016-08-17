@@ -2,18 +2,16 @@
 
 const stack = require('../stack')
 
-exports.prompt = (buffer, state) => {
+exports.prompt = (state) => {
   const userName = stack.latest(state.sessions)
   const path = '/' + state.currentLocation.join('/')
-  buffer
-    .color('green').print(userName)
-    .color('light-gray').print('@')
-    .color('yellow').print(path)
+  return userName + '@' + path
 }
 
-exports.welcome = (buffer, state) => {
+exports.welcome = (state) => {
   const userName = stack.latest(state.sessions)
   const date = state.lastActivity
-  buffer.print('Hello ' + userName + '!')
-  if (date instanceof Date) buffer.print(' Last activity: ' + date.toLocaleString())
+  let result = 'Hello ' + userName + '!'
+  if (date instanceof Date) result += ' Last activity: ' + date.toLocaleString()
+  return result
 }

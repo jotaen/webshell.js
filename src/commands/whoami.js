@@ -2,7 +2,7 @@
 
 const stack = require('../stack')
 
-module.exports = (input, terminal, state) => {
+module.exports = (input, print, state) => {
   const userName = stack.latest(state.sessions)
-  terminal.print(userName)
+  print(userName)
 }

@@ -1,6 +1,6 @@
 'use strict'
 
-const createBuffer = require('../src/buffer/textBuffer.js')
+const createBuffer = require('../src/buffer.js')
 const testingStore = require('./testingStore')
 
 module.exports = () => {
