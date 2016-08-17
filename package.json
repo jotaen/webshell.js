@@ -4,8 +4,8 @@
     "linter": "eslint .",
     "coverage": "istanbul cover _mocha",
     "pretest": "npm run --silent linter",
-    "bundler": "browserify src/repls/browser.js --s webshellCreate -o dist/webshell.js",
-    "bundler-watch": "watchify src/repls/browser.js --s webshellCreate -o dist/webshell.js"
+    "bundler": "browserify src/view/browser.js --s webshellCreate -o dist/webshell.js",
+    "bundler-watch": "watchify src/view/browser.js --s webshellCreate -o dist/webshell.js"
   },
   "devDependencies": {
     "browserify": "^13.1.0",

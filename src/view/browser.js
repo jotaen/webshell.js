@@ -1,6 +1,6 @@
 'use strict'
 
-const createEvaluator = require('../evaluator')
+const createEvaluator = require('../engine/evaluator')
 const util = require('./util')
 const defaultState = require('../defaultState')
 const reducers = require('../reducers/index')

@@ -1,8 +1,8 @@
 'use strict'
 
 const createStore = require('redux').createStore
-const action = require('./actions')
-const createBuffer = require('./buffer')
+const action = require('../actions')
+const createBuffer = require('../buffer')
 
 const splitStatement = (line) => {
   const parts = line.split(' ')
@@ -15,16 +15,18 @@ const splitStatement = (line) => {
 
 module.exports = (commands, reducers, initialState) => {
   const store = createStore(reducers, initialState)
-  let nextCommand
+  let priorityCommand
   return (line) => {
     const buffer = createBuffer()
     const statement = splitStatement(line)
     store.dispatch(action.activity())
     const frozenState = Object.freeze(store.getState())
     let execute = () => {}
-    if (typeof nextCommand === 'function') {
-      execute = nextCommand
-    } else if (typeof commands[statement.command] === 'function') {
+    let input = statement.input
+    if (priorityCommand) {
+      execute = priorityCommand
+      input = statement.raw
+    } else if (commands[statement.command]) {
       store.dispatch(action.saveInput(statement.raw))
       execute = commands[statement.command]
     } else if (statement.command !== '') {
@@ -32,7 +34,9 @@ module.exports = (commands, reducers, initialState) => {
     }
 
     try {
-      nextCommand = execute(statement.input, buffer.print, frozenState, store.dispatch)
+      priorityCommand = undefined
+      const nextCommand = execute(input, buffer.print, frozenState, store.dispatch)
+      if (typeof nextCommand === 'function') priorityCommand = nextCommand
     } catch (e) {
       buffer.print(statement.command + ': ' + e.message)
     }
