@@ -11,5 +11,6 @@ module.exports = (args, print, state, dispatch) => {
   const tree = state.fileTree
   const destination = path.slice(0, -1)
   if (!filesystem.isDirectory(tree, destination)) throw new CommandError.NotADirectory(destination)
-  dispatch(action.createFile(path, args[1]))
+  const content = args.slice(1).join(' ')
+  dispatch(action.createFile(path, content))
 }

@@ -10,10 +10,10 @@ describe('#put (create file)', () => {
   it('should create a new file at the current location', () => {
     const env = createEnv()
     const filename = 'hello-world.txt'
-    const content = 'Hello World!'
-    put([filename, content], env.buffer.print, env.frozenState, env.dispatch)
+    const args = [filename, 'Hello', 'World']
+    put(args, env.buffer.print, env.frozenState, env.dispatch)
     const result = filesystem.find(env.store.getState().fileTree, [filename])
-    assert.strictEqual(result, content)
+    assert.strictEqual(result, 'Hello World')
   })
 
   it('should create a new file at an arbitrary (existing) location', () => {
