@@ -1,7 +1,7 @@
 'use strict'
 
 const createEvaluator = require('../engine/evaluator')
-const util = require('./util')
+const special = require('./specials')
 const defaultState = require('../defaultState')
 const reducers = require('../reducers/index')
 const commands = require('../commands/index')
@@ -40,17 +40,17 @@ module.exports = (elementId, initialState) => {
       webshellElement.removeChild(inputElement)
       return
     }
-    const prompt = util.prompt(state)
+    const prompt = special.prompt(state)
     inputElement.insertAdjacentHTML('beforebegin', '<div class="prompt">' + prompt + '</div>')
     webshellElement.scrollTop = webshellElement.scrollHeight
     saveState(elementId, state)
     return false
   }
 
-  const welcome = util.welcome(mergedState)
+  const welcome = special.welcome(mergedState)
   inputElement.insertAdjacentHTML('beforebegin', '<div class="response">' + welcome + '</div>')
 
-  const prompt = util.prompt(mergedState)
+  const prompt = special.prompt(mergedState)
   inputElement.insertAdjacentHTML('beforebegin', '<div class="prompt">' + prompt + '</div>')
   inputElement.focus()
 }

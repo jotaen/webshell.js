@@ -5,7 +5,12 @@ const stack = require('../stack')
 exports.prompt = (state) => {
   const userName = stack.latest(state.sessions)
   const path = '/' + state.currentLocation.join('/')
-  return userName + '@' + path
+  const html = [
+    '<span class="text-green">' + userName + '</span>',
+    '<span class="text-lightgray">@</span>',
+    '<span class="text-yellow">' + path + '</span>'
+  ]
+  return html.join('')
 }
 
 exports.welcome = (state) => {
