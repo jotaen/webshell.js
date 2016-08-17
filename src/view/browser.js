@@ -5,6 +5,7 @@ const util = require('./util')
 const defaultState = require('../defaultState')
 const reducers = require('../reducers/index')
 const commands = require('../commands/index')
+const render = require('./render')
 
 const saveState = (name, obj) => {
   const key = 'webshelljs_' + name
@@ -17,7 +18,7 @@ module.exports = (elementId, initialState) => {
   const evaluator = createEvaluator(commands, reducers, mergedState)
 
   const webshellElement = document.getElementById(elementId)
-  webshellElement.innerHTML = '<div class="webshell__input webshell__input--current webshell__text" id="' + elementId + '-cursor" contentEditable="true"></div>'
+  webshellElement.innerHTML = '<div class="input input-current" id="' + elementId + '-cursor" contentEditable="true"></div>'
   const inputElement = document.getElementById(elementId + '-cursor')
   webshellElement.onclick = (event) => {
     if (event.target === webshellElement) inputElement.focus()
@@ -27,29 +28,29 @@ module.exports = (elementId, initialState) => {
     if (event.keyCode !== 13) return
     const input = inputElement.innerHTML
     const {state, output} = evaluator(input)
-    inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__input webshell__text">' + input + '</div>')
+    inputElement.insertAdjacentHTML('beforebegin', '<div class="input">' + input + '</div>')
     inputElement.innerHTML = ''
     const outputAsHtml = output.reduce((rendered, line) => {
-      rendered += line
+      rendered += render(line)
       return rendered
     }, '')
-    inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__response webshell__text">' + outputAsHtml + '</div>')
+    inputElement.insertAdjacentHTML('beforebegin', '<div class="response">' + outputAsHtml + '</div>')
     if (!state) {
-      inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__response webshell__text">Bye bye.</div>')
+      inputElement.insertAdjacentHTML('beforebegin', '<div class="response">Bye bye.</div>')
       webshellElement.removeChild(inputElement)
       return
     }
     const prompt = util.prompt(state)
-    inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__prompt webshell__text">' + prompt + '</div>')
+    inputElement.insertAdjacentHTML('beforebegin', '<div class="prompt">' + prompt + '</div>')
     webshellElement.scrollTop = webshellElement.scrollHeight
     saveState(elementId, state)
     return false
   }
 
   const welcome = util.welcome(mergedState)
-  inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__response webshell__text">' + welcome + '</div>')
+  inputElement.insertAdjacentHTML('beforebegin', '<div class="response">' + welcome + '</div>')
 
   const prompt = util.prompt(mergedState)
-  inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__prompt webshell__text">' + prompt + '</div>')
+  inputElement.insertAdjacentHTML('beforebegin', '<div class="prompt">' + prompt + '</div>')
   inputElement.focus()
 }

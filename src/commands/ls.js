@@ -15,9 +15,11 @@ module.exports = (args, print, state) => {
   if (!filesystem.isDirectory(tree, path)) throw new CommandError.NotADirectory(path)
 
   const targetDirectory = filesystem.find(tree, path)
-  Object.keys(targetDirectory).sort().forEach((node) => {
+  const result = Object.keys(targetDirectory).sort().map((node) => {
     let suffix = ''
-    if (typeof tree[node] === 'object') suffix = '/'
-    print(node + suffix)
+    const nodePath = path.concat(node)
+    if (filesystem.isDirectory(tree, nodePath)) suffix = '/'
+    return node + suffix
   })
+  print(result)
 }

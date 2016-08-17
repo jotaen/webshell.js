@@ -21,50 +21,61 @@
         cursor: text;
         padding: 0.5em;
         overflow-y: scroll;
+        color: #fff
       }
-      .webshell__prompt {
+      .prompt {
         margin-top: 1em;
       }
-      .webshell__prompt:first-child {
+      .prompt:first-child {
         margin-top: 0;
       }
       @media (min-width: 30em) {
-        .webshell__prompt {
+        .prompt {
           margin-top: inherit;
           float: left;
           margin-right: 0.2em;
         }
       }
-      .webshell__input {
+      .input {
         position: relative;
         display: flex;
         outline: none;
         padding-left: 1em;
       }
-      .webshell__input:before {
+      .input:before {
         position: absolute;
         left: 0em;
         content: '$';
         color: #777;
       }
-      .webshell__input--current:before {
+      .input-current:before {
         color: #c0253e;
       }
-      .webshell__response {
+      .response {
         clear: both;
         white-space: pre-wrap;
         margin-bottom: 0.2em;
         min-height: 1em;
       }
       @media (min-width: 30em) {
-        .webshell__response {
+        .response {
           min-height: inherit;
         }
       }
-      .webshell__text { color: #fff }
-      .webshell__text--green { color: #65c858 }
-      .webshell__text--yellow { color: #cac43b }
-      .webshell__text--light-gray { color: #999 }
+      .list {
+        padding-left: 0;
+        margin: 0;
+        column-width: 10em;
+        column-gap: 3em;
+      }
+      .list-item {
+        list-style-type: none;
+        word-wrap: break-word;
+      }
+      .text { color: #fff }
+      .text-green { color: #65c858 }
+      .text-yellow { color: #cac43b }
+      .text-lightgray { color: #999 }
     </style>
   </head>
   <body>
