@@ -3,6 +3,9 @@
 const createEvaluator = require('../evaluator')
 const createBuffer = require('../buffer/htmlBuffer')
 const util = require('./util')
+const defaultState = require('../defaultState')
+const reducers = require('../reducers/index')
+const commands = require('../commands/index')
 
 const saveState = (name, obj) => {
   const key = 'webshelljs_' + name
@@ -11,8 +14,8 @@ const saveState = (name, obj) => {
 }
 
 module.exports = (elementId, initialState) => {
-  const evaluator = createEvaluator(initialState)
-  const buffer = createBuffer()
+  const mergedState = Object.assign(defaultState(), initialState)
+  const evaluator = createEvaluator(commands, reducers, mergedState)
 
   const webshellElement = document.getElementById(elementId)
   webshellElement.innerHTML = '<div class="webshell__input webshell__input--current webshell__text" id="' + elementId + '-cursor" contentEditable="true"></div>'
@@ -23,6 +26,7 @@ module.exports = (elementId, initialState) => {
 
   inputElement.onkeydown = (event) => {
     if (event.keyCode !== 13) return
+    const buffer = createBuffer()
     const input = inputElement.innerHTML
     const state = evaluator(input, buffer)
     const response = buffer.flush()
@@ -42,11 +46,12 @@ module.exports = (elementId, initialState) => {
     return false
   }
 
-  util.welcome(buffer, initialState)
+  const buffer = createBuffer()
+  util.welcome(buffer, mergedState)
   const hello = buffer.flush()
   inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__response webshell__text">' + hello + '</div>')
 
-  util.prompt(buffer, initialState)
+  util.prompt(buffer, mergedState)
   const ps1 = buffer.flush()
   inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__prompt">' + ps1 + '</div>')
   inputElement.focus()

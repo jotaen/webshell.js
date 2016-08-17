@@ -1,9 +1,6 @@
 'use strict'
 
-const defaultState = require('./defaultState')
 const createStore = require('redux').createStore
-const reducers = require('./reducers/index')
-const commands = require('./commands/index')
 const action = require('./actions')
 
 const splitStatement = (line) => {
@@ -20,12 +17,10 @@ const isStateOkay = (state) => {
   return true
 }
 
-module.exports = (initialState) => {
-  const state = Object.assign(defaultState(), initialState)
-  const store = createStore(reducers, state)
+module.exports = (commands, reducers, initialState) => {
+  const store = createStore(reducers, initialState)
   let nextCommand
   return (line, buffer) => {
-    buffer.reset()
     const statement = splitStatement(line)
     store.dispatch(action.activity())
     const frozenState = Object.freeze(store.getState())
