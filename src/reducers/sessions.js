@@ -1,7 +1,9 @@
 'use strict'
 
+const CommandError = require('../errors')
+
 exports.LOGIN = (state, action) => {
-  if (action.userName === '') throw Error('EMPTY_USERNAME')
+  if (action.userName === '') throw new CommandError.InvalidParameter(action.userName)
   const sessions = state.sessions.concat([String(action.userName)])
   return Object.assign({}, state, {sessions})
 }

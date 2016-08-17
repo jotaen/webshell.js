@@ -3,6 +3,7 @@
 const makePathFromString = require('../makePathFromString')
 const action = require('../actions')
 const filesystem = require('../filesystem')
+const CustomError = require('../errors')
 
 module.exports = (input, terminal, state, dispatch) => {
   const currentLocation = state.currentLocation
@@ -18,6 +19,6 @@ module.exports = (input, terminal, state, dispatch) => {
     dispatch(action.createDirectory(path))
   } catch (e) {
     const pathString = '/' + path.join('/')
-    if (e.message === 'ALREADY_EXISTS') terminal.print(pathString + ': File or folder already exists')
+    if (e instanceof CustomError.PathAlreadyExists) terminal.print(pathString + ': File or folder already exists')
   }
 }

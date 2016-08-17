@@ -3,6 +3,7 @@
 const assert = require('assert')
 const testingStore = require('../../testingStore')
 const action = require('../../../src/actions')
+const CommandError = require('../../../src/errors')
 
 describe('#filesystem', () => {
   describe('#CHANGE_LOCATION', () => {
@@ -19,7 +20,7 @@ describe('#filesystem', () => {
       const invalidPath = ['var', 'www']
       assert.throws(() => {
         store.dispatch(action.changeLocation(invalidPath))
-      }, /NOT_FOUND/)
+      }, CommandError.PathNotFound)
       assert.deepEqual(store.getState().currentLocation, [])
     })
 
@@ -28,7 +29,7 @@ describe('#filesystem', () => {
       const invalidPath = ['etc', 'hosts']
       assert.throws(() => {
         store.dispatch(action.changeLocation(invalidPath))
-      }, /NOT_A_DIRECTORY/)
+      }, CommandError.NotADirectory)
       assert.deepEqual(store.getState().currentLocation, [])
     })
   })
@@ -64,7 +65,7 @@ describe('#filesystem', () => {
       const path = ['usr', 'local']
       assert.throws(() => {
         store.dispatch(action.createDirectory(path))
-      }, /ALREADY_EXISTS/)
+      }, CommandError.PathAlreadyExists)
       assert.deepEqual(store.getState().fileTree, original)
     })
   })
@@ -100,7 +101,7 @@ describe('#filesystem', () => {
       const path = ['etc', 'hosts']
       assert.throws(() => {
         store.dispatch(action.createFile(path))
-      }, /ALREADY_EXISTS/)
+      }, CommandError.PathAlreadyExists)
       assert.deepEqual(store.getState().fileTree, original)
     })
   })

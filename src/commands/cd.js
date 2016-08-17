@@ -2,6 +2,7 @@
 
 const makePathFromString = require('../makePathFromString')
 const action = require('../actions')
+const CustomError = require('../errors')
 
 module.exports = (input, terminal, state, dispatch) => {
   const currentLocation = state.currentLocation
@@ -10,7 +11,7 @@ module.exports = (input, terminal, state, dispatch) => {
     dispatch(action.changeLocation(path))
   } catch (e) {
     const pathString = '/' + path.join('/')
-    if (e.message === 'NOT_FOUND') terminal.print(pathString + ': No such file or directory')
-    if (e.message === 'NOT_A_DIRECTORY') terminal.print(pathString + ': Not a directory')
+    if (e instanceof CustomError.PathNotFound) terminal.print(pathString + ': No such file or directory')
+    if (e instanceof CustomError.NotADirectory) terminal.print(pathString + ': Not a directory')
   }
 }

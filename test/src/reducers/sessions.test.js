@@ -4,6 +4,7 @@ const assert = require('assert')
 const testingStore = require('../../testingStore')
 const action = require('../../../src/actions')
 const stack = require('../../../src/stack')
+const CommandError = require('../../../src/errors')
 
 describe('#users', () => {
   describe('#LOGIN', () => {
@@ -19,7 +20,7 @@ describe('#users', () => {
       const store = testingStore()
       assert.throws(() => {
         store.dispatch(action.login(''))
-      }, /EMPTY_USERNAME/)
+      }, CommandError.InvalidParameter)
     })
   })
 
