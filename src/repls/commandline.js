@@ -1,18 +1,18 @@
 'use strict'
 
 const createBuffer = require('../buffer/textBuffer.js')
-const createEngine = require('../engine.js')
+const createEvaluator = require('../evaluator.js')
 const util = require('./util')
 
 module.exports = (stdin, stdout, initialState) => {
   stdin.resume()
   stdin.setEncoding('utf8')
-  const engine = createEngine(initialState)
+  const evaluator = createEvaluator(initialState)
   const buffer = createBuffer()
 
   stdin.on('data', (line) => {
     const input = line.replace(/(\r\n|\n|\r)/gm, '')
-    const state = engine(input, buffer)
+    const state = evaluator(input, buffer)
     const response = buffer.flush()
     stdout.write(response)
     if (!state) {

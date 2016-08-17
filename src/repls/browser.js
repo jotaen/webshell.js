@@ -1,6 +1,6 @@
 'use strict'
 
-const createEngine = require('../engine')
+const createEvaluator = require('../evaluator')
 const createBuffer = require('../buffer/htmlBuffer')
 const util = require('./util')
 
@@ -11,7 +11,7 @@ const saveState = (name, obj) => {
 }
 
 module.exports = (elementId, initialState) => {
-  const engine = createEngine(initialState)
+  const evaluator = createEvaluator(initialState)
   const buffer = createBuffer()
 
   const webshellElement = document.getElementById(elementId)
@@ -24,7 +24,7 @@ module.exports = (elementId, initialState) => {
   inputElement.onkeydown = (event) => {
     if (event.keyCode !== 13) return
     const input = inputElement.innerHTML
-    const state = engine(input, buffer)
+    const state = evaluator(input, buffer)
     const response = buffer.flush()
     inputElement.insertAdjacentHTML('beforebegin', '<div class="webshell__input webshell__text">' + input + '</div>')
     inputElement.innerHTML = ''
