@@ -10,7 +10,7 @@ describe('#su (switch user)', () => {
   it('should switch the current user', () => {
     const env = createEnv()
     const newUser = 'alice'
-    su(newUser, env.buffer.print, env.frozenState, env.dispatch)
+    su([newUser], env.buffer.print, env.frozenState, env.dispatch)
     const currentUser = stack.latest(env.store.getState().sessions)
     assert.strictEqual(newUser, currentUser)
   })
@@ -19,7 +19,7 @@ describe('#su (switch user)', () => {
     const env = createEnv()
     const oldUser = stack.latest(env.store.getState().sessions)
     assert.throws(() => {
-      su('', env.buffer.print, env.frozenState, env.dispatch)
+      su([], env.buffer.print, env.frozenState, env.dispatch)
     }, CommandError.InvalidArgument)
     const currentUser = stack.latest(env.store.getState().sessions)
     assert.strictEqual(oldUser, currentUser)

@@ -8,7 +8,7 @@ const CommandError = require('../../../src/errors')
 describe('#ls (list)', () => {
   it('should list all items of the current location', () => {
     const env = createEnv()
-    ls('', env.buffer.print, env.frozenState)
+    ls([], env.buffer.print, env.frozenState)
     const output = env.buffer.get()
     const expect = ['bin/', 'etc/', 'usr/']
     assert.deepEqual(output, expect)
@@ -17,7 +17,7 @@ describe('#ls (list)', () => {
   it('should list all items of any location', () => {
     const env = createEnv()
     const input = '/bin'
-    ls(input, env.buffer.print, env.frozenState)
+    ls([input], env.buffer.print, env.frozenState)
     const output = env.buffer.get()
     const expect = ['date']
     assert.deepEqual(output, expect)
@@ -27,7 +27,7 @@ describe('#ls (list)', () => {
     const env = createEnv()
     const input = '/this/directory/does/not/exist'
     assert.throws(() => {
-      ls(input, env.buffer.print, env.frozenState)
+      ls([input], env.buffer.print, env.frozenState)
     }, CommandError.PathNotFound)
   })
 
@@ -35,14 +35,14 @@ describe('#ls (list)', () => {
     const env = createEnv()
     const input = '/etc/hosts'
     assert.throws(() => {
-      ls(input, env.buffer.print, env.frozenState)
+      ls([input], env.buffer.print, env.frozenState)
     }, CommandError.NotADirectory)
   })
 
   it('should add trailing slashes to directories', () => {
     const env = createEnv()
     const input = '/bin'
-    ls(input, env.buffer.print, env.frozenState)
+    ls([input], env.buffer.print, env.frozenState)
     const output = env.buffer.get()
     const expect = ['date']
     assert.deepEqual(output, expect)
@@ -51,7 +51,7 @@ describe('#ls (list)', () => {
   it('should sort the output in alphabetic order', () => {
     const env = createEnv()
     const input = '/etc'
-    ls(input, env.buffer.print, env.frozenState)
+    ls([input], env.buffer.print, env.frozenState)
     const output = env.buffer.get()
     const expect = ['hosts', 'passwd']
     assert.deepEqual(output, expect)

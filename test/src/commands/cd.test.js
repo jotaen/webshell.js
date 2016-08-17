@@ -9,7 +9,7 @@ describe('#cd (change directory)', () => {
   it('should change the current working directory', () => {
     const env = createEnv()
     const newPath = '/usr/local/'
-    cd(newPath, env.buffer.print, env.frozenState, env.dispatch)
+    cd([newPath], env.buffer.print, env.frozenState, env.dispatch)
     const output = env.buffer.get()
     const result = env.store.getState().currentLocation
     const expect = ['usr', 'local']
@@ -20,7 +20,7 @@ describe('#cd (change directory)', () => {
   it('should change the current working directory, even if input is "dirty"', () => {
     const env = createEnv()
     const newPath = '////usr///local//'
-    cd(newPath, env.buffer.print, env.frozenState, env.dispatch)
+    cd([newPath], env.buffer.print, env.frozenState, env.dispatch)
     const output = env.buffer.get()
     const result = env.store.getState().currentLocation
     const expect = ['usr', 'local']
@@ -32,7 +32,7 @@ describe('#cd (change directory)', () => {
     const env = createEnv()
     const newPath = '/path/that/does/not/exist'
     assert.throws(() => {
-      cd(newPath, env.buffer.print, env.frozenState, env.dispatch)
+      cd([newPath], env.buffer.print, env.frozenState, env.dispatch)
     }, CommandError.PathNotExists)
     assert.deepEqual(env.store.getState().currentLocation, [])
   })
@@ -41,7 +41,7 @@ describe('#cd (change directory)', () => {
     const env = createEnv()
     const newPath = '/etc/hosts'
     assert.throws(() => {
-      cd(newPath, env.buffer.print, env.frozenState, env.dispatch)
+      cd([newPath], env.buffer.print, env.frozenState, env.dispatch)
     }, CommandError.NotADirectory)
     assert.deepEqual(env.store.getState().currentLocation, [])
   })

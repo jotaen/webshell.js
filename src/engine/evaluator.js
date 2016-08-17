@@ -9,7 +9,7 @@ const splitStatement = (line) => {
   return {
     raw: line,
     command: parts.shift(),
-    input: parts.join(' ')
+    input: parts
   }
 }
 

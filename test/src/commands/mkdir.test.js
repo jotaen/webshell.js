@@ -10,7 +10,7 @@ describe('#mkdir (make directory)', () => {
   it('should create a new directory at the current location', () => {
     const env = createEnv()
     const newPath = 'temp'
-    mkdir(newPath, env.buffer.print, env.frozenState, env.dispatch)
+    mkdir([newPath], env.buffer.print, env.frozenState, env.dispatch)
     const result = filesystem.find(env.store.getState().fileTree, ['temp'])
     assert.deepEqual(result, {})
   })
@@ -18,7 +18,7 @@ describe('#mkdir (make directory)', () => {
   it('should create a new directory at an arbitrary (existing) location', () => {
     const env = createEnv()
     const newPath = '/usr/local/bin'
-    mkdir(newPath, env.buffer.print, env.frozenState, env.dispatch)
+    mkdir([newPath], env.buffer.print, env.frozenState, env.dispatch)
     const result = filesystem.find(env.store.getState().fileTree, ['usr', 'local', 'bin'])
     assert.deepEqual(result, {})
   })
@@ -27,7 +27,7 @@ describe('#mkdir (make directory)', () => {
     const env = createEnv()
     const newPath = '/usr'
     assert.throws(() => {
-      mkdir(newPath, env.buffer.print, env.frozenState, env.dispatch)
+      mkdir([newPath], env.buffer.print, env.frozenState, env.dispatch)
     }, CommandError.PathAlreadyExists)
   })
 
@@ -35,7 +35,7 @@ describe('#mkdir (make directory)', () => {
     const env = createEnv()
     const newPath = '/var/www'
     assert.throws(() => {
-      mkdir(newPath, env.buffer.print, env.frozenState, env.dispatch)
+      mkdir([newPath], env.buffer.print, env.frozenState, env.dispatch)
     }, CommandError.PathNotExists)
   })
 })

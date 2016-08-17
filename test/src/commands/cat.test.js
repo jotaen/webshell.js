@@ -9,7 +9,7 @@ describe('#cat (concat, echo files)', () => {
   it('should print out the content of a file', () => {
     const env = createEnv()
     const path = '/etc/hosts'
-    cat(path, env.buffer.print, env.frozenState)
+    cat([path], env.buffer.print, env.frozenState)
     const output = env.buffer.get()
     const expect = ['127.0.0.1 localhost']
     assert.deepEqual(output, expect)
@@ -19,7 +19,7 @@ describe('#cat (concat, echo files)', () => {
     const env = createEnv()
     const path = '/usr'
     assert.throws(() => {
-      cat(path, env.buffer.print, env.frozenState)
+      cat([path], env.buffer.print, env.frozenState)
     }, CommandError.NotAFile)
   })
 
@@ -27,14 +27,13 @@ describe('#cat (concat, echo files)', () => {
     const env = createEnv()
     const path = '/non/existing/path/filename.txt'
     assert.throws(() => {
-      cat(path, env.buffer.print, env.frozenState)
+      cat([path], env.buffer.print, env.frozenState)
     }, CommandError.PathNotFound)
   })
 
   it('should print a `usage` text, if no input was given', () => {
     const env = createEnv()
-    const path = ''
-    cat(path, env.buffer.print, env.frozenState)
+    cat([], env.buffer.print, env.frozenState)
     const output = env.buffer.get()
     assert(/usage/.test(output))
   })
