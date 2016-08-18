@@ -10,7 +10,7 @@ describe('#ls (list)', () => {
     const env = createEnv()
     ls([], env.buffer.print, env.frozenState)
     const output = env.buffer.get()
-    const expect = ['bin/', 'etc/', 'usr/']
+    const expect = [['bin/', 'etc/', 'usr/']]
     assert.deepEqual(output, expect)
   })
 
@@ -19,7 +19,7 @@ describe('#ls (list)', () => {
     const input = '/bin'
     ls([input], env.buffer.print, env.frozenState)
     const output = env.buffer.get()
-    const expect = ['date']
+    const expect = [['date']]
     assert.deepEqual(output, expect)
   })
 
@@ -44,7 +44,7 @@ describe('#ls (list)', () => {
     const input = '/bin'
     ls([input], env.buffer.print, env.frozenState)
     const output = env.buffer.get()
-    const expect = ['date']
+    const expect = [['date']]
     assert.deepEqual(output, expect)
   })
 
@@ -53,7 +53,7 @@ describe('#ls (list)', () => {
     const input = '/etc'
     ls([input], env.buffer.print, env.frozenState)
     const output = env.buffer.get()
-    const expect = ['hosts', 'passwd']
+    const expect = [['hosts', 'passwd']]
     assert.deepEqual(output, expect)
   })
 })
