@@ -66,6 +66,7 @@ module.exports = (commands, reducers, initialState) => {
 
   const complete = (line) => {
     const parts = tokenize(line).map(token => token.content)
+    if (parts.length === 0) return []
     const last = parts.pop()
     const tree = store.getState().fileTree
     const location = store.getState().currentLocation

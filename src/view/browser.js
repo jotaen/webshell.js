@@ -95,7 +95,7 @@ module.exports = (elementId, initialState) => {
 
   const flush = (additionalContent) => {
     const input = read()
-    const text = input + (additionalContent ? additionalContent : '')
+    const text = input + (typeof additionalContent === 'string' ? additionalContent : '')
     inputElement.insertAdjacentHTML('beforebegin', '<div class="input">' + text + '</div>')
     inputElement.innerHTML = ''
     return input
