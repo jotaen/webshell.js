@@ -11,7 +11,7 @@ const entities = require('html-entities').XmlEntities
 module.exports = (elementId, initialState) => {
   const mergedState = Object.assign(defaultState(), initialState)
   const engine = createEngine(commands, reducers, mergedState)
-  let currentHistoryItem = 0
+  let currentHistoryItem = -1
   ;(() => {})(currentHistoryItem) // workaround for falsy linter error
   const webshellElement = document.getElementById(elementId)
   webshellElement.innerHTML = '<div class="input input-current" id="' + elementId + '-cursor" contentEditable="true"></div>'
@@ -66,10 +66,18 @@ module.exports = (elementId, initialState) => {
 
   const historyUp = () => {
     currentHistoryItem++
+    const history = engine.state().history.reverse()
+    if (currentHistoryItem > history.length - 1) currentHistoryItem = history.length - 1
+    const old = typeof history[currentHistoryItem] === 'string' ? history[currentHistoryItem] : ''
+    propose(old)
   }
 
   const historyDown = () => {
     currentHistoryItem--
+    const history = engine.state().history.reverse()
+    if (currentHistoryItem < -1) currentHistoryItem = -1
+    const old = typeof history[currentHistoryItem] === 'string' ? history[currentHistoryItem] : ''
+    propose(old)
   }
 
   const focus = () => {
@@ -84,6 +92,7 @@ module.exports = (elementId, initialState) => {
   }
 
   const prompt = () => {
+    currentHistoryItem = -1
     const state = engine.state()
     inputElement.insertAdjacentHTML('beforebegin', '<div class="prompt">' + special.prompt(state) + '</div>')
     focus()
