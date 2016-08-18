@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "deepmerge": "^0.2.10",
+    "html-entities": "^1.2.0",
     "redux": "^3.5.2"
   }
 }

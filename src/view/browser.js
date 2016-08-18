@@ -6,6 +6,7 @@ const defaultState = require('../defaultState')
 const reducers = require('../reducers/index')
 const commands = require('../commands/index')
 const render = require('./render')
+const entities = require('html-entities').XmlEntities
 
 const saveState = (name, obj) => {
   const key = 'webshelljs_' + name
@@ -26,7 +27,7 @@ module.exports = (elementId, initialState) => {
 
   inputElement.onkeydown = (event) => {
     if (event.keyCode !== 13) return
-    const input = inputElement.innerHTML
+    const input = entities.decode(inputElement.innerHTML)
     const {state, output} = evaluator(input)
     inputElement.insertAdjacentHTML('beforebegin', '<div class="input">' + input + '</div>')
     inputElement.innerHTML = ''
