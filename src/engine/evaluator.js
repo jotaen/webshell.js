@@ -15,7 +15,6 @@ const splitStatement = (line) => {
 
 module.exports = (commands, reducers, initialState) => {
   const store = createStore(reducers, initialState)
-  let priorityCommand
   return (line) => {
     const buffer = createBuffer()
     const statement = splitStatement(line)
@@ -23,10 +22,7 @@ module.exports = (commands, reducers, initialState) => {
     const frozenState = Object.freeze(store.getState())
     let execute = () => {}
     let input = statement.input
-    if (priorityCommand) {
-      execute = priorityCommand
-      input = statement.raw
-    } else if (commands[statement.command]) {
+    if (commands[statement.command]) {
       store.dispatch(action.saveInput(statement.raw))
       execute = commands[statement.command]
     } else if (statement.command !== '') {
@@ -34,9 +30,7 @@ module.exports = (commands, reducers, initialState) => {
     }
 
     try {
-      priorityCommand = undefined
-      const nextCommand = execute(input, buffer.print, frozenState, store.dispatch)
-      if (typeof nextCommand === 'function') priorityCommand = nextCommand
+      execute(input, buffer.print, frozenState, store.dispatch)
     } catch (e) {
       buffer.print(statement.command + ': ' + e.message)
     }
