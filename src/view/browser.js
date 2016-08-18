@@ -21,21 +21,47 @@ module.exports = (elementId, initialState) => {
   }
   inputElement.onkeydown = function (event) {
     switch (event.keyCode) {
-      case 13:
+      case 13: // return
         evaluate()
         return false
-      case 38:
+      case 38: // arrow up
         historyUp()
         return false
-      case 40:
+      case 40: // arrow down
         historyDown()
         return false
-      case 67:
-        if (event.ctrlKey) console.log(67)
+      case 67: // c
+        if (!event.ctrlKey) return true
+        clear()
+        return false
+      case 9: // tab
+        tab()
         return false
       default:
         return true
     }
+  }
+
+  const tab = () => {
+    const input = read()
+    const result = engine.complete(input)
+    let line = ''
+    if (result.length === 1) {
+      line = result[0].preceding + ' ' + result[0].partial
+    } else {
+      flush()
+      print([result.map(item => item.partial)])
+      prompt()
+      line = input
+    }
+    propose(line)
+  }
+
+  const clear = () => {
+    flush('^C')
+    print([])
+    prompt()
+    propose('')
   }
 
   const historyUp = () => {
@@ -47,6 +73,7 @@ module.exports = (elementId, initialState) => {
   }
 
   const focus = () => {
+    webshellElement.scrollTop = webshellElement.scrollHeight
     inputElement.focus()
   }
 
@@ -56,21 +83,22 @@ module.exports = (elementId, initialState) => {
     window.localStorage.setItem(key, value)
   }
 
-  const prompt = (state) => {
+  const prompt = () => {
+    const state = engine.state()
     inputElement.insertAdjacentHTML('beforebegin', '<div class="prompt">' + special.prompt(state) + '</div>')
+    focus()
   }
 
-  const scrollToPrompt = () => {
-    webshellElement.scrollTop = webshellElement.scrollHeight
+  const read = () => {
+    return entities.decode(inputElement.innerHTML).replace(/&nbsp;/g, ' ')
   }
 
-  const readline = () => {
-    return entities.decode(inputElement.innerHTML)
-  }
-
-  const flush = (input) => {
-    inputElement.insertAdjacentHTML('beforebegin', '<div class="input">' + input + '</div>')
+  const flush = (additionalContent) => {
+    const input = read()
+    const text = input + (additionalContent ? additionalContent : '')
+    inputElement.insertAdjacentHTML('beforebegin', '<div class="input">' + text + '</div>')
     inputElement.innerHTML = ''
+    return input
   }
 
   const terminate = () => {
@@ -85,21 +113,31 @@ module.exports = (elementId, initialState) => {
     inputElement.insertAdjacentHTML('beforebegin', '<div class="response">' + outputAsHtml + '</div>')
   }
 
+  const propose = (line) => {
+    inputElement.innerHTML = line
+    if (line.length > 0) {
+      const range = document.createRange()
+      const sel = window.getSelection()
+      range.setStart(inputElement.childNodes[0], line.length)
+      range.collapse(true)
+      sel.removeAllRanges()
+      sel.addRange(range)
+      focus()
+    }
+  }
+
   const evaluate = () => {
-    const input = readline()
+    const input = flush()
     const {state, output} = engine.evaluate(input)
-    flush(input)
     print(output)
     if (!state) {
       terminate()
       return
     }
-    prompt(state)
     saveState(state)
-    scrollToPrompt()
+    prompt()
   }
 
   inputElement.insertAdjacentHTML('beforebegin', '<div class="response">' + special.welcome(mergedState) + '</div>')
-  inputElement.insertAdjacentHTML('beforebegin', '<div class="prompt">' + special.prompt(mergedState) + '</div>')
-  focus()
+  prompt()
 }

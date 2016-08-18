@@ -5,6 +5,9 @@ const action = require('../actions')
 const createBuffer = require('../buffer')
 const parse = require('./parse')
 const render = require('./render.js')
+const filesystem = require('../filesystem.js')
+const makePathFromString = require('../makePathFromString.js')
+const tokenize = require('./tokenize')
 
 module.exports = (commands, reducers, initialState) => {
   const store = createStore(reducers, initialState)
@@ -61,8 +64,33 @@ module.exports = (commands, reducers, initialState) => {
     return Object.freeze(store.getState())
   }
 
+  const complete = (line) => {
+    const parts = tokenize(line).map(token => token.content)
+    const last = parts.pop()
+    const tree = store.getState().fileTree
+    const location = store.getState().currentLocation
+    const path = makePathFromString(last, location)
+    if (last.slice(-1) === '/') path.push('')
+    const partial = path.pop()
+    const result = filesystem.find(tree, path)
+    if (!result) return []
+    return Object.keys(result).filter((item) => {
+      return (item.indexOf(partial) === 0)
+    }).map((item) => {
+      let p = ''
+      const absolutePath = path.join('/')
+      if (absolutePath.length > 0) p += '/' + absolutePath
+      p += '/' + item + '/'
+      return {
+        preceding: parts.join(' '),
+        partial: p
+      }
+    })
+  }
+
   return {
     evaluate,
-    state
+    state,
+    complete
   }
 }
