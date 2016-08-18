@@ -3,40 +3,53 @@
 const createStore = require('redux').createStore
 const action = require('../actions')
 const createBuffer = require('../buffer')
+const parse = require('./parse')
+const render = require('./render.js')
 
-const splitStatement = (line) => {
-  const parts = line.split(' ')
-  return {
-    raw: line,
-    command: parts.shift(),
-    input: parts
+const findExec = (commands, commandName) => {
+  if (commands[commandName]) {
+    return commands[commandName]
+  } else if (commandName !== undefined) {
+    return () => { throw new Error('Command not found') }
+  } else {
+    return () => {}
   }
+}
+
+const makeArgs = (previous, job) => {
+  let args = job.args
+  if (job.wantsInput) {
+    const plainTextOutput = previous.output.reduce((result, output) => {
+      return (result + render(output))
+    }, '')
+    args.push(plainTextOutput)
+  }
+  return args
 }
 
 module.exports = (commands, reducers, initialState) => {
   const store = createStore(reducers, initialState)
   return (line) => {
-    const buffer = createBuffer()
-    const statement = splitStatement(line)
     store.dispatch(action.activity())
-    const frozenState = Object.freeze(store.getState())
-    let execute = () => {}
-    let input = statement.input
-    if (commands[statement.command]) {
-      store.dispatch(action.saveInput(statement.raw))
-      execute = commands[statement.command]
-    } else if (statement.command !== '') {
-      execute = () => { throw new Error('Command not found') }
-    }
+    store.dispatch(action.saveInput(line))
+    const queue = parse(line)
+    const result = queue.reduce((previous, job) => {
+      if (previous.error && job.stopOnFailure) return previous
+      const buffer = createBuffer()
+      const frozenState = Object.freeze(store.getState())
+      const execute = findExec(commands, job.command)
 
-    try {
-      execute(input, buffer.print, frozenState, store.dispatch)
-    } catch (e) {
-      buffer.print(statement.command + ': ' + e.message)
-    }
+      try {
+        const args = makeArgs(previous, job)
+        execute(args, buffer.print, frozenState, store.dispatch)
+        return {error: false, output: buffer.get()}
+      } catch (e) {
+        return {error: true, output: [job.command + ': ' + e.message]}
+      }
+    }, {error: false, output: ['']})
 
     return {
-      output: buffer.get(),
+      output: result.output,
       state: Object.freeze(store.getState())
     }
   }

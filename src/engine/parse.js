@@ -11,13 +11,17 @@ const createJob = (operator) => {
   }
   if (operator === '>') {
     command.command = 'put'
+    command.wantsInput = true
   } else if (operator === '>>') {
     command.command = 'put'
     command.args.push('--amend')
+    command.wantsInput = true
   } else if (operator === '|') {
+    command.wantsInput = true
     command.wantsInput = true
   } else if (operator === '&') {
     command.stopOnFailure = false
+  } else if (operator === '&&') {
   }
   return command
 }
