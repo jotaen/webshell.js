@@ -1,7 +1,7 @@
 'use strict'
 
 const assert = require('assert')
-const tokenize = require('../../../src/engine/tokenize')
+const tokenize = require('../../../src/core/tokenize')
 
 describe('#tokenize', () => {
   it('should split simple statements', () => {

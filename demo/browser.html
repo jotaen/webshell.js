@@ -91,7 +91,7 @@
       const defaultState = webshellDefaultState()
       const savedState = webshellReadState(id)
       const initialState = Object.assign({}, defaultState, savedState)
-      const webshell = webshellCreate(id, initialState)
+      const webshell = createWebshell(id, initialState)
     </script>
   </body>
 </html>

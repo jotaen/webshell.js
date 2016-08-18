@@ -1,7 +1,7 @@
 'use strict'
 
 const assert = require('assert')
-const parse = require('../../../src/engine/parse')
+const parse = require('../../../src/core/parse')
 
 describe('#parse', () => {
   it('generate a list of commands', () => {
