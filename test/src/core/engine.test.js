@@ -11,9 +11,9 @@ describe('#engine', () => {
         wasInvoked = true
       }
     }
-    const reducers = () => {}
+    const reducers = (action, state) => state
     const engine = createEngine(commands, reducers, {})
-    engine.evaluate('something', {})
+    engine.evaluate('something')
     assert.strictEqual(wasInvoked, true)
   })
 })

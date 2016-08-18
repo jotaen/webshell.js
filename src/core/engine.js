@@ -36,12 +36,11 @@ module.exports = (commands, reducers, initialState) => {
   const process = (previous, job) => {
     if (previous.error && job.stopOnFailure) return previous
     const buffer = createBuffer()
-    const frozenState = Object.freeze(store.getState())
     const execute = findExec(commands, job.command)
 
     try {
       const args = makeArgs(previous, job)
-      execute(args, buffer.print, frozenState, store.dispatch)
+      execute(args, buffer.print, state(), store.dispatch)
       return {error: false, output: buffer.get()}
     } catch (e) {
       return {error: true, output: [job.command + ': ' + e.message]}
@@ -56,12 +55,12 @@ module.exports = (commands, reducers, initialState) => {
 
     return {
       output: result.output,
-      state: Object.freeze(store.getState())
+      state: state()
     }
   }
 
   const state = () => {
-    return Object.freeze(store.getState())
+    return JSON.parse(JSON.stringify(store.getState()))
   }
 
   const complete = (line) => {
