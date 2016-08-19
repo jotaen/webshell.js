@@ -9,17 +9,16 @@ const stack = require('../stack')
 const entities = require('html-entities').XmlEntities
 
 module.exports = (elementId, options) => {
-
   //
   //  INITIALIZATION
   //
-  
+
   const defaultOptions = {
     initialState: {}
   }
   const opts = Object.assign({}, defaultOptions, options)
 
-  const refresh = window.location.href.search(/\?refresh/) === -1 ? false : true
+  const refresh = (window.location.href.search(/\?refresh/) === -1)
   if (refresh) {
     persistState.delete(elementId)
     window.location = window.location.href.split('?')[0]

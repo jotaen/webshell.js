@@ -9,7 +9,8 @@ exports.default = () => ({
 })
 
 exports.serialize = (state) => {
-  return JSON.stringify(state)
+  const obj = !state ? {} : state
+  return JSON.stringify(obj)
 }
 
 exports.deserialize = (string) => {

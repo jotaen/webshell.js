@@ -1,7 +1,5 @@
 'use strict'
 
-'use strict'
-
 const assert = require('assert')
 const stack = require('../../src/stack')
 
