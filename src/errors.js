@@ -40,7 +40,8 @@ NotAFile.prototype.constructor = NotAFile
 
 function InvalidParameter (parameter) {
   this.name = 'InvalidParameter'
-  this.message = parameter + ': Invalid argument'
+  if (!parameter) this.message = 'Empty parameter not allowed'
+  else this.message = parameter + ': Invalid argument'
   this.stack = (new Error()).stack
 }
 InvalidParameter.prototype = Object.create(Error.prototype)

@@ -22,6 +22,13 @@ describe('#users', () => {
         store.dispatch(action.login(''))
       }, CommandError.InvalidParameter)
     })
+
+    it('should throw, if argument was not provided', () => {
+      const store = testingStore()
+      assert.throws(() => {
+        store.dispatch(action.login())
+      }, CommandError.InvalidParameter)
+    })
   })
 
   describe('#LOGOUT', () => {
