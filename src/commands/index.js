@@ -5,6 +5,7 @@ module.exports = {
   cd: require('./cd'),
   exit: require('./exit'),
   help: require('./help'),
+  info: require('./info'),
   login: require('./su'), // alias
   logout: require('./exit'), // alias
   ls: require('./ls'),
