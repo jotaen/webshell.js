@@ -3,6 +3,7 @@
 module.exports = {
   cat: require('./cat'),
   cd: require('./cd'),
+  echo: require('./echo'),
   exit: require('./exit'),
   help: require('./help'),
   info: require('./info'),
