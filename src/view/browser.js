@@ -137,8 +137,9 @@ module.exports = (elementId, initialState) => {
 
   const evaluate = () => {
     const input = flush()
-    const {state, output} = engine.evaluate(input)
+    const {output} = engine.evaluate(input)
     print(output)
+    const state = engine.state()
     if (!state) {
       terminate()
       return
@@ -149,4 +150,12 @@ module.exports = (elementId, initialState) => {
 
   inputElement.insertAdjacentHTML('beforebegin', '<div class="response">' + special.welcome(mergedState) + '</div>')
   prompt()
+
+  return {
+    print: (input, response) => {
+      flush(input)
+      print((response === undefined ? [] : response))
+      prompt()
+    }
+  }
 }

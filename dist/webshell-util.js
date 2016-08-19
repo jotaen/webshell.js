@@ -1,7 +1,7 @@
 const webshellReadState = (name) => {
   const key = 'webshelljs_' + name
   const value = window.localStorage.getItem(key)
-  if (!value) return {}
+  if (!value) return undefined
   const result = JSON.parse(value)
   if (result.lastActivity) result.lastActivity = new Date(result.lastActivity)
   return result
@@ -13,11 +13,8 @@ const webshellDeleteState = (name) => {
 }
 
 const webshellDefaultState = () => ({
-  currentLocation: ['var', 'www'],
-  fileTree: {
-    var: {
-      www: {}
-    }
-  },
+  currentLocation: [],
+  fileTree: {},
+  history: [],
   sessions: ['browser']
 })

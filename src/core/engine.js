@@ -54,8 +54,7 @@ module.exports = (commands, reducers, initialState) => {
     const result = queue.reduce(process, {error: false, output: ['']})
 
     return {
-      output: result.output,
-      state: state()
+      output: result.output
     }
   }
 
