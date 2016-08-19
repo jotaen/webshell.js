@@ -3,10 +3,10 @@
 const createStore = require('redux').createStore
 const reducers = require('../src/reducers/index')
 const action = require('../src/actions')
-const defaultState = require('../src/defaultState')
+const createDefaultState = require('../src/state').default
 
 module.exports = () => {
-  const store = createStore(reducers, defaultState(reducers))
+  const store = createStore(reducers, createDefaultState(reducers))
   store.dispatch(action.activity(new Date(1245151961)))
   store.dispatch(action.login('root'))
   store.dispatch(action.login('alice'))

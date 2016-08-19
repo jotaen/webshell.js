@@ -8,9 +8,11 @@ const render = require('../render/plainText')
 const filesystem = require('../filesystem')
 const makePathFromString = require('../makePathFromString')
 const tokenize = require('./tokenize')
+const state = require('../state')
 
 module.exports = (commands, reducers, initialState) => {
-  const store = createStore(reducers, initialState)
+  const startState = Object.assign({}, state.default(), initialState)
+  const store = createStore(reducers, startState)
 
   const findExec = (commands, commandName) => {
     if (commands[commandName]) {
@@ -40,7 +42,7 @@ module.exports = (commands, reducers, initialState) => {
 
     try {
       const args = makeArgs(previous, job)
-      execute(args, buffer.print, state(), store.dispatch)
+      execute(args, buffer.print, stateCopy(), store.dispatch)
       return {error: false, output: buffer.get()}
     } catch (e) {
       return {error: true, output: [job.command + ': ' + e.message]}
@@ -58,9 +60,7 @@ module.exports = (commands, reducers, initialState) => {
     }
   }
 
-  const state = () => {
-    return JSON.parse(JSON.stringify(store.getState()))
-  }
+  const stateCopy = () => state.copy(store.getState())
 
   const complete = (line) => {
     const parts = tokenize(line).map(token => token.content)
@@ -89,7 +89,7 @@ module.exports = (commands, reducers, initialState) => {
 
   return {
     evaluate,
-    state,
+    state: stateCopy,
     complete
   }
 }
