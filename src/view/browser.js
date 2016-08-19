@@ -5,7 +5,7 @@ const special = require('./specials')
 const defaultState = require('../defaultState')
 const reducers = require('../reducers/index')
 const commands = require('../commands/index')
-const render = require('./render')
+const render = require('../render/html')
 const entities = require('html-entities').XmlEntities
 
 module.exports = (elementId, initialState) => {

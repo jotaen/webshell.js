@@ -1,7 +1,7 @@
 'use strict'
 
 const text = (input) => {
-  return input
+  return input + '\n'
 }
 
 const list = (input) => {
@@ -11,6 +11,7 @@ const list = (input) => {
 }
 
 module.exports = (input) => {
-  if (typeof input === 'string') return text(input)
+  if (input === undefined) return '\n'
+  else if (typeof input === 'string') return text(input)
   else if (Array.isArray(input)) return list(input)
 }

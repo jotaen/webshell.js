@@ -13,6 +13,7 @@ const list = (input) => {
 }
 
 module.exports = (input) => {
-  if (typeof input === 'string') return text(input)
+  if (input === undefined) return '<div>&nbsp;</div>'
+  else if (typeof input === 'string') return text(input)
   else if (Array.isArray(input)) return list(input)
 }

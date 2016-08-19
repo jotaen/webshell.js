@@ -4,9 +4,9 @@ const createStore = require('redux').createStore
 const action = require('../actions')
 const createBuffer = require('../buffer')
 const parse = require('./parse')
-const render = require('./render.js')
-const filesystem = require('../filesystem.js')
-const makePathFromString = require('../makePathFromString.js')
+const render = require('../render/plainText')
+const filesystem = require('../filesystem')
+const makePathFromString = require('../makePathFromString')
 const tokenize = require('./tokenize')
 
 module.exports = (commands, reducers, initialState) => {
