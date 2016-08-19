@@ -17,6 +17,9 @@ exports.welcome = (state) => {
   const userName = stack.latest(state.sessions)
   const date = state.lastActivity
   let result = 'Hello ' + userName + '!'
-  if (date instanceof Date) result += ' Last activity: ' + date.toLocaleString()
+  if (date instanceof Date) {
+    result += ' Last activity: ' + date.toLocaleString()
+    result += '<br>Reset the shell to its default state by <a class="text text-lightgray" href="?refresh">clicking here</a>'
+  }
   return result
 }
