@@ -15,7 +15,7 @@ module.exports = (id) => {
   }
 
   const freeze = () => {
-    webshell.removeChild(inputElement)
+    webshell.removeChild(input)
   }
 
   const focus = () => {
@@ -82,11 +82,11 @@ module.exports = (id) => {
   return {
     freeze,
     focus,
-    onArrowDown: (cb) => {eventHandler.onArrowDown = cb},
-    onArrowUp: (cb) => {eventHandler.onArrowUp = cb},
-    onCancel: (cb) => {eventHandler.onCancel = cb},
-    onReturn: (cb) => {eventHandler.onReturn = cb},
-    onTab: (cb) => {eventHandler.onTab = cb},
+    onArrowDown: (cb) => { eventHandler.onArrowDown = cb },
+    onArrowUp: (cb) => { eventHandler.onArrowUp = cb },
+    onCancel: (cb) => { eventHandler.onCancel = cb },
+    onReturn: (cb) => { eventHandler.onReturn = cb },
+    onTab: (cb) => { eventHandler.onTab = cb },
     prompt,
     readInput,
     setInput,
