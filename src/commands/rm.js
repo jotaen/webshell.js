@@ -5,7 +5,12 @@ const action = require('../actions')
 const filesystem = require('../filesystem')
 const Command = require('../errors')
 
-module.exports = (args, print, state, dispatch) => {
+exports.help = ({
+  description: 'Remove a file or directory',
+  usage: 'rm [path, ...]'
+})
+
+exports.main = (args, print, state, dispatch) => {
   const tree = state.fileTree
   const pathes = args.map((pathString) => {
     const path = makePathFromString(pathString, state.currentLocation)

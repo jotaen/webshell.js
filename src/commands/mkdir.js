@@ -5,7 +5,12 @@ const action = require('../actions')
 const filesystem = require('../filesystem')
 const CommandError = require('../errors')
 
-module.exports = (args, print, state, dispatch) => {
+exports.help = ({
+  description: 'Create a new directory',
+  usage: 'mkdir [directory]'
+})
+
+exports.main = (args, print, state, dispatch) => {
   const currentLocation = state.currentLocation
   const path = makePathFromString(args[0], currentLocation)
   const tree = state.fileTree

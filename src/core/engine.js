@@ -14,7 +14,7 @@ module.exports = (commands, reducers, initialState) => {
 
   const findExec = (commands, commandName) => {
     if (commands[commandName]) {
-      return commands[commandName]
+      return commands[commandName].main
     } else if (commandName !== undefined) {
       return () => { throw new Error('Command not found') }
     } else {

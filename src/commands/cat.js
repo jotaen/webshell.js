@@ -4,7 +4,12 @@ const makePathFromString = require('../makePathFromString')
 const filesystem = require('../filesystem')
 const CommandError = require('../errors')
 
-module.exports = (args, print, state) => {
+exports.help = ({
+  description: 'Concat and print out files',
+  usage: 'cat [file, ...]'
+})
+
+exports.main = (args, print, state) => {
   if (args.length === 0) {
     print('usage: cat [filename]')
     return

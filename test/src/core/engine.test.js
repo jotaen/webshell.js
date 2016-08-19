@@ -7,8 +7,10 @@ describe('#engine', () => {
   it('should dispatch a command', () => {
     let wasInvoked = false
     const commands = {
-      something: () => {
-        wasInvoked = true
+      something: {
+        main: () => {
+          wasInvoked = true
+        }
       }
     }
     const reducers = (action, state) => state

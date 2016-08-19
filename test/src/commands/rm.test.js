@@ -1,7 +1,7 @@
 'use strict'
 
 const assert = require('assert')
-const rm = require('../../../src/commands/rm')
+const rm = require('../../../src/commands/rm').main
 const filesystem = require('../../../src/filesystem')
 const createEnv = require('../../testingEnv')
 const CommandError = require('../../../src/errors')

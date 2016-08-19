@@ -1,7 +1,7 @@
 'use strict'
 
 const assert = require('assert')
-const whoami = require('../../../src/commands/whoami')
+const whoami = require('../../../src/commands/whoami').main
 const createEnv = require('../../testingEnv')
 
 describe('#whoami (who am i)', () => {

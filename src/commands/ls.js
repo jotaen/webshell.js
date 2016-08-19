@@ -4,7 +4,12 @@ const filesystem = require('../filesystem')
 const makePathFromString = require('../makePathFromString')
 const CommandError = require('../errors')
 
-module.exports = (args, print, state) => {
+exports.help = ({
+  description: 'List the content of a directory',
+  usage: 'ls [directory]'
+})
+
+exports.main = (args, print, state) => {
   const tree = state.fileTree
   const currentLocation = state.currentLocation
   let path = []

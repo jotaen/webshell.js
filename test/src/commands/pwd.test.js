@@ -1,7 +1,7 @@
 'use strict'
 
 const assert = require('assert')
-const pwd = require('../../../src/commands/pwd')
+const pwd = require('../../../src/commands/pwd').main
 const createEnv = require('../../testingEnv')
 
 describe('#pwd (print working directory)', () => {

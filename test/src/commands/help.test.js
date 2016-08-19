@@ -1,7 +1,7 @@
 'use strict'
 
 const assert = require('assert')
-const help = require('../../../src/commands/help')
+const help = require('../../../src/commands/help').main
 const createEnv = require('../../testingEnv')
 
 describe('#help', () => {

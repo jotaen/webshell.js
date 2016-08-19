@@ -1,7 +1,7 @@
 'use strict'
 
 const assert = require('assert')
-const exit = require('../../../src/commands/exit')
+const exit = require('../../../src/commands/exit').main
 const createEnv = require('../../testingEnv')
 const stack = require('../../../src/stack')
 

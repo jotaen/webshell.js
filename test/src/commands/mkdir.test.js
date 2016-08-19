@@ -1,7 +1,7 @@
 'use strict'
 
 const assert = require('assert')
-const mkdir = require('../../../src/commands/mkdir')
+const mkdir = require('../../../src/commands/mkdir').main
 const filesystem = require('../../../src/filesystem')
 const createEnv = require('../../testingEnv')
 const CommandError = require('../../../src/errors')

@@ -3,7 +3,6 @@
 module.exports = {
   cat: require('./cat'),
   cd: require('./cd'),
-  debug: require('./debug'),
   exit: require('./exit'),
   help: require('./help'),
   login: require('./su'), // alias

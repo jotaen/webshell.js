@@ -2,6 +2,11 @@
 
 const action = require('../actions')
 
-module.exports = (args, print, state, dispatch) => {
+exports.help = ({
+  description: 'Terminate session of currently logged in user',
+  usage: 'exit'
+})
+
+exports.main = (args, print, state, dispatch) => {
   dispatch(action.logout())
 }
