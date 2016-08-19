@@ -1,11 +1,19 @@
 {
+  "name": "webshell.js",
+  "author": "Jan Heuermann <jan@jotaen.net>",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jotaen/webshell.js.git"
+  },
+  "license": "Apache-2.0",
   "scripts": {
     "test": "mocha",
     "linter": "eslint .",
     "coverage": "istanbul cover _mocha",
     "pretest": "npm run --silent linter",
-    "bundler": "browserify src/view/browser.js --s createWebshell -o dist/webshell.js",
-    "bundler-watch": "watchify src/view/browser.js --s createWebshell -o dist/webshell.js"
+    "dist": "browserify src/view/browser.js --s createWebshell -p licensify -o dist/webshell.js",
+    "dist-watch": "watchify src/view/browser.js --s createWebshell -p licensify -o dist/webshell.js"
   },
   "devDependencies": {
     "browserify": "^13.1.0",
@@ -14,6 +22,7 @@
     "eslint-plugin-promise": "^2.0.0",
     "eslint-plugin-standard": "^2.0.0",
     "istanbul": "^0.4.0",
+    "licensify": "^3.1.2",
     "mocha": "^2.3.3",
     "watchify": "^3.7.0"
   },

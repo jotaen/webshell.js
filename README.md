@@ -19,7 +19,7 @@ webshell.js is a command line interpreter that runs in your browser.
 
 1. Clone the repo
 2. Run `npm install`
-3. Run `npm run bundler`
+3. Run `npm run dist`
 
 The build output can be found here: `dist/webshell.js`
 
@@ -33,6 +33,6 @@ See [the basic example](examples/basic.html).
 
 ## Styling
 
-The webshell outputs bare, unstyled HTML. In order to make it look good you must provide some CSS.
+The webshell outputs nearly bare, unstyled HTML. In order to make it look good you must provide some CSS.
 
 For your convenience, choose one of the [available themes](themes/) and include it via `<style>` or `<link href="">`.
