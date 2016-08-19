@@ -13,7 +13,7 @@ exports.main = (args, print) => {
   print('|__/|__/\\___/_.___/____/_/ /_/\\___/_/_(_)_/ /____/  ')
   print('                                       /___/        ')
   print('')
-  print('webshell.js • The shell simulator that runs in your browser')
+  print('webshell.js • The command line interpreter that runs in your browser')
   print('See: https://github.com/jotaen/webshell.js')
   print()
   print('Created by: Jan Heuermann • http://jotaen.net')
