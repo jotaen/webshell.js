@@ -1,10 +1,6 @@
 .webshell {
-  box-sizing: border-box;
   height: 100vh;
   background-color: #000;
-  cursor: text;
-  padding: 0.5em;
-  overflow-y: scroll;
   color: #fff;
   font-family: monospace;
   font-size: 18px;
@@ -27,8 +23,6 @@
 }
 
 .input {
-  position: relative;
-  display: flex;
   outline: none;
   padding-left: 1em;
 }
@@ -45,8 +39,6 @@
 }
 
 .response {
-  clear: both;
-  white-space: pre-wrap;
   margin-bottom: 0.2em;
   min-height: 1em;
 }
@@ -58,14 +50,11 @@
 }
 
 .list {
-  padding-left: 0;
-  margin: 0;
   column-width: 10em;
   column-gap: 3em;
 }
 
 .list-item {
-  list-style-type: none;
   word-wrap: break-word;
 }
 

@@ -25,8 +25,14 @@ The build output can be found here: `dist/webshell.js`
 
 ## Usage
 
-Build webshell (see above) and include the generated file in your webpage.
+1. Build the webshell bundle (see above) and include the generated file with a `<script src="">` tag in your webpage.
+2. Create an empty `<div>` element with a custom id, e.g.: `<div id="atari"></div>`
+3. Call the function `createWebshell()` and pass it the id of the div-element, e.g.: `createWebshell('atari')`
 
-See [the basic example](examples/basic.html) on how to include the webshell in your webpage.
+See [the basic example](examples/basic.html).
 
-If your webshell is setup, choose one of the [available themes](themes/) or write your own CSS.
+## Styling
+
+The webshell outputs bare, unstyled HTML. In order to make it look good you must provide some CSS.
+
+For your convenience, choose one of the [available themes](themes/) and include it via `<style>` or `<link href="">`.

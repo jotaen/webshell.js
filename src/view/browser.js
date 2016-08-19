@@ -7,6 +7,7 @@ const commands = require('../commands/index')
 const render = require('../render/html')
 const stack = require('../stack')
 const createElement = require('./element')
+const basicStyling = require('./basicStyling')
 
 module.exports = (id, options) => {
   //
@@ -30,6 +31,8 @@ module.exports = (id, options) => {
   let currentHistoryItem = -1
   ;(() => {})(currentHistoryItem) // this line is a workaround for an incorrectly issued linter error
   const element = createElement(id)
+
+  basicStyling()
 
   //
   //  METHOD DEFINITIONS
