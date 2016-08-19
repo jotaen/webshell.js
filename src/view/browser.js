@@ -1,46 +1,42 @@
 'use strict'
 
 const createEngine = require('../core/engine')
-const special = require('./specials')
-const defaultState = require('../defaultState')
+const persistState = require('./persistState')
 const reducers = require('../reducers/index')
 const commands = require('../commands/index')
 const render = require('../render/html')
+const stack = require('../stack')
 const entities = require('html-entities').XmlEntities
 
-module.exports = (elementId, initialState) => {
-  const mergedState = Object.assign(defaultState(), initialState)
-  const engine = createEngine(commands, reducers, mergedState)
+module.exports = (elementId, options) => {
+
+  //
+  //  INITIALIZATION
+  //
+  
+  const defaultOptions = {
+    initialState: {}
+  }
+  const opts = Object.assign({}, defaultOptions, options)
+
+  const refresh = window.location.href.search(/\?refresh/) === -1 ? false : true
+  if (refresh) {
+    persistState.delete(elementId)
+    window.location = window.location.href.split('?')[0]
+  }
+  const savedState = persistState.read(elementId)
+  const initialState = Object.assign({}, savedState, opts.initialState)
+
+  const engine = createEngine(commands, reducers, initialState)
   let currentHistoryItem = -1
-  ;(() => {})(currentHistoryItem) // workaround for falsy linter error
+  ;(() => {})(currentHistoryItem) // this line is a workaround for an incorrectly issued linter error
   const webshellElement = document.getElementById(elementId)
   webshellElement.innerHTML = '<div class="input input-current" id="' + elementId + '-cursor" contentEditable="true"></div>'
   const inputElement = document.getElementById(elementId + '-cursor')
-  webshellElement.onclick = function (event) {
-    if (event.target === webshellElement) focus()
-  }
-  inputElement.onkeydown = function (event) {
-    switch (event.keyCode) {
-      case 13: // return
-        evaluate()
-        return false
-      case 38: // arrow up
-        historyUp()
-        return false
-      case 40: // arrow down
-        historyDown()
-        return false
-      case 67: // c
-        if (!event.ctrlKey) return true
-        clear()
-        return false
-      case 9: // tab
-        tab()
-        return false
-      default:
-        return true
-    }
-  }
+
+  //
+  //  METHOD DEFINITIONS
+  //
 
   const tab = () => {
     const input = read()
@@ -85,17 +81,30 @@ module.exports = (elementId, initialState) => {
     inputElement.focus()
   }
 
-  const saveState = (state) => {
-    const key = 'webshelljs_' + elementId
-    const value = JSON.stringify(state)
-    window.localStorage.setItem(key, value)
-  }
-
   const prompt = () => {
     currentHistoryItem = -1
     const state = engine.state()
-    inputElement.insertAdjacentHTML('beforebegin', '<div class="prompt">' + special.prompt(state) + '</div>')
+    const userName = stack.latest(state.sessions)
+    const path = '/' + state.currentLocation.join('/')
+    const html = [
+      '<span class="text-green">' + userName + '</span>',
+      '<span class="text-lightgray">@</span>',
+      '<span class="text-yellow">' + path + '</span>'
+    ].join('')
+    inputElement.insertAdjacentHTML('beforebegin', '<div class="prompt">' + html + '</div>')
     focus()
+  }
+
+  const welcome = () => {
+    const state = engine.state()
+    const userName = stack.latest(state.sessions)
+    const date = state.lastActivity
+    let hello = 'Hello ' + userName + '!'
+    if (date instanceof Date) {
+      hello += ' Last activity: ' + date.toLocaleString()
+      hello += '<br>Reset the shell to its default state by <a class="text text-lightgray" href="?refresh">clicking here</a>'
+    }
+    inputElement.insertAdjacentHTML('beforebegin', '<div class="response">' + hello + '</div>')
   }
 
   const read = () => {
@@ -144,11 +153,45 @@ module.exports = (elementId, initialState) => {
       terminate()
       return
     }
-    saveState(state)
+    persistState.save(elementId, state)
     prompt()
   }
 
-  inputElement.insertAdjacentHTML('beforebegin', '<div class="response">' + special.welcome(mergedState) + '</div>')
+  //
+  // BIND EVENT HANDLERS
+  //
+
+  webshellElement.onclick = function (event) {
+    if (event.target === webshellElement) focus()
+  }
+  inputElement.onkeydown = function (event) {
+    switch (event.keyCode) {
+      case 13: // return
+        evaluate()
+        return false
+      case 38: // arrow up
+        historyUp()
+        return false
+      case 40: // arrow down
+        historyDown()
+        return false
+      case 67: // c
+        if (!event.ctrlKey) return true
+        clear()
+        return false
+      case 9: // tab
+        tab()
+        return false
+      default:
+        return true
+    }
+  }
+
+  //
+  // START
+  //
+
+  welcome()
   prompt()
 
   return {

@@ -1,0 +1,75 @@
+.webshell {
+  box-sizing: border-box;
+  height: 100vh;
+  background-color: #000;
+  cursor: text;
+  padding: 0.5em;
+  overflow-y: scroll;
+  color: #fff;
+  font-family: monospace;
+  font-size: 18px;
+}
+
+.prompt {
+  margin-top: 1em;
+}
+
+.prompt:first-child {
+  margin-top: 0;
+}
+
+@media (min-width: 30em) {
+  .prompt {
+    margin-top: inherit;
+    float: left;
+    margin-right: 0.2em;
+  }
+}
+
+.input {
+  position: relative;
+  display: flex;
+  outline: none;
+  padding-left: 1em;
+}
+
+.input:before {
+  position: absolute;
+  left: 0em;
+  content: '$';
+  color: #777;
+}
+
+.input-current:before {
+  color: #c0253e;
+}
+
+.response {
+  clear: both;
+  white-space: pre-wrap;
+  margin-bottom: 0.2em;
+  min-height: 1em;
+}
+
+@media (min-width: 30em) {
+  .response {
+    min-height: inherit;
+  }
+}
+
+.list {
+  padding-left: 0;
+  margin: 0;
+  column-width: 10em;
+  column-gap: 3em;
+}
+
+.list-item {
+  list-style-type: none;
+  word-wrap: break-word;
+}
+
+.text { color: #fff }
+.text-green { color: #65c858 }
+.text-yellow { color: #cac43b }
+.text-lightgray { color: #999 }
