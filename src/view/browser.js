@@ -25,7 +25,7 @@ module.exports = (id, options) => {
     window.location = window.location.href.split('?')[0]
   }
   const savedState = persistState.read(id)
-  const initialState = Object.assign({}, savedState, opts.initialState)
+  const initialState = savedState || opts.initialState
 
   const engine = createEngine(commands, reducers, initialState)
   let currentHistoryItem = -1
