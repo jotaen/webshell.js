@@ -4,7 +4,7 @@ const CommandError = require('../errors')
 
 exports.LOGIN = (state, action) => {
   if (typeof action.userName !== 'string' || action.userName === '') {
-    throw new CommandError.InvalidParameter(action.userName)
+    throw new CommandError.InvalidArgument(action.userName)
   }
   const sessions = state.sessions.concat([String(action.userName)])
   return Object.assign({}, state, {sessions})

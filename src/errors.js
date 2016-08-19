@@ -4,7 +4,7 @@ exports.PathNotFound = PathNotFound
 exports.PathAlreadyExists = PathAlreadyExists
 exports.NotADirectory = NotADirectory
 exports.NotAFile = NotAFile
-exports.InvalidParameter = InvalidParameter
+exports.InvalidArgument = InvalidArgument
 
 function PathNotFound (path) {
   this.name = 'PathNotFound'
@@ -38,11 +38,11 @@ function NotAFile (path) {
 NotAFile.prototype = Object.create(Error.prototype)
 NotAFile.prototype.constructor = NotAFile
 
-function InvalidParameter (parameter) {
-  this.name = 'InvalidParameter'
+function InvalidArgument (parameter) {
+  this.name = 'InvalidArgument'
   if (!parameter) this.message = 'Empty parameter not allowed'
   else this.message = parameter + ': Invalid argument'
   this.stack = (new Error()).stack
 }
-InvalidParameter.prototype = Object.create(Error.prototype)
-InvalidParameter.prototype.constructor = InvalidParameter
+InvalidArgument.prototype = Object.create(Error.prototype)
+InvalidArgument.prototype.constructor = InvalidArgument

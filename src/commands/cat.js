@@ -10,15 +10,14 @@ exports.help = ({
 })
 
 exports.main = (args, print, state) => {
-  if (args.length === 0) {
-    print('usage: cat [filename]')
-    return
-  }
-  const tree = state.fileTree
-  const currentLocation = state.currentLocation
-  const path = makePathFromString(args[0], currentLocation)
-  const node = filesystem.find(tree, path)
-  if (node === undefined) throw new CommandError.PathNotFound(path)
-  if (!filesystem.isFile(tree, path)) throw new CommandError.NotAFile(path)
-  print(node)
+  if (args.length === 0) throw new CommandError.InvalidArgument()
+
+  const content = args.reduce((result, pathString) => {
+    const path = makePathFromString(pathString, state.currentLocation)
+    const node = filesystem.find(state.fileTree, path)
+    if (node === undefined) throw new CommandError.PathNotFound(path)
+    if (!filesystem.isFile(state.fileTree, path)) throw new CommandError.NotAFile(path)
+    return (result.concat(node))
+  }, '')
+  print(content)
 }

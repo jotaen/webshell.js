@@ -11,10 +11,10 @@ exports.help = ({
 })
 
 exports.main = (args, print, state, dispatch) => {
-  const currentLocation = state.currentLocation
-  const path = makePathFromString(args[0], currentLocation)
-  const tree = state.fileTree
-  const destination = path.slice(0, -1)
-  if (!filesystem.isDirectory(tree, destination)) throw new CommandError.NotADirectory(destination)
-  dispatch(action.createDirectory(path))
+  args.forEach((pathString) => {
+    const path = makePathFromString(pathString, state.currentLocation)
+    const destination = path.slice(0, -1)
+    if (!filesystem.isDirectory(state.fileTree, destination)) throw new CommandError.NotADirectory(destination)
+    dispatch(action.createDirectory(path))
+  })
 }

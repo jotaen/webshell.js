@@ -33,12 +33,15 @@ describe('#rm (remove)', () => {
     assert.deepEqual(result2, undefined)
   })
 
-  it('shouldn’t do anything, if path does not exist', () => {
+  it('should stop/break, if one path does not exist', () => {
     const env = createEnv()
-    const input = ['/etc', '/this/path/does/not/exist']
+    const input = ['/etc', '/this/path/does/not/exist', '/usr']
     assert.throws(() => {
       rm(input, env.buffer.print, env.frozenState, env.dispatch)
     }, CommandError.PathNotExists)
-    assert.deepEqual(env.store.getState(), env.frozenState)
+    const first = filesystem.find(env.store.getState().fileTree, ['etc'])
+    assert.deepEqual(first, undefined)
+    const third = filesystem.find(env.store.getState().fileTree, ['usr'])
+    assert.ok(third)
   })
 })
