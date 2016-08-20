@@ -14,17 +14,21 @@ module.exports = (id) => {
     onTab: () => {}
   }
 
+  const scroll = () => {
+    webshell.scrollTop = webshell.scrollHeight
+  }
+
   const freeze = () => {
     webshell.removeChild(input)
   }
 
   const focus = () => {
-    webshell.scrollTop = webshell.scrollHeight
     input.focus()
   }
 
   const prompt = (text) => {
     input.insertAdjacentHTML('beforebegin', '<div class="prompt">' + text + '</div>')
+    scroll()
   }
 
   const readInput = () => {
@@ -46,10 +50,12 @@ module.exports = (id) => {
 
   const writeResponse = (text) => {
     input.insertAdjacentHTML('beforebegin', '<div class="response">' + text + '</div>')
+    scroll()
   }
 
   const writeInput = (text) => {
     input.insertAdjacentHTML('beforebegin', '<div class="input">' + entities.encode(text) + '</div>')
+    scroll()
   }
 
   webshell.onclick = function (event) {

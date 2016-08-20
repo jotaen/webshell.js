@@ -50,7 +50,6 @@ module.exports = (id, options) => {
       '<span class="text-yellow">' + entities.encode(path) + '</span>'
     ].join('')
     element.prompt(html)
-    element.focus()
   }
 
   const welcome = () => {
@@ -156,6 +155,7 @@ module.exports = (id, options) => {
       flush(input)
       print((response === undefined ? [] : response))
       prompt()
-    }
+    },
+    focus: () => element.focus()
   }
 }
