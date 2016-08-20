@@ -1,12 +1,14 @@
 'use strict'
 
+const entities = require('html-entities').XmlEntities.encode
+
 const text = (input) => {
-  return '<div>' + input + '</div>'
+  return '<div>' + entities(input) + '</div>'
 }
 
 const list = (input) => {
   const items = input.reduce((result, item) => {
-    result += '<li class="list-item">' + item + '</li>'
+    result += '<li class="list-item">' + entities(item) + '</li>'
     return result
   }, '')
   return '<ul class="list">' + items + '</ul>'

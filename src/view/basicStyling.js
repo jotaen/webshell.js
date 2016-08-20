@@ -12,8 +12,15 @@ module.exports = () => {
     }
 
     .input {
-      position: relative;
-      display: flex;
+      display: block;
+      min-width: 3em;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+
+    .input:empty {
+      min-height: 1em;
+      line-height: normal;
     }
 
     .response {

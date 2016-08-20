@@ -8,6 +8,7 @@ const render = require('../render/html')
 const stack = require('../stack')
 const createElement = require('./element')
 const basicStyling = require('./basicStyling')
+const entities = require('html-entities').XmlEntities
 
 module.exports = (id, options) => {
   //
@@ -44,9 +45,9 @@ module.exports = (id, options) => {
     const userName = stack.latest(state.sessions)
     const path = '/' + state.currentLocation.join('/')
     const html = [
-      '<span class="text-green">' + userName + '</span>',
+      '<span class="text-green">' + entities.encode(userName) + '</span>',
       '<span class="text-lightgray">@</span>',
-      '<span class="text-yellow">' + path + '</span>'
+      '<span class="text-yellow">' + entities.encode(path) + '</span>'
     ].join('')
     element.prompt(html)
     element.focus()

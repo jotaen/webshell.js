@@ -24,7 +24,7 @@ module.exports = (id) => {
   }
 
   const prompt = (text) => {
-    input.insertAdjacentHTML('beforebegin', '<div class="prompt">'.concat(text).concat('</div>'))
+    input.insertAdjacentHTML('beforebegin', '<div class="prompt">' + text + '</div>')
   }
 
   const readInput = () => {
@@ -49,7 +49,7 @@ module.exports = (id) => {
   }
 
   const writeInput = (text) => {
-    input.insertAdjacentHTML('beforebegin', '<div class="input">' + text + '</div>')
+    input.insertAdjacentHTML('beforebegin', '<div class="input">' + entities.encode(text) + '</div>')
   }
 
   webshell.onclick = function (event) {
@@ -60,19 +60,24 @@ module.exports = (id) => {
     switch (event.keyCode) {
       case 13:
         eventHandler.onReturn()
+        event.preventDefault()
         return false
       case 38:
         eventHandler.onArrowUp()
+        event.preventDefault()
         return false
       case 40:
         eventHandler.onArrowDown()
+        event.preventDefault()
         return false
       case 67:
         if (!event.ctrlKey) return true
         eventHandler.onCancel()
+        event.preventDefault()
         return false
       case 9:
         eventHandler.onTab()
+        event.preventDefault()
         return false
       default:
         return true
