@@ -4,6 +4,7 @@
   color: #fff;
   font-family: monospace;
   font-size: 18px;
+  line-height: 1.2;
 }
 
 .prompt {
@@ -44,3 +45,22 @@
 .text-green { color: #65c858 }
 .text-yellow { color: #cac43b }
 .text-lightgray { color: #999 }
+
+@media (min-width: 30em) {
+  .input {
+    clear: none;
+  }
+
+  .input:empty {
+    display: inline-block; /* firefox bug */
+  }
+
+  .prompt {
+    margin-top: inherit;
+    margin-right: 0.2em;
+  }
+
+  .response {
+    min-height: inherit;
+  }
+}
