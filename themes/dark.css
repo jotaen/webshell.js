@@ -7,46 +7,28 @@
 }
 
 .prompt {
+  position: relative;
+  float: left;
+  padding-right: 1em;
   margin-top: 1em;
-}
-
-.prompt:first-child {
-  margin-top: 0;
-}
-
-@media (min-width: 30em) {
-  .prompt {
-    margin-top: inherit;
-    float: left;
-    margin-right: 0.2em;
-  }
 }
 
 .input {
   outline: none;
-  padding-left: 1em;
+  clear: left;
 }
 
-.input:before {
+.prompt:after {
   position: absolute;
-  left: 0em;
+  top: 0;
+  right: 0.1em;
   content: '$';
   color: #777;
-}
-
-.input-current:before {
   color: #c0253e;
 }
 
-.response {
-  margin-bottom: 0.2em;
-  min-height: 1em;
-}
-
-@media (min-width: 30em) {
-  .response {
-    min-height: inherit;
-  }
+.response:empty {
+  min-height: 0;
 }
 
 .list {
