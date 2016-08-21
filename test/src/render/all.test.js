@@ -17,8 +17,8 @@ describe('#render', () => {
     const input = 'Hello World'
     const html = renderHtml(input)
     const text = renderText(input)
-    assert.strictEqual(html, '<div>Hello World</div>')
-    assert.strictEqual(text, 'Hello World\n')
+    assert.strictEqual(html, '<span>Hello World</span>')
+    assert.strictEqual(text, 'Hello World')
   })
 
   it('should render an array of string to a list', () => {

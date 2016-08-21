@@ -3,7 +3,7 @@
 const entities = require('html-entities').XmlEntities.encode
 
 const text = (input) => {
-  return '<div>' + entities(input) + '</div>'
+  return '<span>' + entities(input) + '</span>'
 }
 
 const list = (input) => {

@@ -1,7 +1,7 @@
 'use strict'
 
 const text = (input) => {
-  return input + '\n'
+  return input
 }
 
 const list = (input) => {
