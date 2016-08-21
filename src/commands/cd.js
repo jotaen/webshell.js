@@ -3,7 +3,7 @@
 const makePathFromString = require('../makePathFromString')
 const action = require('../actions')
 
-exports.help = ({
+exports.help = () => ({
   description: 'Change the current working directory',
   usage: 'cd [directory]'
 })

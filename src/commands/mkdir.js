@@ -5,7 +5,7 @@ const action = require('../actions')
 const filesystem = require('../filesystem')
 const CommandError = require('../errors')
 
-exports.help = ({
+exports.help = () => ({
   description: 'Create a new directory',
   usage: 'mkdir [directory]'
 })

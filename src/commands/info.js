@@ -1,6 +1,6 @@
 'use strict'
 
-exports.help = ({
+exports.help = () => ({
   description: 'Print info about this system',
   usage: 'info'
 })

@@ -5,7 +5,7 @@ const action = require('../actions')
 const filesystem = require('../filesystem')
 const Command = require('../errors')
 
-exports.help = ({
+exports.help = () => ({
   description: 'Remove a file or directory',
   usage: 'rm [path, ...]'
 })

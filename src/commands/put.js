@@ -6,7 +6,7 @@ const filesystem = require('../filesystem')
 const CommandError = require('../errors')
 const argparse = require('minimist')
 
-exports.help = ({
+exports.help = () => ({
   description: 'Create a new file',
   usage: 'put [filename] [content]'
 })

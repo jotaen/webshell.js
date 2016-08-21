@@ -4,7 +4,7 @@ const filesystem = require('../filesystem')
 const makePathFromString = require('../makePathFromString')
 const CommandError = require('../errors')
 
-exports.help = ({
+exports.help = () => ({
   description: 'List the content of a directory',
   usage: 'ls [directory]'
 })

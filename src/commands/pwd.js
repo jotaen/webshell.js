@@ -1,6 +1,6 @@
 'use strict'
 
-exports.help = ({
+exports.help = () => ({
   description: 'Print current working directory',
   usage: 'pwd'
 })

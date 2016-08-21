@@ -2,7 +2,7 @@
 
 const stack = require('../stack')
 
-exports.help = ({
+exports.help = () => ({
   description: 'Print out name of currently logged in user',
   usage: 'whoami'
 })

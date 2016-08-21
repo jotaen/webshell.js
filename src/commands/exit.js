@@ -2,7 +2,7 @@
 
 const action = require('../actions')
 
-exports.help = ({
+exports.help = () => ({
   description: 'Terminate session of currently logged in user',
   usage: 'exit'
 })

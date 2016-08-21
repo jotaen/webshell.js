@@ -2,7 +2,7 @@
 
 const action = require('../actions')
 
-exports.help = ({
+exports.help = () => ({
   description: 'Switch current user',
   usage: 'su [username]'
 })

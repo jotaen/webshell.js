@@ -8,13 +8,19 @@ const printAll = (print, commands) => {
 
 const printOne = (print, commands, name) => {
   const cmd = commands[name]
-  if (!cmd || !cmd.help) {
+  if (!cmd || typeof cmd.help !== 'function') {
     print('help: No topic found for command `' + name + '`')
     return
   }
-  if (cmd.help.description) print(cmd.help.description)
-  if (cmd.help.usage) print('usage: ' + cmd.help.usage)
+  const help = cmd.help()
+  if (help.description) print(help.description)
+  if (help.usage) print('usage: ' + help.usage)
 }
+
+exports.help = () => ({
+  description: 'Displays help messages',
+  usage: 'help [command]'
+})
 
 exports.main = (args, print) => {
   const commands = require('./index')

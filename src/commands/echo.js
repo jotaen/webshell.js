@@ -1,6 +1,6 @@
 'use strict'
 
-exports.help = ({
+exports.help = () => ({
   description: 'Prints text on the console',
   usage: 'echo [word, ...]'
 })
