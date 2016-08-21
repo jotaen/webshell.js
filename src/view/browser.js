@@ -79,7 +79,7 @@ module.exports = (id, options) => {
 
   const print = (output) => {
     const outputAsHtml = output.reduce((rendered, line) => {
-      return (rendered + render(line))
+      return (rendered + '<div>' + render(line) + '</div>')
     }, '')
     element.writeResponse(outputAsHtml)
   }
