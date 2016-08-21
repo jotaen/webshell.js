@@ -1,6 +1,7 @@
 'use strict'
 
 const createStore = require('redux').createStore
+const middlewares = require('./middlewares')
 const action = require('../actions')
 const createBuffer = require('../buffer')
 const parse = require('./parse')
@@ -12,7 +13,7 @@ const state = require('../state')
 
 module.exports = (commands, reducers, initialState) => {
   const startState = Object.assign({}, state.default(), initialState)
-  const store = createStore(reducers, startState)
+  const store = createStore(reducers, startState, middlewares)
 
   const findExec = (commands, commandName) => {
     if (commands[commandName]) {
