@@ -23,8 +23,6 @@ exports.CREATE_PATH = (state, action) => {
 exports.REMOVE_PATH = (state, action) => {
   const path = action.path
   const tree = state.fileTree
-  const target = filesystem.find(tree, path)
-  if (target === undefined) throw new CommandError.PathNotFound(path)
   const newTree = filesystem.remove(tree, path)
   return Object.assign({}, state, {fileTree: newTree})
 }

@@ -11,6 +11,7 @@ const createJob = (operator) => {
   }
   if (operator === '>') {
     command.command = 'put'
+    command.args.push('--overwrite')
     command.wantsInput = true
   } else if (operator === '>>') {
     command.command = 'put'
