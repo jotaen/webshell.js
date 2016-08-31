@@ -12,7 +12,7 @@
     "linter": "eslint .",
     "coverage": "istanbul cover _mocha",
     "pretest": "npm run --silent linter",
-    "dist": "./node_modules/.bin/browserify src/view/browser.js --s createWebshell -p licensify -o dist/webshell.js -t  [ babelify --presets [ es2015-script ] ]",
+    "dist": "browserify src/view/browser.js --s createWebshell -p licensify -o dist/webshell.js -t  [ babelify --presets [ es2015-script ] ]",
     "dist-watch": "watchify src/view/browser.js --s createWebshell -p licensify -o dist/webshell.js -t  [ babelify --presets [ es2015-script ] ]"
   },
   "devDependencies": {
