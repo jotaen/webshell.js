@@ -1,0 +1,12 @@
+{
+  "title": "webshell.js",
+  "structure": {
+    "summary": "docs/README.md"
+  },
+  "plugins": ["prism", "-highlight", "github"],
+  "pluginsConfig": {
+    "github": {
+      "url": "https://github.com/jotaen/webshell.js/"
+    }
+  }
+}
