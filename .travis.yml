@@ -8,7 +8,6 @@ after_success:
 
 addons:
   artifacts:
-    s3_region: "eu-central-1"
     paths:
       - $(ls ./dist/*.js | tr "\n" ":")
     target_paths:
