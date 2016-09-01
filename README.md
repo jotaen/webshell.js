@@ -17,23 +17,23 @@
 
 webshell.js is a command line interpreter that runs in your browser.
 
-## Requirements
+## Overview
 
-- NodeJS > 5.0.0
+#### Live Demo:
+[See webshell.js in action](http://static.jotaen.net/webshell.js/examples/basic.html)
 
-## Install, build
+#### Download:
+[Grab the latest version](http://static.jotaen.net/webshell.js/dist/webshell.js)
 
-1. Clone the repo
-2. Run `npm install`
-3. Run `npm run dist`
+#### Documentation:
+[Read the docs](docs/index.md)
 
-The build output can be found here: `dist/webshell.js`
+## Get started
 
-## Usage
-
-1. Build the webshell bundle (see above) and include the generated file with a `<script src="">` tag in your webpage.
-2. Create an empty `<div>` element with a custom id, e.g.: `<div id="atari"></div>`
-3. Call the function `createWebshell()` and pass it the id of the div-element, e.g.: `createWebshell('atari')`
+1. Download or build `webshell.js`
+2. Include `webshell.js` file with a `<script src="">` tag in your webpage.
+3. Create an empty `<div>` element with a custom id, e.g.: `<div id="atari"></div>`
+4. Call the function `createWebshell()` and pass it the id of the div-element, e.g.: `createWebshell('atari')`
 
 See [the basic example](examples/basic.html).
 
