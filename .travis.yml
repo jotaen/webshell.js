@@ -2,3 +2,14 @@ language: node_js
 script: npm test
 node_js:
   - "6.0"
+
+after_success:
+  - npm run dist:release
+
+addons:
+  artifacts:
+    s3_region: "eu-central-1"
+    paths:
+      - $HOME/dist
+    target_paths:
+      - webshell.js
