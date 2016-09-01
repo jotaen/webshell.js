@@ -10,6 +10,6 @@ addons:
   artifacts:
     s3_region: "eu-central-1"
     paths:
-      - ./dist/*.js
+      - $(ls ./dist/*.js | tr "\n" ":")
     target_paths:
       - webshell.js
