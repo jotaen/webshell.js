@@ -2,3 +2,15 @@ language: node_js
 script: npm test
 node_js:
   - "6.0"
+
+after_success:
+  - npm run dist:release
+
+addons:
+  artifacts:
+    paths:
+      - $(ls ./dist/*.js | tr "\n" ":")
+      - $(ls ./examples/* | tr "\n" ":")
+      - $(ls ./themes/* | tr "\n" ":")
+    target_paths:
+      - webshell.js

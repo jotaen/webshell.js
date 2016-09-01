@@ -2,5 +2,5 @@
 /coverage
 /html/bundle.js
 npm-debug.log
-/dist/webshell.js
 /_book
+/dist
