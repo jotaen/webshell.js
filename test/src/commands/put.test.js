@@ -32,7 +32,6 @@ describe('#put (create file)', () => {
     const path = ['etc', 'blank_file.txt']
     put([pathString], env.buffer.print, env.frozenState, env.dispatch)
     const result = filesystem.find(env.store.getState().fileTree, path)
-    console.log(result)
     assert.strictEqual(result, '')
   })
 
