@@ -10,5 +10,7 @@ addons:
   artifacts:
     paths:
       - $(ls ./dist/*.js | tr "\n" ":")
+      - ./examples
+      - ./themes
     target_paths:
       - webshell.js
