@@ -1,7 +1,8 @@
 {
   "title": "webshell.js",
+  "root": "/docs",
   "structure": {
-    "summary": "docs/README.md"
+    "summary": "README.md"
   },
   "plugins": ["prism", "-highlight", "github"],
   "pluginsConfig": {
