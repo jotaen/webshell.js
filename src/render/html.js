@@ -4,7 +4,16 @@ const entities = require('html-entities').XmlEntities.encode
 const Autolinker = require('autolinker')
 
 const out = (input) => {
-  return Autolinker.link(entities(input))
+  return Autolinker.link(
+    entities(input),
+    {
+      urls: { schemeMatches: true, wwwMatches: false, tldMatches: false },
+      phone: false,
+      hashtag: false,
+      stripPrefix: false,
+      stripTrailingSlash: false
+    }
+  )
 }
 
 const line = (input) => {
