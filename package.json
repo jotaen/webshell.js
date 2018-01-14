@@ -29,10 +29,10 @@
     "watchify": "3.7.0"
   },
   "dependencies": {
+    "autolinker": "1.6.0",
     "deepmerge": "0.2.10",
     "html-entities": "1.2.0",
     "minimist": "1.2.0",
-    "redux": "3.5.2",
-    "linkifyjs": "2.1.5"
+    "redux": "3.5.2"
   }
 }
