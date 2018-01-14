@@ -7,6 +7,7 @@ const out = (input) => {
   return Autolinker.link(
     entities(input),
     {
+      newWindow: false,
       urls: { schemeMatches: true, wwwMatches: false, tldMatches: false },
       phone: false,
       hashtag: false,
