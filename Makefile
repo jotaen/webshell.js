@@ -20,4 +20,4 @@ build: install
 			-t [ babelify --presets [ es2015-script ] ]
 
 release: build
-	cp dist/webshell.js dist/webshell-$(md5sum dist/webshell.js | cut -c 1-10).js
+	cp dist/webshell.js dist/webshell-$$(md5sum dist/webshell.js | cut -c 1-10).js
