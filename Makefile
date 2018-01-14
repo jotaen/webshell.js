@@ -1,4 +1,4 @@
-.PHONY: install build
+.PHONY: install
 
 install:
 	docker run --rm \
@@ -7,7 +7,7 @@ install:
 		node:9.3 \
 		npm i
 
-build:
+build: install
 	docker run --rm \
 		-v $$(pwd):/app \
 		-w /app \
