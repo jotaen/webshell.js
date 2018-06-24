@@ -1,17 +1,26 @@
-.PHONY: install
+.PHONY: install test
+
+node_version = 10.5
 
 install:
 	docker run --rm \
 		-v $$(pwd):/app \
 		-w /app \
-		node:9.3 \
+		node:$(node_version) \
 		npm i
+
+test:
+	docker run --rm \
+		-v $$(pwd):/app \
+		-w /app \
+		node:$(node_version) \
+		./node_modules/.bin/mocha
 
 build: install
 	docker run --rm \
 		-v $$(pwd):/app \
 		-w /app \
-		node:9.3 \
+		node:$(node_version) \
 		./node_modules/.bin/browserify \
 			src/view/browser.js \
 			--s createWebshell \

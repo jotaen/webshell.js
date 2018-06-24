@@ -15,24 +15,25 @@
     "dist:watch": "watchify src/view/browser.js --s createWebshell -p licensify -o dist/webshell.js -t  [ babelify --presets [ es2015-script ] ]"
   },
   "devDependencies": {
+    "babel-core": "6.26.3",
     "babel-preset-es2015-script": "1.1.0",
-    "babelify": "7.3.0",
-    "browserify": "13.1.0",
-    "coveralls": "2.11.12",
-    "eslint": "3.1.1",
-    "eslint-config-standard": "5.3.5",
-    "eslint-plugin-promise": "2.0.0",
-    "eslint-plugin-standard": "2.0.0",
-    "istanbul": "0.4.0",
-    "licensify": "3.1.2",
-    "mocha": "3.0.2",
-    "watchify": "3.7.0"
+    "babelify": "8.0.0",
+    "browserify": "16.2.2",
+    "coveralls": "3.0.1",
+    "eslint": "5.0.0",
+    "eslint-config-standard": "11.0.0",
+    "eslint-plugin-promise": "3.8.0",
+    "eslint-plugin-standard": "3.1.0",
+    "istanbul": "0.4.5",
+    "licensify": "3.1.3",
+    "mocha": "5.2.0",
+    "watchify": "3.11.0"
   },
   "dependencies": {
-    "autolinker": "1.6.0",
+    "autolinker": "1.6.2",
     "deepmerge": "0.2.10",
     "html-entities": "1.2.0",
     "minimist": "1.2.0",
-    "redux": "3.5.2"
+    "redux": "4.0.0"
   }
 }
