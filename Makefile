@@ -1,22 +1,22 @@
-.PHONY: install test
+.PHONY: test dist
 
 node_version = 10.5
 
-install:
+node_modules: 
 	docker run --rm \
 		-v $$(pwd):/app \
 		-w /app \
 		node:$(node_version) \
 		npm i
 
-test:
+test: node_modules
 	docker run --rm \
 		-v $$(pwd):/app \
 		-w /app \
 		node:$(node_version) \
 		./node_modules/.bin/mocha
 
-build: install
+dist: node_modules
 	docker run --rm \
 		-v $$(pwd):/app \
 		-w /app \
@@ -28,5 +28,5 @@ build: install
 			-o dist/webshell.js \
 			-t [ babelify --presets [ es2015-script ] ]
 
-release: build
+release: dist
 	cp dist/webshell.js dist/webshell-$$(md5sum dist/webshell.js | cut -c 1-10).js
