@@ -3,7 +3,6 @@
 [![Build Status](https://api.travis-ci.org/jotaen/webshell.js.svg)](https://travis-ci.org/jotaen/webshell.js)
 [![Coverage Status](https://coveralls.io/repos/github/jotaen/webshell.js/badge.svg?branch=master)](https://coveralls.io/github/jotaen/webshell.js?branch=master)
 ![Dependencies](https://david-dm.org/jotaen/webshell.js.svg)
-[![bitHound Overall Score](https://www.bithound.io/github/jotaen/webshell.js/badges/score.svg)](https://www.bithound.io/github/jotaen/webshell.js)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 ```
