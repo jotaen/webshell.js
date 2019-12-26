@@ -1,4 +1,4 @@
-.PHONY: test dist
+.PHONY: test
 
 node_image = node:12.14.0-alpine
 
@@ -17,6 +17,7 @@ test: node_modules
 		./node_modules/.bin/mocha
 
 dist: node_modules
+	mkdir -p dist
 	docker run --rm \
 		-v $$(pwd):/app \
 		-w /app \
