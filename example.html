@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>webshell.js</title>
+    <script src="dist/webshell.js"></script>
+    <link rel="stylesheet" href="dist/webshell.css" media="screen">
+    <style media="screen">
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      .webshell {
+        height: 100vh;
+        box-sizing: border-box;
+        overflow: scroll;
+        background-color: #000;
+        color: #fff;
+        font-size: 18px;
+        line-height: 1.2;
+        font-family: monospace;
+        padding: 0.5em;
+      }
+      .webshell-prompt-user { color: #65c858 }
+      .webshell-prompt-at { color: #cac43b }
+      .webshell-prompt-path { color: #999 }
+      .webshell-prompt-delimiter { color: #c0253e; }
+
+      .webshell a {
+        color: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="myWebshell" class="webshell"></div>
+
+    <script type="text/javascript">
+      const myWebshell = createWebshell('myWebshell')
+      myWebshell.focus()
+    </script>
+  </body>
+</html>

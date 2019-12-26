@@ -13,6 +13,6 @@ addons:
     paths:
       - $(ls ./dist/*.js | tr "\n" ":")
       - $(ls ./dist/*.css | tr "\n" ":")
-      - $(ls ./examples/* | tr "\n" ":")
+      - example.html
     target_paths:
       - webshell.js

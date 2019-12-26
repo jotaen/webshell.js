@@ -1,18 +1,29 @@
-.webshell {
-  box-sizing: border-box;
-  cursor: text;
-  overflow-y: scroll;
-}
+/**
+ *  Predefined classes for styling
+ */
+
+.webshell-prompt-user {}
+.webshell-prompt-at {}
+.webshell-prompt-path {}
+.webshell-prompt-delimiter { }
+
+
+/**
+ *  “Functional” classes for layouting
+ */
 
 .webshell-prompt {
   margin-top: 1em;
 }
 
 .webshell-input {
-  outline: none;
   min-width: 3em;
   word-wrap: break-word;
   white-space: pre-wrap;
+}
+
+.webshell-input-current {
+  outline: none;
 }
 
 .webshell-response {
@@ -37,22 +48,3 @@
   word-wrap: break-word;
   list-style-type: none;
 }
-
-/*@media (min-width: 30em) {
-  .webshell-input {
-    clear: none;
-  }
-
-  .webshell-input:empty {
-    display: inline-block;  firefox bug 
-  }
-
-  .webshell-prompt {
-    margin-top: inherit;
-    margin-right: 0.2em;
-  }
-
-  .webshell-response {
-    min-height: inherit;
-  }
-}*/

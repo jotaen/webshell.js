@@ -3,6 +3,8 @@
  */
 
 .webshell {
+  box-sizing: border-box;
+  overflow: scroll;
   background-color: #000;
   color: #fff;
   font-size: 18px;
@@ -10,12 +12,11 @@
   font-family: monospace;
   padding: 0.5em;
 }
-.webshell-input { color: #fff; }
 .webshell-prompt-user { color: #65c858 }
 .webshell-prompt-at { color: #cac43b }
 .webshell-prompt-path { color: #999 }
 .webshell-prompt-delimiter { color: #c0253e; }
 
-a {
+.webshell a {
   color: inherit;
 }
