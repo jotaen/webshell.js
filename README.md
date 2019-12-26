@@ -21,7 +21,8 @@ webshell.js is a command line interpreter that runs in your browser.
 [See webshell.js in action](http://static.jotaen.net/webshell.js/examples/basic.html)
 
 #### Download:
-[Grab the latest version](http://static.jotaen.net/webshell.js/dist/webshell.js)
+- [Latest version of `webshell.js`](http://static.jotaen.net/webshell.js/dist/webshell.js)
+- [Latest version of `webshell.css`](http://static.jotaen.net/webshell.js/dist/webshell.css) (basic styling, but no colouring)
 
 #### Documentation:
 [Read the docs](docs/index.md)
