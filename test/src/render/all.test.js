@@ -25,7 +25,7 @@ describe('#render', () => {
     const input = ['a', 'b', 'c']
     const html = renderHtml(input)
     const text = renderText(input)
-    assert.strictEqual(html, '<ul class="list"><li class="list-item">a</li><li class="list-item">b</li><li class="list-item">c</li></ul>')
+    assert.strictEqual(html, '<ul class="webshell-list"><li class="webshell-list-item">a</li><li class="webshell-list-item">b</li><li class="webshell-list-item">c</li></ul>')
     assert.strictEqual(text, 'a\nb\nc\n')
   })
 })

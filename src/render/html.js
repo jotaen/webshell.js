@@ -23,10 +23,10 @@ const line = (input) => {
 
 const list = (input) => {
   const items = input.reduce((result, item) => {
-    result += '<li class="list-item">' + out(item) + '</li>'
+    result += '<li class="webshell-list-item">' + out(item) + '</li>'
     return result
   }, '')
-  return '<ul class="list">' + items + '</ul>'
+  return '<ul class="webshell-list">' + items + '</ul>'
 }
 
 module.exports = (input) => {
