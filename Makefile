@@ -26,6 +26,8 @@ dist: node_modules
 			--s createWebshell \
 			-p licensify \
 			-o dist/webshell.js
+	cp themes/base.css dist/webshell.css
 
 release: dist
 	cp dist/webshell.js dist/webshell-$$(md5sum dist/webshell.js | cut -c 1-10).js
+	cp dist/webshell.css dist/webshell-$$(md5sum dist/webshell.css | cut -c 1-10).css
