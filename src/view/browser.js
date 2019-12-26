@@ -7,7 +7,6 @@ const commands = require('../commands/index')
 const render = require('../render/html')
 const stack = require('../stack')
 const createElement = require('./element')
-const basicStyling = require('./basicStyling')
 const entities = require('html-entities').XmlEntities
 
 module.exports = (id, options) => {
@@ -33,8 +32,6 @@ module.exports = (id, options) => {
   ;(() => {})(currentHistoryItem) // this line is a workaround for an incorrectly issued linter error
   const element = createElement(id)
 
-  basicStyling()
-
   //
   //  METHOD DEFINITIONS
   //
@@ -45,9 +42,11 @@ module.exports = (id, options) => {
     const userName = stack.latest(state.sessions)
     const path = '/' + state.currentLocation.join('/')
     const html = [
-      '<span class="webshell-text-green">' + entities.encode(userName) + '</span>',
-      '<span class="webshell-text-lightgray">@</span>',
-      '<span class="webshell-text-yellow">' + entities.encode(path) + '</span>'
+      '<span class="webshell-prompt-user">' + entities.encode(userName) + '</span>',
+      '<span class="webshell-prompt-at">@</span>',
+      '<span class="webshell-prompt-path">' + entities.encode(path) + '</span>',
+      '<span class="webshell-prompt-delimiter">$</span>',
+      '<span> </span>'
     ].join('')
     element.prompt(html)
   }
@@ -59,7 +58,7 @@ module.exports = (id, options) => {
     let hello = 'Hello ' + userName + '!'
     if (date instanceof Date) {
       hello += ' Last activity: ' + date.toLocaleString()
-      hello += '<br>Reset the shell to its default state by <a class="webshell-text webshell-text-lightgray" href="?refresh">clicking here</a>'
+      hello += '<br>Reset the shell to its default state by <a href="?refresh">clicking here</a>'
     }
     element.writeResponse(hello)
   }

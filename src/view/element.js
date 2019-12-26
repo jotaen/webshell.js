@@ -4,7 +4,8 @@ const entities = require('html-entities').XmlEntities
 
 module.exports = (id) => {
   const webshell = document.getElementById(id)
-  webshell.innerHTML = '<div class="webshell-input webshell-input-current" id="' + id + '-cursor" contentEditable="true"></div>'
+  // Has to be a `span` element to avoid `contentediatable` quirks
+  webshell.innerHTML = '<span class="webshell-input webshell-input-current" id="' + id + '-cursor" contentEditable="true"></span>'
   const input = document.getElementById(id + '-cursor')
   const eventHandler = {
     onArrowDown: () => {},
@@ -27,7 +28,7 @@ module.exports = (id) => {
   }
 
   const prompt = (text) => {
-    input.insertAdjacentHTML('beforebegin', '<div class="webshell-prompt">' + text + '</div>')
+    input.insertAdjacentHTML('beforebegin', '<span class="webshell-prompt">' + text + '</span>')
     scroll()
   }
 
@@ -54,7 +55,7 @@ module.exports = (id) => {
   }
 
   const writeInput = (text) => {
-    input.insertAdjacentHTML('beforebegin', '<div class="webshell-input">' + entities.encode(text) + '</div>')
+    input.insertAdjacentHTML('beforebegin', '<span class="webshell-input">' + entities.encode(text) + '</span>')
     scroll()
   }
 

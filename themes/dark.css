@@ -1,66 +1,21 @@
+/**
+ *  Dark colouring on top of `base.css`
+ */
+
 .webshell {
-  height: 100vh;
   background-color: #000;
   color: #fff;
-  font-family: monospace;
   font-size: 18px;
   line-height: 1.2;
+  font-family: monospace;
+  padding: 0.5em;
 }
+.webshell-input { color: #fff; }
+.webshell-prompt-user { color: #65c858 }
+.webshell-prompt-at { color: #cac43b }
+.webshell-prompt-path { color: #999 }
+.webshell-prompt-delimiter { color: #c0253e; }
 
-.webshell-prompt {
-  position: relative;
-  float: left;
-  padding-right: 1em;
-  margin-top: 1em;
-}
-
-.webshell-input {
-  outline: none;
-  clear: left;
-}
-
-.webshell-prompt:after {
-  position: absolute;
-  top: 0;
-  right: 0.1em;
-  content: '$';
-  color: #777;
-  color: #c0253e;
-}
-
-.webshell-response:empty {
-  min-height: 0;
-}
-
-.webshell-list {
-  column-width: 10em;
-  column-gap: 3em;
-}
-
-.webshell-list-item {
-  word-wrap: break-word;
-}
-
-.webshell-text { color: #fff }
-.webshell-text-green { color: #65c858 }
-.webshell-text-yellow { color: #cac43b }
-.webshell-text-lightgray { color: #999 }
-
-@media (min-width: 30em) {
-  .webshell-input {
-    clear: none;
-  }
-
-  .webshell-input:empty {
-    display: inline-block; /* firefox bug */
-  }
-
-  .webshell-prompt {
-    margin-top: inherit;
-    margin-right: 0.2em;
-  }
-
-  .webshell-response {
-    min-height: inherit;
-  }
+a {
+  color: inherit;
 }
