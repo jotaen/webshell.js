@@ -4,7 +4,7 @@ const entities = require('html-entities').XmlEntities
 
 module.exports = (id) => {
   const webshell = document.getElementById(id)
-  webshell.innerHTML = '<div class="input input-current" id="' + id + '-cursor" contentEditable="true"></div>'
+  webshell.innerHTML = '<div class="webshell-input webshell-input-current" id="' + id + '-cursor" contentEditable="true"></div>'
   const input = document.getElementById(id + '-cursor')
   const eventHandler = {
     onArrowDown: () => {},
@@ -27,7 +27,7 @@ module.exports = (id) => {
   }
 
   const prompt = (text) => {
-    input.insertAdjacentHTML('beforebegin', '<div class="prompt">' + text + '</div>')
+    input.insertAdjacentHTML('beforebegin', '<div class="webshell-prompt">' + text + '</div>')
     scroll()
   }
 
@@ -49,12 +49,12 @@ module.exports = (id) => {
   }
 
   const writeResponse = (text) => {
-    input.insertAdjacentHTML('beforebegin', '<div class="response">' + text + '</div>')
+    input.insertAdjacentHTML('beforebegin', '<div class="webshell-response">' + text + '</div>')
     scroll()
   }
 
   const writeInput = (text) => {
-    input.insertAdjacentHTML('beforebegin', '<div class="input">' + entities.encode(text) + '</div>')
+    input.insertAdjacentHTML('beforebegin', '<div class="webshell-input">' + entities.encode(text) + '</div>')
     scroll()
   }
 

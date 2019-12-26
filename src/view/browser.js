@@ -45,9 +45,9 @@ module.exports = (id, options) => {
     const userName = stack.latest(state.sessions)
     const path = '/' + state.currentLocation.join('/')
     const html = [
-      '<span class="text-green">' + entities.encode(userName) + '</span>',
-      '<span class="text-lightgray">@</span>',
-      '<span class="text-yellow">' + entities.encode(path) + '</span>'
+      '<span class="webshell-text-green">' + entities.encode(userName) + '</span>',
+      '<span class="webshell-text-lightgray">@</span>',
+      '<span class="webshell-text-yellow">' + entities.encode(path) + '</span>'
     ].join('')
     element.prompt(html)
   }
@@ -59,7 +59,7 @@ module.exports = (id, options) => {
     let hello = 'Hello ' + userName + '!'
     if (date instanceof Date) {
       hello += ' Last activity: ' + date.toLocaleString()
-      hello += '<br>Reset the shell to its default state by <a class="text text-lightgray" href="?refresh">clicking here</a>'
+      hello += '<br>Reset the shell to its default state by <a class="webshell-text webshell-text-lightgray" href="?refresh">clicking here</a>'
     }
     element.writeResponse(hello)
   }
