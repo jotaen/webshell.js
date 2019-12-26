@@ -7,26 +7,16 @@
     "url": "git+https://github.com/jotaen/webshell.js.git"
   },
   "license": "Apache-2.0",
-  "scripts": {
-    "coverage": "istanbul cover _mocha",
-    "dist:watch": "watchify src/view/browser.js --s createWebshell -p licensify -o dist/webshell.js -t  [ babelify --presets [ es2015-script ] ]"
-  },
   "devDependencies": {
-    "babel-core": "6.26.3",
-    "babel-preset-es2015-script": "1.1.0",
-    "babelify": "8.0.0",
-    "browserify": "16.2.2",
-    "coveralls": "3.0.1",
-    "istanbul": "0.4.5",
+    "browserify": "16.5.0",
     "licensify": "3.1.3",
-    "mocha": "5.2.0",
-    "watchify": "3.11.0"
+    "mocha": "6.2.2"
   },
   "dependencies": {
-    "autolinker": "1.6.2",
-    "deepmerge": "0.2.10",
-    "html-entities": "1.2.0",
+    "autolinker": "3.11.1",
+    "deepmerge": "4.2.2",
+    "html-entities": "1.2.1",
     "minimist": "1.2.0",
-    "redux": "4.0.0"
+    "redux": "4.0.5"
   }
 }

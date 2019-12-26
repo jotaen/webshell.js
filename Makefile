@@ -1,32 +1,31 @@
 .PHONY: test dist
 
-node_version = 10.5
+node_image = node:12.14.0-alpine
 
 node_modules: 
 	docker run --rm \
 		-v $$(pwd):/app \
 		-w /app \
-		node:$(node_version) \
+		$(node_image) \
 		npm i
 
 test: node_modules
 	docker run --rm \
 		-v $$(pwd):/app \
 		-w /app \
-		node:$(node_version) \
+		$(node_image) \
 		./node_modules/.bin/mocha
 
 dist: node_modules
 	docker run --rm \
 		-v $$(pwd):/app \
 		-w /app \
-		node:$(node_version) \
+		$(node_image) \
 		./node_modules/.bin/browserify \
 			src/view/browser.js \
 			--s createWebshell \
 			-p licensify \
-			-o dist/webshell.js \
-			-t [ babelify --presets [ es2015-script ] ]
+			-o dist/webshell.js
 
 release: dist
 	cp dist/webshell.js dist/webshell-$$(md5sum dist/webshell.js | cut -c 1-10).js
