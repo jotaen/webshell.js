@@ -16,7 +16,7 @@
     "autolinker": "3.11.1",
     "deepmerge": "4.2.2",
     "html-entities": "1.2.1",
-    "minimist": "1.2.0",
+    "minimist": "1.2.3",
     "redux": "4.0.5"
   }
 }
