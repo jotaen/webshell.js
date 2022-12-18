@@ -1,11 +1,11 @@
 'use strict'
 
-const entities = require('html-entities').encode
+const entities = require('html-entities')
 const Autolinker = require('autolinker')
 
 const out = (input) => {
   return Autolinker.link(
-    entities(input),
+    entities.encode(input),
     {
       newWindow: false,
       urls: { schemeMatches: true, wwwMatches: false, tldMatches: false },

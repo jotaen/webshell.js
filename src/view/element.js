@@ -1,6 +1,6 @@
 'use strict'
 
-const entities = require('html-entities').entities
+const entities = require('html-entities')
 
 module.exports = (id) => {
   const webshell = document.getElementById(id)
