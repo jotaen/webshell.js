@@ -1,4 +1,4 @@
-.PHONY: test
+.PHONY: test dist
 
 node_image = node:12.14.0-alpine
 

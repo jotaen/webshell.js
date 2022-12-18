@@ -7,7 +7,7 @@ const commands = require('../commands/index')
 const render = require('../render/html')
 const stack = require('../stack')
 const createElement = require('./element')
-const entities = require('html-entities').XmlEntities
+const entities = require('html-entities').entities
 
 module.exports = (id, options) => {
   //

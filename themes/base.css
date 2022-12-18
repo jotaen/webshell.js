@@ -12,14 +12,20 @@
  *  “Functional” classes for layouting
  */
 
+.webshell-prompt,
+.webshell-input,
+.webshell-response,
+.webshell-list {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
 .webshell-prompt {
   margin-top: 1em;
 }
 
 .webshell-input {
   min-width: 3em;
-  word-wrap: break-word;
-  white-space: pre-wrap;
 }
 
 .webshell-input-current {
@@ -30,7 +36,6 @@
   clear: both;
   min-height: 1em;
   line-height: normal;
-  white-space: pre-wrap;
 }
 
 .webshell-response:empty {
@@ -45,6 +50,5 @@
 }
 
 .webshell-list-item {
-  word-wrap: break-word;
   list-style-type: none;
 }

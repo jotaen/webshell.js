@@ -1,6 +1,6 @@
 'use strict'
 
-const entities = require('html-entities').XmlEntities.encode
+const entities = require('html-entities').encode
 const Autolinker = require('autolinker')
 
 const out = (input) => {
