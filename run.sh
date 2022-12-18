@@ -5,15 +5,15 @@ readonly NODE_IMAGE='node:18.12.1-bullseye'
 run::dev-env() {
 	docker run \
 		--rm \
+		-it \
 		--volume "$(pwd):/app" \
 		--workdir /app \
 		--entrypoint /bin/bash \
-		-it \
 		"${NODE_IMAGE}"
 }
 
 run::install() {
-	npm i
+	npm install
 }
 
 run::test() {
@@ -23,10 +23,10 @@ run::test() {
 }
 
 run::build() {
+	mkdir -p dist/
 	./node_modules/.bin/browserify \
-			src/view/browser.js \
-			--s createWebshell \
-			-p licensify \
-			-o dist/webshell.js
-	cp themes/base.css dist/webshell.css
+		src/view/browser.js \
+		--standalone createWebshell \
+		--plugin licensify \
+		--outfile dist/webshell.js
 }

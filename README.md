@@ -1,9 +1,5 @@
 # webshell.js
 
-[![Build Status](https://api.travis-ci.org/jotaen/webshell.js.svg)](https://travis-ci.org/jotaen/webshell.js)
-[![Coverage Status](https://coveralls.io/repos/github/jotaen/webshell.js/badge.svg?branch=master)](https://coveralls.io/github/jotaen/webshell.js?branch=master)
-![Dependencies](https://david-dm.org/jotaen/webshell.js.svg)
-
 ```
                 __         __         ____    _     
  _      _____  / /_  _____/ /_  ___  / / /   (_)____
@@ -15,26 +11,15 @@
 
 webshell.js is a command line interpreter that runs in your browser.
 
-## Overview
+## Live Demo
 
-#### Live Demo:
-[See webshell.js in action](http://static.jotaen.net/webshell.js/example.html)
-
-#### Download:
-- [Latest version of `webshell.js`](http://static.jotaen.net/webshell.js/dist/webshell.js)
-- [Latest version of `webshell.css`](http://static.jotaen.net/webshell.js/dist/webshell.css) (basic styling, but no colouring)
-
-#### Documentation:
-[Read the docs](docs/index.md)
+[Try webshell.js and see it in action](http://static.jotaen.net/webshell.js/example.html)
 
 ## Get started
 
-1. Download or build `webshell.js`
-2. Include `webshell.js` file with a `<script src="">` tag in your webpage.
-3. Create an empty `<div>` element with a custom id, e.g.: `<div id="atari"></div>`
-4. Call the function `createWebshell()` and pass it the id of the div-element, e.g.: `createWebshell('atari')`
+Prerequisites: NodeJS 18+
 
-See [the basic example](examples/basic.html).
+With [run.sh](https://run.jotaen.net/), do `run::install` and `run::build`. That will create a `dist/` folder, containing a `webshell.js` bundle. `webshell.js` is supposed to be included via a `<script>` tag on a web page. See [the example](examples/basic.html) to learn how it is supposed to be used.
 
 ## Styling
 
