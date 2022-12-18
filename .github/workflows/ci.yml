@@ -1,0 +1,17 @@
+name: CI
+on: push
+env:
+  NODE_VERSION: '18.12'
+jobs:
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Install dependencies
+        run: source ./run.sh && run::install
+      - name: Run unit tests
+        run: source ./run.sh && run::test
