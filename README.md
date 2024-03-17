@@ -19,7 +19,7 @@ webshell.js is a command line interpreter that runs in your browser.
 
 Prerequisites: NodeJS 18+
 
-With [run.sh](https://run.jotaen.net/), do `run::install` and `run::build`. That will create a `dist/` folder, containing a `webshell.js` bundle. `webshell.js` is supposed to be included via a `<script>` tag on a web page. See [the example](examples/basic.html) to learn how it is supposed to be used.
+With [run.sh](https://run.jotaen.net/), do `run::install` and `run::build`. That will create a `dist/` folder, containing a `webshell.js` bundle. `webshell.js` is supposed to be included via a `<script>` tag on a web page. See [the example](example.html) to learn how it is supposed to be used.
 
 ## Styling
 
